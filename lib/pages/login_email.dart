@@ -354,7 +354,7 @@ class _LoginEmailState extends State<LoginEmail> {
                               )));
                 },
                 leading: Image.asset(
-                  'assets/images/social/email-logo.png',
+                  'assets/images/emailicon.png',
                   height: 45.0,
                 ),
                 contentPadding: EdgeInsets.all(0.0),

@@ -483,7 +483,7 @@ class _LoginPageState extends State<LoginPage> {
                               )));
                 },
                 leading: Image.asset(
-                  'assets/images/social/email-logo.png',
+                  'assets/images/emailicon.png',
                   height: 45.0,
                 ),
                 contentPadding: EdgeInsets.all(0.0),
@@ -503,9 +503,9 @@ class _LoginPageState extends State<LoginPage> {
                 onTap: () {
                   _loginWithFacebook();
                 },
-                leading: Image.asset(
-                  'assets/images/Social/IconFacebook.png',
-                  height: 45.0,
+                leading: Image(
+                  image: AssetImage('assets/images/facebookicon.png'),
+                  height: 45,
                 ),
                 contentPadding: EdgeInsets.all(0.0),
                 title: Text(

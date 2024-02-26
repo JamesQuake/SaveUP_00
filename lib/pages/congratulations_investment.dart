@@ -333,7 +333,7 @@ class _CongratsInvestmentState extends State<CongratsInvestment> {
                         onTap: () => _sendEmail(),
                         child: CircleAvatar(
                           backgroundImage:
-                              AssetImage('assets/images/social/email-logo.png'),
+                              AssetImage('assets/images/emailicon.png'),
                         ),
                       ),
                     ],

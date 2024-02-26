@@ -319,7 +319,7 @@ class _CongratsSaving extends State<CongratsSaving> {
                         },
                         child: CircleAvatar(
                           backgroundImage:
-                              AssetImage('assets/images/social/email-logo.png'),
+                              AssetImage('assets/images/emailicon.png'),
                         ),
                       ),
                     ],

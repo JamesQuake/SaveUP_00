@@ -1,0 +1,235 @@
+name: pay_or_save
+description: A new Flutter project.
+
+# The following line prevents the package from being accidentally published to
+# pub.dev using `pub publish`. This is preferred for private packages.
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+version: 1.0.0+25
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  hexcolor: ^2.0.0
+  video_player: ^2.1.0
+  chewie: ^1.0.0
+  provider: ^6.0.1
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.2
+  firebase_auth: ^3.1.1
+  # firebase_auth: ^1.1.2
+  firebase_storage: ^10.0.3
+  google_sign_in: ^5.2.0
+  shared_preferences: ^2.0.7
+  # webview_flutter: ^0.3.22+1
+  flutter_launcher_icons: ^0.9.2
+  # video_player: ^0.10.11+1
+  cloud_firestore: ^3.3.0
+  # cloud_firestore: ^1.0.7
+  file_picker: ^4.0.2
+  google_fonts: ^3.0.1
+  charts_flutter: ^0.12.0
+  flare_flutter: ^3.0.2
+  percent_indicator:
+  # firebase_admob: ^0.11.2
+  youtube_player_flutter: ^8.0.0
+  image_picker: ^0.8.4
+  loading_animations: ^2.1.0
+  # firebase_core: ^1.1.0
+  firebase_core: ^1.6.0
+  animated_text_kit: ^4.1.1
+  http: ^0.13.4
+  transparent_image: ^2.0.0
+  # shared_preferences: ^0.5.12+2
+  flutter_staggered_grid_view: ^0.6.2
+  flutter_rating_bar: ^4.0.1
+  webview_flutter: ^3.0.4
+  english_words: ^4.0.0
+  smooth_page_indicator: ^1.0.0+2
+  intl: ^0.17.0
+  flutter_facebook_auth: ^4.4.0+1
+  url_launcher: ^6.0.18
+  font_awesome_flutter: ^10.1.0
+  google_mobile_ads: ^1.1.0
+  social_share: ^2.2.1
+  cloud_functions: ^3.3.7
+  purchases_flutter: ^4.3.0
+  crypto: ^3.0.2
+  convert: ^3.1.0
+  flutter_screenutil: ^5.7.0
+
+dependency_overrides:
+  firebase_core_platform_interface: 4.5.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/posmob.png"
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter.
+flutter:
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  assets:
+    - assets/ebay.png
+    - assets/ebay.svg
+    - assets/category.json
+    - assets/animation/
+    - assets/images/
+    - assets/images/new/logo.png
+    - assets/images/new/img1.png
+    - assets/images/new/img2.png
+    - assets/images/new/img3.png
+    - assets/images/new/img4.png
+    - assets/images/new/edu.png
+    - assets/images/new/retire.png
+    - assets/images/new/reward.png
+    - assets/images/new/savings.png
+    - assets/images/new/ebay.svg
+    - assets/images/new/bin.png
+    - assets/images/new/ebay.png
+    - assets/images/new/ebay1.png
+    - assets/images/new/category.json
+    - assets/images/new/newlogo.png
+    - assets/images/new/posimage.jpeg
+    - assets/images/poslogo.png
+    - assets/images/Boy1.png
+    - assets/images/Boy2.png
+    - assets/images/Emptypockets1.png
+    - assets/images/Emptypockets2.png
+    - assets/images/Coin.png
+    - assets/images/Instructions.jpg
+    - assets/images/Kid.png
+    - assets/images/new/videoassets/ExitVideo.mp4
+    - assets/images/Accounts/AcctChecking.png
+    - assets/images/Accounts/AcctInvestment.png
+    - assets/images/Accounts/AcctReward.png
+    - assets/images/Accounts/AcctSavings.png
+    - assets/images/posicon.png
+    - assets/images/posmob.png
+    - assets/images/posmobsq.png
+    - assets/images/video1.png
+    - assets/images/introvid.png
+    - assets/images/video3.png
+    - assets/images/social/iconemail.png
+    - assets/images/Social/IconFacebook.png
+    - assets/images/social/icontwitter.png
+    - assets/images/social/iconlinkedin.png
+    - assets/images/social/iconpinterest.png
+    - assets/images/social/iconinstagram.png
+    - assets/images/amazonnew.jpg
+    - assets/images/google-logo-1.png
+    - assets/images/google-logo-2.png
+    - assets/images/social/email-logo.png
+    - assets/images/social/gmail-logo.png
+    - assets/images/iconsgoals/retirement.png
+    - assets/images/iconsgoals/furnishing.png
+    - assets/images/iconsgoals/travel.png
+    - assets/images/iconsgoals/legacy.png
+    - assets/images/iconsgoals/business.png
+    - assets/images/iconsgoals/auto.png
+    - assets/images/iconsgoals/wedding.png
+    - assets/images/iconsgoals/general.png
+    - assets/images/iconsgoals/home.png
+    - assets/images/iconsgoals/computer-electronics.png
+    - assets/images/iconsgoals/other.png
+    - assets/images/iconsgoals/rainy-day.png
+    - assets/images/iconsgoals/education.png
+    - assets/images/VirtualCloset.png
+    - assets/images/upup.png
+    - assets/images/downdown.png
+    - assets/images/uphollow.png
+    - assets/images/rglogo.png
+    - assets/images/logotext.png
+    - assets/images/rgpos.png
+    - assets/images/amazon1.png
+    - assets/images/amazon2.png
+    - assets/images/Headers/congratulations.png
+    - assets/images/Headers/sharesuccess.png
+    - assets/images/Headers/setgoals.png
+    - assets/images/Headers/crowdfunding.png
+    - assets/images/paywyzly.png
+    - assets/images/shopwyzly.png
+    - assets/images/mycompany.png
+    - assets/images/wyzly-ico.png
+    - assets/images/wyzly.png
+    - assets/images/wyzly-text.png
+    - assets/images/new/videoassets/ew-1.mp4
+    - assets/images/new/videoassets/eW-2.mp4
+    - assets/images/new/videoassets/ew-3.mp4
+    - assets/images/mycompany2.png
+    - assets/images/mycompany3.png
+    - assets/images/shopping-bag.png
+    - assets/images/buttons/add-green.png
+    - assets/images/buttons/add-blue.png
+    - assets/images/buttons/undo-green.png
+    - assets/images/buttons/undo-blue.png
+    - assets/images/ads.png
+    - assets/images/ads-cancel.png
+    - assets/images/reward-points1.png
+    - assets/images/reward-points2.png
+    - assets/images/gifs/cngrts.gif
+    - assets/images/shopcartblack.png
+    - assets/images/shopcartwyt.png
+    - assets/images/anim/dollarsign.png
+    - assets/images/anim/textspend.png
+    - assets/images/anim/textsave.png
+    - assets/images/anim/textshop.png
+    - assets/images/anim/textew.png
+    - assets/images/anim/emptycart.png
+  # To add assets to your application, add an assets section, like this:
+  # assets:
+  #   - images/a_dot_burr.jpeg
+  #   - images/a_dot_ham.jpeg
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/assets-and-images/#resolution-aware.
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/assets-and-images/#from-packages
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
+  #   - family: Trajan Pro
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages

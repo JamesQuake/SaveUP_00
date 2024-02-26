@@ -1,0 +1,33 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/jeeali/.pub-cache/hosted/pub.dartlang.org/social_share-2.3.1/android/src/main/AndroidManifest.xml:1:1-5:12
+INJECTED from /Users/jeeali/.pub-cache/hosted/pub.dartlang.org/social_share-2.3.1/android/src/main/AndroidManifest.xml:1:1-5:12
+INJECTED from /Users/jeeali/.pub-cache/hosted/pub.dartlang.org/social_share-2.3.1/android/src/main/AndroidManifest.xml:1:1-5:12
+	package
+		ADDED from /Users/jeeali/.pub-cache/hosted/pub.dartlang.org/social_share-2.3.1/android/src/main/AndroidManifest.xml:3:5-47
+		INJECTED from /Users/jeeali/.pub-cache/hosted/pub.dartlang.org/social_share-2.3.1/android/src/main/AndroidManifest.xml
+		INJECTED from /Users/jeeali/.pub-cache/hosted/pub.dartlang.org/social_share-2.3.1/android/src/main/AndroidManifest.xml
+	xmlns:tools
+		ADDED from /Users/jeeali/.pub-cache/hosted/pub.dartlang.org/social_share-2.3.1/android/src/main/AndroidManifest.xml:2:5-51
+	xmlns:android
+		ADDED from /Users/jeeali/.pub-cache/hosted/pub.dartlang.org/social_share-2.3.1/android/src/main/AndroidManifest.xml:1:11-69
+meta-data#flutterEmbedding
+ADDED from /Users/jeeali/.pub-cache/hosted/pub.dartlang.org/social_share-2.3.1/android/src/main/AndroidManifest.xml:4:5-67
+	android:value
+		ADDED from /Users/jeeali/.pub-cache/hosted/pub.dartlang.org/social_share-2.3.1/android/src/main/AndroidManifest.xml:4:48-65
+	android:name
+		ADDED from /Users/jeeali/.pub-cache/hosted/pub.dartlang.org/social_share-2.3.1/android/src/main/AndroidManifest.xml:4:16-47
+uses-sdk
+INJECTED from /Users/jeeali/.pub-cache/hosted/pub.dartlang.org/social_share-2.3.1/android/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/jeeali/.pub-cache/hosted/pub.dartlang.org/social_share-2.3.1/android/src/main/AndroidManifest.xml
+INJECTED from /Users/jeeali/.pub-cache/hosted/pub.dartlang.org/social_share-2.3.1/android/src/main/AndroidManifest.xml
+INJECTED from /Users/jeeali/.pub-cache/hosted/pub.dartlang.org/social_share-2.3.1/android/src/main/AndroidManifest.xml
+INJECTED from /Users/jeeali/.pub-cache/hosted/pub.dartlang.org/social_share-2.3.1/android/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/jeeali/.pub-cache/hosted/pub.dartlang.org/social_share-2.3.1/android/src/main/AndroidManifest.xml
+		ADDED from /Users/jeeali/.pub-cache/hosted/pub.dartlang.org/social_share-2.3.1/android/src/main/AndroidManifest.xml
+		INJECTED from /Users/jeeali/.pub-cache/hosted/pub.dartlang.org/social_share-2.3.1/android/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/jeeali/.pub-cache/hosted/pub.dartlang.org/social_share-2.3.1/android/src/main/AndroidManifest.xml
+		ADDED from /Users/jeeali/.pub-cache/hosted/pub.dartlang.org/social_share-2.3.1/android/src/main/AndroidManifest.xml
+		INJECTED from /Users/jeeali/.pub-cache/hosted/pub.dartlang.org/social_share-2.3.1/android/src/main/AndroidManifest.xml

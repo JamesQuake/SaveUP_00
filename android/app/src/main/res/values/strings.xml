@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Pay or Save</string>
+    <string name="facebook_app_id">696439556011062</string>
+    <string name="facebook_client_token">8863ed4263dc2f2762e71c2accafbc81</string>
+    <string name="fb_login_protocol_scheme">fb696439556011062</string>
+</resources>

@@ -1,0 +1,13 @@
+com.mr.flutter.plugin.filepicker.file_picker-core-1.6.0-0 /Users/jeeali/.gradle/caches/transforms-3/91a4a560380a04f0d720d25f3d485372/transformed/core-1.6.0/res
+com.mr.flutter.plugin.filepicker.file_picker-jetified-window-1.0.0-beta04-1 /Users/jeeali/.gradle/caches/transforms-3/98d6fb177d8329536d0d2275c7741dd7/transformed/jetified-window-1.0.0-beta04/res
+com.mr.flutter.plugin.filepicker.file_picker-jetified-window-java-1.0.0-beta04-2 /Users/jeeali/.gradle/caches/transforms-3/d064244ac7a99d795894e8d1c3e19721/transformed/jetified-window-java-1.0.0-beta04/res
+com.mr.flutter.plugin.filepicker.file_picker-jetified-annotation-experimental-1.1.0-3 /Users/jeeali/.gradle/caches/transforms-3/e9f1d70a8d1e7c9d3758fd50646d2ca5/transformed/jetified-annotation-experimental-1.1.0/res
+com.mr.flutter.plugin.filepicker.file_picker-main-4 /Users/jeeali/.pub-cache/hosted/pub.dartlang.org/file_picker-4.6.1/android/src/main/res
+com.mr.flutter.plugin.filepicker.file_picker-profile-5 /Users/jeeali/.pub-cache/hosted/pub.dartlang.org/file_picker-4.6.1/android/src/profile/res
+com.mr.flutter.plugin.filepicker.file_picker-pngs-6 /Users/jeeali/Downloads/ewyzly/build/file_picker/generated/res/pngs/profile
+com.mr.flutter.plugin.filepicker.file_picker-resValues-7 /Users/jeeali/Downloads/ewyzly/build/file_picker/generated/res/resValues/profile
+com.mr.flutter.plugin.filepicker.file_picker-rs-8 /Users/jeeali/Downloads/ewyzly/build/file_picker/generated/res/rs/profile
+com.mr.flutter.plugin.filepicker.file_picker-mergeProfileResources-9 /Users/jeeali/Downloads/ewyzly/build/file_picker/intermediates/incremental/profile/mergeProfileResources/merged.dir
+com.mr.flutter.plugin.filepicker.file_picker-mergeProfileResources-10 /Users/jeeali/Downloads/ewyzly/build/file_picker/intermediates/incremental/profile/mergeProfileResources/stripped.dir
+com.mr.flutter.plugin.filepicker.file_picker-merged_res-11 /Users/jeeali/Downloads/ewyzly/build/file_picker/intermediates/merged_res/profile
+com.mr.flutter.plugin.filepicker.file_picker-packaged_res-12 /Users/jeeali/Downloads/ewyzly/build/flutter_plugin_android_lifecycle/intermediates/packaged_res/profile

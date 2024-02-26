@@ -1,0 +1,12 @@
+creativemaybeno.wakelock-core-1.6.0-0 /Users/jeeali/.gradle/caches/transforms-3/91a4a560380a04f0d720d25f3d485372/transformed/core-1.6.0/res
+creativemaybeno.wakelock-jetified-window-1.0.0-beta04-1 /Users/jeeali/.gradle/caches/transforms-3/98d6fb177d8329536d0d2275c7741dd7/transformed/jetified-window-1.0.0-beta04/res
+creativemaybeno.wakelock-jetified-window-java-1.0.0-beta04-2 /Users/jeeali/.gradle/caches/transforms-3/d064244ac7a99d795894e8d1c3e19721/transformed/jetified-window-java-1.0.0-beta04/res
+creativemaybeno.wakelock-jetified-annotation-experimental-1.1.0-3 /Users/jeeali/.gradle/caches/transforms-3/e9f1d70a8d1e7c9d3758fd50646d2ca5/transformed/jetified-annotation-experimental-1.1.0/res
+creativemaybeno.wakelock-main-4 /Users/jeeali/.pub-cache/hosted/pub.dartlang.org/wakelock-0.6.2/android/src/main/res
+creativemaybeno.wakelock-profile-5 /Users/jeeali/.pub-cache/hosted/pub.dartlang.org/wakelock-0.6.2/android/src/profile/res
+creativemaybeno.wakelock-pngs-6 /Users/jeeali/Downloads/ewyzly/build/wakelock/generated/res/pngs/profile
+creativemaybeno.wakelock-resValues-7 /Users/jeeali/Downloads/ewyzly/build/wakelock/generated/res/resValues/profile
+creativemaybeno.wakelock-rs-8 /Users/jeeali/Downloads/ewyzly/build/wakelock/generated/res/rs/profile
+creativemaybeno.wakelock-mergeProfileResources-9 /Users/jeeali/Downloads/ewyzly/build/wakelock/intermediates/incremental/profile/mergeProfileResources/merged.dir
+creativemaybeno.wakelock-mergeProfileResources-10 /Users/jeeali/Downloads/ewyzly/build/wakelock/intermediates/incremental/profile/mergeProfileResources/stripped.dir
+creativemaybeno.wakelock-merged_res-11 /Users/jeeali/Downloads/ewyzly/build/wakelock/intermediates/merged_res/profile

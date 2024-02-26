@@ -1,0 +1,82 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.revenuecat.purchases_flutter-mergeProfileResources-15:/values-cs/values-cs.xml",
+            "map": [
+                {
+                    "source": "/Users/jeeali/.gradle/caches/transforms-3/40749beb2d02a0a92ed25694981c977c/transformed/core-1.8.0/res/values-cs/values-cs.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "307",
+                        "endColumns": "100",
+                        "endOffsets": "403"
+                    }
+                },
+                {
+                    "source": "/Users/jeeali/.gradle/caches/transforms-3/77277b1c17d5816f6e1453ba51622922/transformed/jetified-play-services-basement-17.0.0/res/values-cs/values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "247",
+                        "endColumns": "201",
+                        "endOffsets": "448"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "105",
+                        "endColumns": "201",
+                        "endOffsets": "302"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "com.revenuecat.purchases_flutter-merged_res-17:/values-cs/values-cs.xml",
+            "map": [
+                {
+                    "source": "/Users/jeeali/.gradle/caches/transforms-3/40749beb2d02a0a92ed25694981c977c/transformed/core-1.8.0/res/values-cs/values-cs.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "307",
+                        "endColumns": "100",
+                        "endOffsets": "403"
+                    }
+                },
+                {
+                    "source": "/Users/jeeali/.gradle/caches/transforms-3/77277b1c17d5816f6e1453ba51622922/transformed/jetified-play-services-basement-17.0.0/res/values-cs/values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "247",
+                        "endColumns": "201",
+                        "endOffsets": "448"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "105",
+                        "endColumns": "201",
+                        "endOffsets": "302"
+                    }
+                }
+            ]
+        }
+    ]
+}

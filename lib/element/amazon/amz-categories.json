@@ -1,0 +1,323 @@
+[
+    {
+        "category": {
+            "categoryId": "3457",
+            "categoryName": "Electronics",
+            "imageUrl": "https://m.media-amazon.com/images/I/71bhWgQK-cL._AC_SL1500_.jpg",
+            "imageUrl2": "https://m.media-amazon.com/images/I/71V9-3bT9rL._AC_SL1500_.jpg"
+        }
+        
+    },
+    {
+        "category": {
+            "categoryId": "550",
+            "categoryName": "Art",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/288AAOSwQTVV-ohU/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/288AAOSwQTVV-ohU/s-l1600.webp"
+        }
+        
+    },
+    {
+        "category": {
+            "categoryId": "2984",
+            "categoryName": "Baby",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/~owAAOSw-3FZJXiA/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/~owAAOSw-3FZJXiA/s-l1600.webp"
+        }
+        
+    },
+    {
+        "category": {
+            "categoryId": "267",
+            "categoryName": "Books",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/iYQAAOSwE6VXJcYG/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/iYQAAOSwE6VXJcYG/s-l1600.webp"
+        }
+        
+    },
+    {
+        "category": {
+            "categoryId": "12576",
+            "categoryName": "Business & Industrial",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/URwAAOSwhXhbaBMb/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/URwAAOSwhXhbaBMb/s-l1600.webp"
+        }
+        
+    },
+    {
+        "category": {
+            "categoryId": "625",
+            "categoryName": "Cameras & Photo",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/0MAAAOSwZGld0v8f/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/0MAAAOSwZGld0v8f/s-l1600.webp"
+        }
+        
+    },
+    {
+        "category": {
+            "categoryId": "15032",
+            "categoryName": "Cell Phones & Accessories",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/0bkAAOSw57BdAIE6/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/0bkAAOSw57BdAIE6/s-l1600.webp"
+        }
+        
+    },
+    {
+        "category": {
+            "categoryId": "11450",
+            "categoryName": "Clothing, Shoes & Accessories",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/vYMAAOSwgr9bojK7/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/vYMAAOSwgr9bojK7/s-l1600.webp"
+        }
+        
+    },
+    {
+        "category": {
+            "categoryId": "11116",
+            "categoryName": "Coins & Paper Money",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/3SYAAOSww5hZJXh9/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/3SYAAOSww5hZJXh9/s-l1600.webp"
+        }
+        
+    },
+    
+    {
+        "category": {
+            "categoryId": "1",
+            "categoryName": "Collectibles",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/vt0AAOSwaIpb0yrR/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/vt0AAOSwaIpb0yrR/s-l1600.webp"
+        }
+    },
+    {
+        "category": {
+            "categoryId": "58058",
+            "categoryName": "Computers/Tablets & Networking",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/rnEAAOSwBt5ZJXh6/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/rnEAAOSwBt5ZJXh6/s-l1600.webp"
+        }
+        
+    },
+    {
+        "category": {
+            "categoryId": "293",
+            "categoryName": "Consumer Electronics",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/hTAAAOSwKytZJXhA/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/hTAAAOSwKytZJXhA/s-l1600.webp"
+        }
+        
+    },
+    {
+        "category": {
+            "categoryId": "14339",
+            "categoryName": "Crafts",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/RIYAAOSwAPVZJXiA/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/RIYAAOSwAPVZJXiA/s-l1600.webp"
+        }
+        
+    },
+    
+    {
+        "category": {
+            "categoryId": "237",
+            "categoryName": "Dolls & Bears",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/qUQAAOSwH09ZJXh8/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/qUQAAOSwH09ZJXh8/s-l1600.webp"
+        }
+        
+    },
+    {
+        "category": {
+            "categoryId": "11232",
+            "categoryName": "DVDs & Movies",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/c9MAAOSwK6RZJXg-/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/c9MAAOSwK6RZJXg-/s-l1600.webp"
+        }
+        
+    },
+    {
+        "category": {
+            "categoryId": "6000",
+            "categoryName": "eBay Motors",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/oucAAOSwGmteWynx/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/oucAAOSwGmteWynx/s-l1600.webp"
+        }
+        
+    },
+    {
+        "category": {
+            "categoryId": "45100",
+            "categoryName": "Entertainment Memorabilia",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/RmQAAOSwX9FZJXh-/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/RmQAAOSwX9FZJXh-/s-l1600.webp"
+        }
+        
+    },
+    
+    {
+        "category": {
+            "categoryId": "99",
+            "categoryName": "Everything Else",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/o1kAAOSwsXFZJX7~/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/o1kAAOSwsXFZJX7~/s-l1600.webp"
+        }
+    
+    },
+    {
+        "category": {
+            "categoryId": "172008",
+            "categoryName": "Gift Cards & Coupons",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/I-8AAOSwuTxV-TPu/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/I-8AAOSwuTxV-TPu/s-l1600.webp"
+        }
+        
+    },
+    {
+        "category": {
+            "categoryId": "26395",
+            "categoryName": "Health & Beauty",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/ODMAAOSwVuNbIKBc/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/ODMAAOSwVuNbIKBc/s-l1600.webp"
+        }
+        
+    },
+    
+    {
+        "category": {
+            "categoryId": "11700",
+            "categoryName": "Home & Garden",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/vU0AAOSwMjtb0yib/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/vU0AAOSwMjtb0yib/s-l1600.webp"
+        }
+        
+    },
+    {
+        "category": {
+            "categoryId": "281",
+            "categoryName": "Jewelry & Watches",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/d5cAAOSwyARbL3Ah/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/d5cAAOSwyARbL3Ah/s-l1600.webp"
+        }
+        
+    },
+    {
+        "category": {
+            "categoryId": "11233",
+            "categoryName": "Music",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/lW8AAOSwplBdGb4e/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/lW8AAOSwplBdGb4e/s-l1600.webp"
+        }
+        
+    },
+    
+    {
+        "category": {
+            "categoryId": "619",
+            "categoryName": "Musical Instruments & Gear",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/5YsAAOSwuMZZJXh~/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/5YsAAOSwuMZZJXh~/s-l1600.webp"
+        }
+        
+    },
+    
+    {
+        "category": {
+            "categoryId": "1281",
+            "categoryName": "Pet Supplies",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/EhkAAOSw4CFY0Asq/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/EhkAAOSw4CFY0Asq/s-l1600.webp"
+        }
+        
+    },
+    {
+        "category": {
+            "categoryId": "870",
+            "categoryName": "Pottery & Glass",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/HVQAAOSwx4RamdC1/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/HVQAAOSwx4RamdC1/s-l1600.webp"
+        }
+        
+    },
+    {
+        "category": {
+            "categoryId": "10542",
+            "categoryName": "Real Estate",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/bOEAAOSwImRYNVVZ/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/bOEAAOSwImRYNVVZ/s-l1600.webp"
+        }
+        
+    },
+    {
+        "category": {
+            "categoryId": "316",
+            "categoryName": "Specialty Services",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/JVwAAOSwB09YKtTe/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/JVwAAOSwB09YKtTe/s-l1600.webp"
+        }
+        
+    },
+    {
+        "category": {
+            "categoryId": "888",
+            "categoryName": "Sporting Goods",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/jU4AAOSwfcNb0y-x/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/jU4AAOSwfcNb0y-x/s-l1600.webp"
+        }
+        
+    },
+    {
+        "category": {
+            "categoryId": "64482",
+            "categoryName": "Sports Mem, Cards & Fan Shop",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/KgoAAOSwcB5ZJXiB/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/KgoAAOSwcB5ZJXiB/s-l1600.webp"
+        }
+        
+    },
+    {
+        "category": {
+            "categoryId": "260",
+            "categoryName": "Stamps",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/R4QAAOSw4V9a1H7g/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/R4QAAOSw4V9a1H7g/s-l1600.webp"
+        }
+        
+    },
+    {
+        "category": {
+            "categoryId": "1305",
+            "categoryName": "Tickets & Experiences",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/rvMAAOSwBt5ZJXiA/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/rvMAAOSwBt5ZJXiA/s-l1600.webp"
+        }
+        
+    },
+    {
+        "category": {
+            "categoryId": "220",
+            "categoryName": "Toys & Hobbies",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/qCIAAOSwjqVZJXh9/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/qCIAAOSwjqVZJXh9/s-l1600.webp"
+        }
+        
+    },
+    {
+        "category": {
+            "categoryId": "3252",
+            "categoryName": "Travel",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/Po4AAOSwBSFeJWLH/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/Po4AAOSwBSFeJWLH/s-l1600.webp"
+        }
+        
+    },
+    {
+        "category": {
+            "categoryId": "1249",
+            "categoryName": "Video Games & Consoles",
+            "imageUrl": "https://i.ebayimg.com/thumbs/images/g/pzwAAOSwZVJa6xBH/s-l225.webp",
+            "imageUrl2": "https://i.ebayimg.com/thumbs/images/g/pzwAAOSwZVJa6xBH/s-l1600.webp"
+        }
+        
+    }
+    
+]

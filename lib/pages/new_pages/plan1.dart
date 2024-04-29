@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:pay_or_save/assets/main_drawer.dart';
-import 'package:pay_or_save/pages/new%20pages/overdraft_reminder.dart';
+import 'package:pay_or_save/pages/new_pages/overdraft_reminder.dart';
 
 import 'plan2.dart';
 
@@ -289,7 +289,7 @@ class _Plan1State extends State<Plan1> {
                         height: 45.0,
                         alignment: Alignment.center,
                         child: Text(
-                          '\$500',
+                          '\$1,000',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -300,7 +300,7 @@ class _Plan1State extends State<Plan1> {
                         height: 45.0,
                         alignment: Alignment.center,
                         child: Text(
-                          '\$1.00',
+                          '\$1.75',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
@@ -311,7 +311,7 @@ class _Plan1State extends State<Plan1> {
                         height: 45.0,
                         alignment: Alignment.center,
                         child: Text(
-                          '\$475',
+                          '\$775',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.grey[400],
@@ -323,7 +323,7 @@ class _Plan1State extends State<Plan1> {
                         height: 45.0,
                         alignment: Alignment.center,
                         child: Text(
-                          '1,975',
+                          '2,975',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.grey[400],
@@ -354,7 +354,7 @@ class _Plan1State extends State<Plan1> {
                         height: 45.0,
                         alignment: Alignment.center,
                         child: Text(
-                          '\$1,000',
+                          '\$2,500',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -365,7 +365,7 @@ class _Plan1State extends State<Plan1> {
                         height: 45.0,
                         alignment: Alignment.center,
                         child: Text(
-                          '\$1.00',
+                          '\$4.00',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
@@ -376,7 +376,7 @@ class _Plan1State extends State<Plan1> {
                         height: 45.0,
                         alignment: Alignment.center,
                         child: Text(
-                          '\$475',
+                          '\$2,475',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.grey[400],
@@ -388,7 +388,7 @@ class _Plan1State extends State<Plan1> {
                         height: 45.0,
                         alignment: Alignment.center,
                         child: Text(
-                          '1,975',
+                          '3,475',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.grey[400],
@@ -419,7 +419,7 @@ class _Plan1State extends State<Plan1> {
                         height: 45.0,
                         alignment: Alignment.center,
                         child: Text(
-                          '\$3,000',
+                          '\$5,000',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -430,7 +430,7 @@ class _Plan1State extends State<Plan1> {
                         height: 45.0,
                         alignment: Alignment.center,
                         child: Text(
-                          '\$5.00',
+                          '\$7.50',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
@@ -441,7 +441,7 @@ class _Plan1State extends State<Plan1> {
                         height: 45.0,
                         alignment: Alignment.center,
                         child: Text(
-                          '\$1,475',
+                          '\$4,975',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.grey[400],
@@ -453,7 +453,7 @@ class _Plan1State extends State<Plan1> {
                         height: 45.0,
                         alignment: Alignment.center,
                         child: Text(
-                          '1,975',
+                          '5,975',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.grey[400],
@@ -484,7 +484,7 @@ class _Plan1State extends State<Plan1> {
                         height: 45.0,
                         alignment: Alignment.center,
                         child: Text(
-                          '\$5,000',
+                          '\$7,500',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -495,7 +495,7 @@ class _Plan1State extends State<Plan1> {
                         height: 45.0,
                         alignment: Alignment.center,
                         child: Text(
-                          '\$7.00',
+                          '\$10.75',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
@@ -506,7 +506,7 @@ class _Plan1State extends State<Plan1> {
                         height: 45.0,
                         alignment: Alignment.center,
                         child: Text(
-                          '\$3,475',
+                          '\$7,475',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.grey[400],
@@ -518,7 +518,7 @@ class _Plan1State extends State<Plan1> {
                         height: 45.0,
                         alignment: Alignment.center,
                         child: Text(
-                          '5,975',
+                          '8,475',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.grey[400],
@@ -551,7 +551,7 @@ class _Plan1State extends State<Plan1> {
                     height: 35.0,
                     alignment: Alignment.center,
                     child: Text(
-                      '\$15.00',
+                      '\$13.75',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontWeight: FontWeight.w500,
@@ -562,7 +562,7 @@ class _Plan1State extends State<Plan1> {
                     height: 35.0,
                     alignment: Alignment.center,
                     child: Text(
-                      '\$7,475',
+                      '\$9,975',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.grey[400],
@@ -574,7 +574,7 @@ class _Plan1State extends State<Plan1> {
                     height: 35.0,
                     alignment: Alignment.center,
                     child: Text(
-                      '7,975',
+                      '10,975',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.grey[400],

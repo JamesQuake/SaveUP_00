@@ -75,7 +75,7 @@ class RegistrationPageTabs extends State<RegistrationPage>
       assert(user != null);
       assert(await user.getIdToken() != null);
       _uid = user.uid;
-      _setPrefs(_loggedAcc);
+      _setPrefs(true);
       createUser(_uid).then((dynam) {
         Navigator.pushReplacement(
             context,

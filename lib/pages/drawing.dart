@@ -34,14 +34,14 @@ class _DrawingState extends State<Drawing> {
     super.dispose();
   }
 
-  Future navigateToVirtualCloset(context) async {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => VirtualCloset(
-                  uid: _uid,
-                )));
-  }
+  // Future navigateToVirtualCloset(context) async {
+  //   Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //           builder: (context) => VirtualCloset(
+  //                 uid: _uid,
+  //               ),),);
+  // }
 
   Future navigateToDashboard(context) async {
     Navigator.push(

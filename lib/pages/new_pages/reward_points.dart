@@ -1,19 +1,21 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:pay_or_save/assets/main_drawer.dart';
-import 'package:pay_or_save/pages/new%20pages/Last_chance.dart';
 
-class OverdraftReminder extends StatefulWidget {
+import 'package:flutter/material.dart';
+import 'package:pay_or_save/assets/main_drawer.dart';
+import 'package:pay_or_save/pages/new_pages/acquire_reward_points.dart';
+import 'package:pay_or_save/pages/new_pages/place_order.dart';
+
+class RewardPoints extends StatefulWidget {
   final String uid;
 
-  const OverdraftReminder({Key key, this.uid}) : super(key: key);
-  // const OverdraftReminder({ Key? key }) : super(key: key);
+  const RewardPoints({Key key, this.uid}) : super(key: key);
+  // const RewardPoints({ Key? key }) : super(key: key);
 
   @override
-  _OverdraftReminderState createState() => _OverdraftReminderState();
+  _RewardPointsState createState() => _RewardPointsState();
 }
 
-class _OverdraftReminderState extends State<OverdraftReminder> {
+class _RewardPointsState extends State<RewardPoints> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +32,7 @@ class _OverdraftReminderState extends State<OverdraftReminder> {
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(
-          "Overdraft Reminder",
+          "Reward Points Notice",
           style: TextStyle(
             fontWeight: FontWeight.w700,
             fontSize: 25.0,
@@ -39,60 +41,87 @@ class _OverdraftReminderState extends State<OverdraftReminder> {
         centerTitle: true,
         elevation: 0.0,
       ),
+      // height: MediaQuery.of(context).size.height - 75,
+      // decoration: BoxDecoration(
+      //       image: DecorationImage(
+      //           image: AssetImage(
+      //             'assets/images/ppic.jpg',
+      //           ),
+      //           fit: BoxFit.fill),
+      //     ),
       endDrawer: MainDrawer(uid: widget.uid),
       body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              SizedBox(
-                height: 16,
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 13, left: 16, right: 16),
-                child: RichText(
-                  // overflow: TextOverflow.visible,
-                  text: TextSpan(
-                    style: TextStyle(
-                      color: Colors.black,
-                      height: 1.5,
-                      fontSize: 18,
-                    ),
-                    children: [
-                      TextSpan(
-                        text: 'WARNING. ',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 17.0,
-                          color: Color(0xffcb0909),
-                        ),
-                      ),
-                      TextSpan(
-                        text:
-                            'Your virtual checking account has a negative balance. You must add money to your account to continue playing.',
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
+        child: Column(
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(
+              height: 16,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+              child: RichText(
+                // overflow: TextOverflow.visible,
+                text: TextSpan(
+                  style: TextStyle(
+                    color: Colors.black,
+                    height: 1.5,
+                    fontSize: 18,
                   ),
+                  children: [
+                    TextSpan(
+                      text: 'WARNING. ',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 17.0,
+                        color: Color(0xffcb0909),
+                      ),
+                    ),
+                    TextSpan(
+                      text: 'Your have ',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+                    ),
+                    TextSpan(
+                      text: 'XXX ',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextSpan(
+                      text:
+                          'reward points. To enter drawing for fabulous prizes, you need at least ',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    TextSpan(
+                      text: '1,500 points',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              SizedBox(
-                height: 30,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(
-                      'assets/images/Boy2.png',
-                    ),
-                    fit: BoxFit.cover,
-                    alignment: Alignment.centerLeft,
+            ),
+            // Image.asset('assets/images/ppic.jpg'),
+            // SizedBox(
+            //   height: 30,
+            // ),
+            Container(
+              height: MediaQuery.of(context).size.height - 170,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                    'assets/images/Kid.png',
                   ),
+                  fit: BoxFit.cover,
+                  alignment: Alignment.centerLeft,
                 ),
-                height: MediaQuery.of(context).size.height - 200,
+              ),
+              child: Container(
+                padding: EdgeInsets.only(left: 16, right: 16.0),
+                height: MediaQuery.of(context).size.height - 260,
                 child: Align(
                   alignment: Alignment.bottomCenter,
                   child: Padding(
@@ -133,14 +162,14 @@ class _OverdraftReminderState extends State<OverdraftReminder> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => LastChance(
+                                        builder: (context) => AcquirePoints(
                                             // uid: widget.uid,
                                             )));
                               },
                             ),
                             child: Container(
                               child: Text(
-                                'Add Money\nNOW',
+                                'Acquire\nReward Points',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 17.0,
@@ -164,7 +193,7 @@ class _OverdraftReminderState extends State<OverdraftReminder> {
                             style: ButtonStyle(
                               backgroundColor:
                                   MaterialStateProperty.resolveWith(
-                                (states) => Color(0xffe79088).withOpacity(0.5),
+                                (states) => Color(0xffcb0909),
                               ),
                               shape: MaterialStateProperty.all<
                                   RoundedRectangleBorder>(
@@ -175,18 +204,25 @@ class _OverdraftReminderState extends State<OverdraftReminder> {
                               overlayColor: MaterialStateProperty.resolveWith(
                                 (states) {
                                   return states.contains(MaterialState.pressed)
-                                      ? Color(0xffe79088)
+                                      ? Colors.red
                                       : null;
                                 },
                               ),
                             ),
                             onPressed: () => Timer(
                               const Duration(milliseconds: 400),
-                              () {},
+                              () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => PlaceOrder(
+                                            // uid: widget.uid,
+                                            )));
+                              },
                             ),
                             child: Container(
                               child: Text(
-                                'Add Money\nLater',
+                                'Skip\nDrawing',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 17.0,
@@ -201,8 +237,8 @@ class _OverdraftReminderState extends State<OverdraftReminder> {
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

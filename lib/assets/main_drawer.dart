@@ -130,7 +130,7 @@ class _MainDrawerState extends State<MainDrawer> {
               ),
             ),
             onTap: () {
-              if (widget.uid != null) if (widget.incomingRoute != '/saving'){
+              if (widget.uid != null){
                 Navigator.pop(context);
                 Navigator.push(
                     context,
@@ -140,7 +140,7 @@ class _MainDrawerState extends State<MainDrawer> {
                               incomingRoute: route,
                             )));
               }
-              
+
               // Navigator.pushNamed(context, '/saving');
             },
           ),
@@ -153,7 +153,7 @@ class _MainDrawerState extends State<MainDrawer> {
               ),
             ),
             onTap: () {
-              if (widget.uid != null) if (widget.incomingRoute != '/investment'){
+              if (widget.uid != null){
                 Navigator.pop(context);
                 Navigator.pushNamed(context, '/investment');
               }
@@ -168,24 +168,25 @@ class _MainDrawerState extends State<MainDrawer> {
               ),
             ),
             onTap: () {
-              if (widget.uid != null) if (widget.incomingRoute != '/select_mode'){
+              // if (widget.incomingRoute != '/select_mode')
+              if (widget.uid != null) {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, '/select_mode');
               }
             },
           ),
-          ListTile(
-            leading: Icon(Icons.local_atm),
-            title: Text(
-              'Add to Checking Account',
-              style: TextStyle(
-                fontSize: 15.0.h,
-              ),
-            ),
-            onTap: () {
-              Navigator.pushNamed(context, '');
-            },
-          ),
+          // ListTile(
+          //   leading: Icon(Icons.local_atm),
+          //   title: Text(
+          //     'Add to Checking Account',
+          //     style: TextStyle(
+          //       fontSize: 15.0.h,
+          //     ),
+          //   ),
+          //   onTap: () {
+          //     Navigator.pushNamed(context, '');
+          //   },
+          // ),
           ListTile(
             leading: Icon(Icons.wallet_giftcard),
             title: Text(
@@ -195,7 +196,8 @@ class _MainDrawerState extends State<MainDrawer> {
               ),
             ),
             onTap: () {
-              Navigator.pushNamed(context, '');
+              Navigator.pop(context);
+              Navigator.pushNamed(context, '/RewardPoints');
             },
           ),
           ListTile(
@@ -235,20 +237,22 @@ class _MainDrawerState extends State<MainDrawer> {
               setState(() {});
             },
           ),
-          if (widget.uid != null)
-            ListTile(
-              leading: Icon(Icons.logout_outlined),
-              title: Text(
-                'Logout',
-                style: TextStyle(
-                  fontSize: 15.0.h,
+          if(widget.uid != null)...[
+            if (widget.incomingRoute != '/virtual_closet')
+              ListTile(
+                leading: Icon(Icons.logout_outlined),
+                title: Text(
+                  'Logout',
+                  style: TextStyle(
+                    fontSize: 15.0.h,
+                  ),
                 ),
+                onTap: () {
+                  // Navigator.pushReplacementNamed(context, '/signin');
+                  if (widget.uid != null) _logOut();
+                },
               ),
-              onTap: () {
-                // Navigator.pushReplacementNamed(context, '/signin');
-                if (widget.uid != null) _logOut();
-              },
-            ),
+          ],
         ],
       ),
     );

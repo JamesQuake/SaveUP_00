@@ -81,16 +81,16 @@ class _SavingGoalsState extends State<SavingGoals>
   // String nativeRoute = '/'
 
   List<String> dropList = [
+    'Business Startup',
     'Car',
     'Computer/Electronics',
+    'Down Payment',
     'Education',
     'Furnishings',
-    'Home',
-    'General Savings',
-    'Rainy Day',
-    'Start a Business',
+    'Rainy Day Fund',
     'Travel/Vacation',
     'Wedding',
+    'General',
     'Other',
     'No goal at this time',
   ];
@@ -651,44 +651,44 @@ class _SavingGoalsState extends State<SavingGoals>
                                                                 switch (val) {
                                                                   case 0:
                                                                     // val = val.toString();
-                                                                    val = 'Car';
+                                                                    val = 'Business Startup';
                                                                     print(val);
                                                                     break;
                                                                   case 1:
                                                                     val =
-                                                                        'Computer/Electronics';
+                                                                        'Car';
                                                                     break;
                                                                   case 2:
                                                                     val =
-                                                                        'Education';
+                                                                        'Computer/Electronics';
                                                                     break;
                                                                   case 3:
                                                                     val =
-                                                                        'Furnishings';
+                                                                        'Down Payment';
                                                                     break;
                                                                   case 4:
                                                                     val =
-                                                                        'Home';
+                                                                        'Education';
                                                                     break;
                                                                   case 5:
                                                                     val =
-                                                                        'General Savings';
+                                                                        'Furnishings';
                                                                     break;
                                                                   case 6:
                                                                     val =
-                                                                        'Rainy Day';
+                                                                        'Rainy Day Fund';
                                                                     break;
                                                                   case 7:
                                                                     val =
-                                                                        'Start a Business';
+                                                                        'Travel/Vacation';
                                                                     break;
                                                                   case 8:
                                                                     val =
-                                                                        'Travel/Vacation';
+                                                                        'Wedding';
                                                                     break;
                                                                   case 9:
                                                                     val =
-                                                                        'Wedding';
+                                                                        'General';
                                                                     break;
                                                                   case 10:
                                                                     val =

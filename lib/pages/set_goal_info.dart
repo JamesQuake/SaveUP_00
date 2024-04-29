@@ -20,7 +20,7 @@ class _SetGoalInfoState extends State<SetGoalInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      endDrawer: MainDrawer(uid: widget.uid),
+      // endDrawer: MainDrawer(uid: widget.uid),
       body: SafeArea(
         child: Column(
           children: [
@@ -29,23 +29,23 @@ class _SetGoalInfoState extends State<SetGoalInfo> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  "assets/images/Headers/setgoals.png",
+                  "assets/images/Headers/SetGoals.png",
                   width: 300.w,
                 ),
                 SizedBox(width: 5.0.w),
-                Builder(
-                  builder: (context) => IconButton(
-                    padding: EdgeInsets.only(right: 0.0),
-                    color: Colors.black,
-                    icon: Icon(
-                      Icons.dehaze,
-                      size: 40.h,
-                    ),
-                    onPressed: () => Scaffold.of(context).openEndDrawer(),
-                    tooltip:
-                        MaterialLocalizations.of(context).openAppDrawerTooltip,
-                  ),
-                ),
+                // Builder(
+                //   builder: (context) => IconButton(
+                //     padding: EdgeInsets.only(right: 0.0),
+                //     color: Colors.black,
+                //     icon: Icon(
+                //       Icons.dehaze,
+                //       size: 40.h,
+                //     ),
+                //     onPressed: () => Scaffold.of(context).openEndDrawer(),
+                //     tooltip:
+                //         MaterialLocalizations.of(context).openAppDrawerTooltip,
+                //   ),
+                // ),
               ],
             ),
             SizedBox(height: 30.0.h),

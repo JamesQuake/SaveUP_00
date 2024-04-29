@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:pay_or_save/assets/main_drawer.dart';
-import 'package:pay_or_save/pages/new%20pages/plan1.dart';
-import 'package:pay_or_save/pages/new%20pages/plan2.dart';
+import 'package:pay_or_save/pages/new_pages/plan1.dart';
+import 'package:pay_or_save/pages/new_pages/plan2.dart';
 
 class AddToAccount extends StatefulWidget {
   // const AddToAccount({ Key? key }) : super(key: key);

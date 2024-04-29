@@ -6,12 +6,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:pay_or_save/assets/main_drawer.dart';
 import 'package:pay_or_save/models/investment_goal_model.dart';
-import 'package:pay_or_save/pages/new%20pages/win.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../providers/total_provider.dart';
 import '../widgets/ring.dart';
+import 'new_pages/win.dart';
 
 enum _SocialMedia { facebook, twitter, email }
 
@@ -50,7 +50,7 @@ class _CongratsInvestmentState extends State<CongratsInvestment> {
         NumberFormat.simpleCurrency(locale: "en-us", decimalDigits: 2)
             .format(double.parse(widget.investAmount)) +
         " using eWyzly, the shopping app that makes savings fun. I'd bet that it save you money too. \n\nCheck it out and receive 1000 free reward point toward valuable prizes by entering friend code 2020 when you download the app.";
-    final urlShare = Uri.encodeComponent('https://www.ewyzly.com');
+    final urlShare = Uri.encodeComponent('https://www.saveupnow.biz');
     final urls = {
       _SocialMedia.facebook:
           'https://www.facebook.com/sharer/sharer.php?u=$urlShare&t=$text',
@@ -74,7 +74,7 @@ class _CongratsInvestmentState extends State<CongratsInvestment> {
   }
 
   Future<void> _sendEmail() async {
-    final urlShare = Uri.decodeComponent('www.eWyzly.com');
+    final urlShare = Uri.decodeComponent('www.saveupnow.biz');
     final text = "I just invested " +
         NumberFormat.simpleCurrency(locale: "en-us", decimalDigits: 2)
             .format(double.parse(widget.investAmount)) +
@@ -311,7 +311,7 @@ class _CongratsInvestmentState extends State<CongratsInvestment> {
                         onTap: () => _share(_SocialMedia.facebook),
                         child: CircleAvatar(
                           backgroundImage: AssetImage(
-                              'assets/images/Social/iconFacebook.png'),
+                              'assets/images/Social/IconFacebook.png'),
                         ),
                       ),
                       // CircleAvatar(
@@ -322,7 +322,7 @@ class _CongratsInvestmentState extends State<CongratsInvestment> {
                         onTap: () => _share(_SocialMedia.twitter),
                         child: CircleAvatar(
                           backgroundImage: AssetImage(
-                              'assets/images/social/icontwitter.png'),
+                              'assets/images/Social/IconTwitter.png'),
                         ),
                       ),
                       // CircleAvatar(
@@ -419,7 +419,9 @@ class _CongratsInvestmentState extends State<CongratsInvestment> {
                           ),
                           onPressed: () => Timer(
                             const Duration(milliseconds: 400),
-                            () {},
+                            () {
+                              Navigator.pushNamedAndRemoveUntil(context, '/starting', (route) => false);
+                            },
                           ),
                           child: Container(
                             child: Text(

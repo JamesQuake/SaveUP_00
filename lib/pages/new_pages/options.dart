@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-// import 'package:pay_or_save/pages/new%20pages/invest_new.dart';
-// import 'package:pay_or_save/pages/new%20pages/save_new.dart';
+// import 'package:pay_or_save/pages/new_pages/invest_new.dart';
+// import 'package:pay_or_save/pages/new_pages/save_new.dart';
 import 'package:pay_or_save/pages/overdraft_notice.dart';
 // import 'package:pay_or_save/pages/save.dart';
 

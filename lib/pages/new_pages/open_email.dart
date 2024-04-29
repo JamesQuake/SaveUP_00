@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pay_or_save/pages/new%20pages/welcome_back.dart';
+import 'package:pay_or_save/pages/new_pages/welcome_back.dart';
 
 class OpenEmail extends StatefulWidget {
   @override

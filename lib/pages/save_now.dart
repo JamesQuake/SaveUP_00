@@ -12,7 +12,7 @@ import 'package:pay_or_save/models/saving_goal_model.dart';
 import 'package:pay_or_save/pages/oldedits/congratulation_saving.dart';
 // import 'package:pay_or_save/pages/invest_now.dart';
 // import 'package:pay_or_save/pages/congrats_saving.dart';
-// import 'package:pay_or_save/pages/new%20pages/congratulations_investment.dart';
+// import 'package:pay_or_save/pages/new_pages/congratulations_investment.dart';
 import 'package:pay_or_save/pages/overdraft.dart';
 import 'package:pay_or_save/pages/overdraft_notice.dart';
 import 'package:pay_or_save/providers/total_provider.dart';
@@ -22,6 +22,7 @@ import 'package:pay_or_save/utilities/validator.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../models/productmodel.dart';
 import '../widgets/alert_pos.dart';
 import 'congrats_saving.dart';
 
@@ -1646,17 +1647,17 @@ class _SaveNowState extends State<SaveNow> with SingleTickerProviderStateMixin {
                       axis: Axis.horizontal,
                       data: 20,
                       child: Image.asset(
-                        "assets/images/shopping-bag.png",
+                        "assets/images/Shopping-Bag.png",
                         height: 60.h,
                         // color: Color(0xffef4136),
                       ),
                       feedback: Image.asset(
-                        "assets/images/shopping-bag.png",
+                        "assets/images/Shopping-Bag.png",
                         height: 35.h,
                         // color: Color(0xffef4136),
                       ),
                       childWhenDragging: Image.asset(
-                        "assets/images/shopping-bag.png",
+                        "assets/images/Shopping-Bag.png",
                         height: 54.h,
                         color: Colors.grey[500],
                       ),
@@ -1717,6 +1718,21 @@ class _SaveNowState extends State<SaveNow> with SingleTickerProviderStateMixin {
                       onAccept: (data) {
                         isFav ? _controller.reverse() : _controller.forward();
                         if (_savedIndex != null) {
+                          /// TODO: add the virtual closet feature here.
+                          // ProductModel _ff;
+                          // await productSummary.then((value) => _ff = value);
+                          // print('${FirebaseAuth.instance.currentUser.uid}');
+                          // FirebaseFirestore.instance.collection('virtualCloset').add({
+                          //   'uid': FirebaseAuth.instance.currentUser.uid,
+                          //   'pName':_productTitle,
+                          //   'pPrice':_productPrice,
+                          //   'pImage':_ff.image.imageUrl,
+                          //   'pId': _ff.itemId,
+                          //   'pUrl': _url,
+                          //   'status':true,
+                          //   'platform':'eBay',
+                          //   'doc':DateTime.now(),
+                          // });
                           Navigator.push(
                               context,
                               MaterialPageRoute(

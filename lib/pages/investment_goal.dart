@@ -81,12 +81,12 @@ class _InvestmentGoalsState extends State<InvestmentGoals> {
   // String _nativeRoute = ''
 
   List<String> dropList = [
+    'Business Startup',
     'Education',
-    'General Investment',
-    'Home',
+    'General',
     'Legacy',
     'Retirement',
-    'Start a Business',
+    'Wealth Building',
     'Other',
     'No goal at this time',
   ];
@@ -711,19 +711,19 @@ class _InvestmentGoalsState extends State<InvestmentGoals> {
                                                                 setState(() {
                                                                   // val = val.toString();
                                                                   val =
-                                                                      "Education";
+                                                                      "Business Startup";
                                                                   print(val);
                                                                 });
                                                                 break;
                                                               case 1:
                                                                 setState(() {
                                                                   val =
-                                                                      "General Investment";
+                                                                      "Education";
                                                                 });
                                                                 break;
                                                               case 2:
                                                                 setState(() {
-                                                                  val = "Home";
+                                                                  val = "General";
                                                                 });
                                                                 break;
                                                               case 3:
@@ -741,7 +741,7 @@ class _InvestmentGoalsState extends State<InvestmentGoals> {
                                                               case 5:
                                                                 setState(() {
                                                                   val =
-                                                                      "Start a Business";
+                                                                      "Wealth Building";
                                                                 });
                                                                 break;
                                                               case 6:

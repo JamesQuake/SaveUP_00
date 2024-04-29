@@ -7,12 +7,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:pay_or_save/assets/main_drawer.dart';
 import 'package:pay_or_save/models/saving_goal_model.dart';
-import 'package:pay_or_save/pages/new%20pages/win.dart';
 import 'package:pay_or_save/providers/total_provider.dart';
 import 'package:pay_or_save/widgets/ring.dart';
 import 'package:pay_or_save/widgets/ring_shadow.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'new_pages/win.dart';
 // import 'package:pay_or_save/providers/total_provider.dart';
 // import 'package:provider/provider.dart';
 
@@ -63,7 +64,7 @@ class _CongratsSaving extends State<CongratsSaving> {
         NumberFormat.simpleCurrency(locale: "en-us", decimalDigits: 2)
             .format(double.parse(widget.savedAmount)) +
         " using eWyzly, the shopping app that makes savings fun. I'd bet that it save you money too. \n\nCheck it out and receive 1000 free reward point toward valuable prizes by entering friend code 2020 when you download the app.";
-    final urlShare = Uri.encodeComponent('https://www.ewyzly.com');
+    final urlShare = Uri.encodeComponent('https://www.saveupnow.biz');
     final urls = {
       SocialMedia.facebook:
           'https://www.facebook.com/sharer/sharer.php?u=$urlShare&t=$text',
@@ -87,7 +88,7 @@ class _CongratsSaving extends State<CongratsSaving> {
   }
 
   Future<void> _sendEmail() async {
-    final urlShare = Uri.decodeComponent('www.eWyzly.com');
+    final urlShare = Uri.decodeComponent('www.saveupnow.biz');
     final text = "I just saved " +
         NumberFormat.simpleCurrency(locale: "en-us", decimalDigits: 2)
             .format(double.parse(widget.savedAmount)) +
@@ -139,13 +140,14 @@ class _CongratsSaving extends State<CongratsSaving> {
     // var savingModelProvider = Provider.of<TotalValues>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
+        /*leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.of(context).pop(),
           // onPressed: () {
           //   getModelInfo();
           // },
-        ),
+        ),*/
+        automaticallyImplyLeading: false,
         backgroundColor: Color(0xff0070c0),
         title: Text(
           'Congratulations',
@@ -303,14 +305,14 @@ class _CongratsSaving extends State<CongratsSaving> {
                         onTap: () => share(SocialMedia.facebook),
                         child: CircleAvatar(
                           backgroundImage: AssetImage(
-                              'assets/images/Social/iconFacebook.png'),
+                              'assets/images/Social/IconFacebook.png'),
                         ),
                       ),
                       GestureDetector(
                         onTap: () => share(SocialMedia.twitter),
                         child: CircleAvatar(
                           backgroundImage: AssetImage(
-                              'assets/images/social/icontwitter.png'),
+                              'assets/images/Social/IconTwitter.png'),
                         ),
                       ),
                       GestureDetector(
@@ -405,7 +407,9 @@ class _CongratsSaving extends State<CongratsSaving> {
                           ),
                           onPressed: () => Timer(
                             const Duration(milliseconds: 400),
-                            () {},
+                            () {
+                              Navigator.pushNamedAndRemoveUntil(context, '/starting', (route) => false);
+                            },
                           ),
                           child: Container(
                             child: Text(

@@ -8,7 +8,7 @@ import 'package:pay_or_save/pages/amazon_page.dart';
 import 'package:pay_or_save/pages/ebay_page.dart';
 import 'package:pay_or_save/pages/invest_now.dart';
 // import 'package:pay_or_save/pages/my_web_view.dart';
-import 'package:pay_or_save/pages/new%20pages/options.dart';
+import 'package:pay_or_save/pages/new_pages/options.dart';
 import 'package:pay_or_save/pages/save_now.dart';
 // import 'package:pay_or_save/pages/save.dart';
 // import 'package:pay_or_save/pages/webview.dart';

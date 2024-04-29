@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:pay_or_save/assets/main_drawer.dart';
-// import 'package:pay_or_save/pages/new%20pages/reward_points.dart';
+// import 'package:pay_or_save/pages/new_pages/reward_points.dart';
 
 class Entered extends StatefulWidget {
   // const Entered({ Key? key }) : super(key: key);

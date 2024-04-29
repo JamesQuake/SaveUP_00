@@ -2019,17 +2019,17 @@ class _InvestNowState extends State<InvestNow>
                       axis: Axis.horizontal,
                       data: 20,
                       child: Image.asset(
-                        "assets/images/shopping-bag.png",
+                        "assets/images/Shopping-Bag.png",
                         height: 60.h,
                         // color: Color(0xffef4136),
                       ),
                       feedback: Image.asset(
-                        "assets/images/shopping-bag.png",
+                        "assets/images/Shopping-Bag.png",
                         height: 35.h,
                         // color: Color(0xffef4136),
                       ),
                       childWhenDragging: Image.asset(
-                        "assets/images/shopping-bag.png",
+                        "assets/images/Shopping-Bag.png",
                         height: 54.h,
                         color: Colors.grey[500],
                       ),

@@ -4,8 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pay_or_save/assets/main_drawer.dart';
-import 'package:pay_or_save/pages/new%20pages/place_order.dart';
-import 'package:pay_or_save/pages/new%20pages/reward_points.dart';
+import 'package:pay_or_save/pages/new_pages/place_order.dart';
+import 'package:pay_or_save/pages/new_pages/reward_points.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/total_provider.dart';
@@ -236,6 +236,14 @@ class _WinPrizes extends State<WinPrizes> {
                             if (details.getRewardPoint < 1500) {
                               _showRewardPointNotice(
                                   context, details.getRewardPoint);
+                            } else{
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => RewardPoints(
+                                        // uid: widget.uid,
+                                      )));
+                              // Navigator.pushNamedAndRemoveUntil(context, '/starting', (route) => false);
                             }
                           },
                         ),
@@ -278,12 +286,13 @@ class _WinPrizes extends State<WinPrizes> {
                         onPressed: () => Timer(
                           const Duration(milliseconds: 400),
                           () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => PlaceOrder(
-                                          uid: widget.uid,
-                                        )));
+                            Navigator.pushNamedAndRemoveUntil(context, '/starting', (route) => false);
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => PlaceOrder(
+                            //               uid: widget.uid,
+                            //             )));
                           },
                         ),
                         child: Container(
@@ -498,12 +507,13 @@ class _WinPrizes extends State<WinPrizes> {
                   onPressed: () => Timer(
                     const Duration(milliseconds: 400),
                     () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PlaceOrder(
-                                  // uid: widget.uid,
-                                  )));
+                      Navigator.pushNamedAndRemoveUntil(context, '/starting', (route) => false);
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) => PlaceOrder(
+                      //             // uid: widget.uid,
+                      //             )));
                     },
                   ),
                   child: Container(

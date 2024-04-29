@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:pay_or_save/assets/main_drawer.dart';
 import 'package:pay_or_save/element/revcat/paywall.dart';
 import 'package:pay_or_save/pages/dashboard.dart';
-import 'package:pay_or_save/pages/new%20pages/add_to_account.dart';
+import 'package:pay_or_save/pages/new_pages/add_to_account.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 // import 'package:square_in_app_payments/in_app_payments.dart';
 // import 'package:square_in_app_payments/models.dart';

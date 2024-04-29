@@ -58,7 +58,9 @@ class _StartingBalancesState extends State<StartingBalances> {
     super.initState();
     // print(_uid);
     // _getBalances();
-    getUserPrefs();
+    getUserPrefs().then((_) {
+      Timer(Duration(seconds: 1), ()=>_setPrefs(false));
+    });
   }
 
   @override
@@ -90,12 +92,16 @@ class _StartingBalancesState extends State<StartingBalances> {
 // // final FirebaseUser currentUser = await _auth.currentUser();
 //   }
 
-  getUserPrefs() async {
+  Future getUserPrefs() async {
     _userPrefs = await SharedPreferences.getInstance();
     setState(() {
       _isNewUser = _userPrefs.getBool('isNewUser');
       _userExists = _userPrefs.getBool('userExists');
     });
+  }
+
+  _setPrefs(bool userInfo) async {
+    await SharedPreferences.getInstance().then((value) => value.setBool('isNewUser', userInfo));
   }
 
   // Future _getBalances() async {
@@ -114,30 +120,30 @@ class _StartingBalancesState extends State<StartingBalances> {
   //   // _getOtherBalances();
   // }
 
-  Widget _item(BuildContext context, int index) {
-    return Container(
-      child: ListTile(
-        title: Text(
-          _list[index].title,
-          style: TextStyle(fontSize: 16.h),
-        ),
-        leading: CircleAvatar(
-          backgroundImage: NetworkImage(_list[index].url),
-        ),
-        trailing: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "\$" + _list[index].amount,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.h),
-            )
-          ],
-        ),
-        onTap: () {},
-      ),
-    );
-  }
+  // Widget _item(BuildContext context, int index) {
+  //   return Container(
+  //     child: ListTile(
+  //       title: Text(
+  //         _list[index].title,
+  //         style: TextStyle(fontSize: 16.h),
+  //       ),
+  //       leading: CircleAvatar(
+  //         backgroundImage: NetworkImage(_list[index].url),
+  //       ),
+  //       trailing: Column(
+  //         crossAxisAlignment: CrossAxisAlignment.center,
+  //         mainAxisAlignment: MainAxisAlignment.center,
+  //         children: <Widget>[
+  //           Text(
+  //             "\$" + _list[index].amount,
+  //             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.h),
+  //           )
+  //         ],
+  //       ),
+  //       onTap: () {},
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -477,6 +483,7 @@ class _StartingBalancesState extends State<StartingBalances> {
                     const Duration(milliseconds: 400),
                     () {
                       // Navigator.pushNamed(context, '');
+                      _setPrefs(false);
                       navigateToStartingInstructions(context);
                       // print("willo");
                     },

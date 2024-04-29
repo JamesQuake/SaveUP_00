@@ -135,7 +135,8 @@ class _LoginEmailState extends State<LoginEmail> {
           content = 'The user you tried to log into was not found';
           break;
       }
-
+      debugPrint('e -> $e');
+      debugPrint('e.code -> ${e.code}');
       showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -150,6 +151,7 @@ class _LoginEmailState extends State<LoginEmail> {
                 ],
               ));
     } catch (e) {
+      debugPrint('e -> $e');
       showDialog(
           context: context,
           builder: (context) => AlertDialog(

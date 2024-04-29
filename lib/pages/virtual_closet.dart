@@ -9,6 +9,8 @@ import 'package:pay_or_save/pages/overdraft.dart';
 import 'package:pay_or_save/pages/reward_ad_banner.dart';
 import 'package:pay_or_save/widgets/menu.dart';
 
+import 'product.dart';
+
 class VirtualCloset extends StatefulWidget {
   final String uid;
 
@@ -34,7 +36,7 @@ class _VirtualClosetState extends State<VirtualCloset> {
   Future _getVirtualClosetProducts() async {
     QuerySnapshot<Map<String, dynamic>> _ff = await FirebaseFirestore.instance
         .collection('virtualCloset')
-        .where('uid', isEqualTo: FirebaseAuth.instance.currentUser.uid)
+        .where('uid', isEqualTo: FirebaseAuth.instance.currentUser.uid).orderBy('doc', descending: true)
         .get();
     _virtualCloset.clear();
     _virtualCloset = [];
@@ -73,48 +75,40 @@ class _VirtualClosetState extends State<VirtualCloset> {
   // }
 
   Widget _item(BuildContext context, int index) {
-    return Stack(
-      children: <Widget>[
-        Container(
-          height: 120,
+    return ListTile(
+      leading: Container(
+        width: 80,
+        child: Image.network(
+          _virtualCloset[index].pImage,
+          alignment: Alignment.center,
+          fit: BoxFit.fitWidth,
         ),
-        Positioned(
-          left: 0,
-          child: Container(
-            height: 80,
-            child: Image.network(
-              _virtualCloset[index].pImage,
-              alignment: Alignment.center,
-              fit: BoxFit.fitHeight,
-            ),
+      ),
+      title: Text(
+        _virtualCloset[index].pName,
+        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+      ),
+      subtitle: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Chip(label: Text('\$${_virtualCloset[index].pPrice}')),
+          Text(
+            '${_virtualCloset[index].platform} | ${_virtualCloset[index].doc.month}/${_virtualCloset[index].doc.day}/${_virtualCloset[index].doc.year}',
+            style: TextStyle(fontSize: 12),
           ),
-        ),
-        Positioned(
-          left: 100,
-          top: 0,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                _virtualCloset[index].pName,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                "\$${_virtualCloset[index].pPrice}",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                "10/19/21",
-                style: TextStyle(fontSize: 16),
-              ),
-              Text(
-                _virtualCloset[index].platform,
-                style: TextStyle(fontSize: 16),
-              ),
-            ],
-          ),
-        )
-      ],
+        ],
+      ),
+      onTap: (){
+        Navigator.push(
+          context,
+          new MaterialPageRoute(
+              builder: (context) => ProductPage(
+                itemId: _virtualCloset[index].pId,
+                uid: widget.uid,
+              )),
+        );
+      },
     );
   }
 
@@ -136,7 +130,7 @@ class _VirtualClosetState extends State<VirtualCloset> {
         centerTitle: true,
         elevation: 0.0,
       ),
-      endDrawer: MainDrawer(uid: widget.uid),
+      endDrawer: MainDrawer(uid: widget.uid, incomingRoute: '/virtual_closet'),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -235,8 +229,7 @@ class _VirtualClosetState extends State<VirtualCloset> {
             ) : Center(
               child: Text('No products for now'),
             ),
-            
-            ButtonTheme(
+            /*ButtonTheme(
               minWidth: double.infinity,
               height: 50.0,
               child: RaisedButton(
@@ -253,7 +246,7 @@ class _VirtualClosetState extends State<VirtualCloset> {
                   borderRadius: new BorderRadius.circular(10.0),
                 ),
               ),
-            ),
+            ),*/
           ],
         ),
       ),

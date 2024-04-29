@@ -292,7 +292,8 @@ class _LoginPageState extends State<LoginPage> {
           content = 'The user you tried to log into was not found';
           break;
       }
-
+      debugPrint('e -> $e');
+      debugPrint('e.code -> ${e.code}');
       showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -307,6 +308,7 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               ));
     } catch (e) {
+      debugPrint('e -> $e');
       showDialog(
           context: context,
           builder: (context) => AlertDialog(

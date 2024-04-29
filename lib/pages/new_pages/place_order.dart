@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:async';
 
 import 'package:pay_or_save/assets/main_drawer.dart';
-import 'package:pay_or_save/pages/new%20pages/thankyou.dart';
+import 'package:pay_or_save/pages/new_pages/thankyou.dart';
 
 class PlaceOrder extends StatefulWidget {
   final String uid;

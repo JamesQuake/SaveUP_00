@@ -89,7 +89,7 @@ class _PaywallState extends State<Paywall> with SingleTickerProviderStateMixin {
                           fontSize: 15.0, fontWeight: FontWeight.bold),
                     ),
                     Image.asset(
-                      "assets/images/reward-points1.png",
+                      "assets/images/Reward-Points1.png",
                       height: 30.0,
                     ),
                   ],
@@ -109,26 +109,54 @@ class _PaywallState extends State<Paywall> with SingleTickerProviderStateMixin {
                       onTap: () async {
                         var isPro;
                         try {
-                          CustomerInfo customerInfo =
-                              await Purchases.purchasePackage(
-                                  myProductList[index]);
+
+                          CustomerInfo customerInfo1 = await Purchases.purchasePackage(myProductList[index]);
+                          var isPro = customerInfo1.entitlements.all["reward_points"].isActive;
+                          if (isPro) {
+                            // Unlock that great "pro" content
+                            print("client is pro");
+                          } else {
+                            print("this man is not pro");
+                          }
+
+                          // Offerings offerings = await Purchases.getOfferings();
+                          // if (offerings.current != null && offerings.current.availablePackages.isNotEmpty) {
+                          //   // Display packages for sale
+                          // }
+                          CustomerInfo customerInfo = await Purchases.purchasePackage(myProductList[index]);
+                          print('customerInfo : ${customerInfo.entitlements.all}');
+                          if (customerInfo.entitlements.all["reward_points"].isActive) {
+                            // Unlock that great "pro" content
+                          }
+                          isPro = customerInfo.entitlements.all["reward_points"].isActive;
+
+                          // CustomerInfo customerInfo =
+                          //     await Purchases.purchasePackage(
+                          //         myProductList[index]);
 
                           // CustomerInfo customerInfo;
                           // Purchases.purchaseProduct("points");
                           print("wagmi");
 
-                          CustomerInfo restoredInfo =
-                              await Purchases.restorePurchases();
+                          // CustomerInfo restoredInfo =
+                          //     await Purchases.restorePurchases();
+
+
+
                           // print(restoredInfo);
                           // if (customerInfo
                           //     .entitlements.all["points"].isActive) {
                           // Grant user "pro" access
-                          isPro =
-                              restoredInfo.entitlements.all["points"].isActive;
+
+
+                          // isPro =
+                          //     restoredInfo.entitlements.all["points"].isActive;
+
+
                           // var isP = customerInfo
                           //     .entitlements.all["reward_points"].isActive;
-                          // print("tingss");
-                          // print(isPro);
+                          print("tingss *********");
+                          print(isPro);
                           // print(isP);
                           if (isPro == true) {
                             _updateClient();

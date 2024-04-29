@@ -225,7 +225,7 @@ class _Plan2State extends State<Plan2> {
                         height: 35.0,
                         alignment: Alignment.center,
                         child: Text(
-                          '\$1.00',
+                          '\$1.75',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
@@ -287,7 +287,7 @@ class _Plan2State extends State<Plan2> {
                         height: 45.0,
                         alignment: Alignment.center,
                         child: Text(
-                          '\$500',
+                          '\$1,000',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -298,7 +298,7 @@ class _Plan2State extends State<Plan2> {
                         height: 45.0,
                         alignment: Alignment.center,
                         child: Text(
-                          '\$1.00',
+                          '\$3.25',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
@@ -309,7 +309,7 @@ class _Plan2State extends State<Plan2> {
                         height: 45.0,
                         alignment: Alignment.center,
                         child: Text(
-                          '\$475',
+                          '\$2,475',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.grey[400],
@@ -321,7 +321,7 @@ class _Plan2State extends State<Plan2> {
                         height: 45.0,
                         alignment: Alignment.center,
                         child: Text(
-                          '1,975',
+                          '2,975',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.grey[400],
@@ -352,7 +352,7 @@ class _Plan2State extends State<Plan2> {
                         height: 45.0,
                         alignment: Alignment.center,
                         child: Text(
-                          '\$1,000',
+                          '\$2,500',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -363,7 +363,7 @@ class _Plan2State extends State<Plan2> {
                         height: 45.0,
                         alignment: Alignment.center,
                         child: Text(
-                          '\$1.00',
+                          '\$7.50',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
@@ -374,7 +374,7 @@ class _Plan2State extends State<Plan2> {
                         height: 45.0,
                         alignment: Alignment.center,
                         child: Text(
-                          '\$475',
+                          '\$4,975',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.grey[400],
@@ -386,7 +386,7 @@ class _Plan2State extends State<Plan2> {
                         height: 45.0,
                         alignment: Alignment.center,
                         child: Text(
-                          '1,975',
+                          '5,475',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.grey[400],
@@ -417,7 +417,7 @@ class _Plan2State extends State<Plan2> {
                         height: 45.0,
                         alignment: Alignment.center,
                         child: Text(
-                          '\$3,000',
+                          '\$5,000',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -428,7 +428,7 @@ class _Plan2State extends State<Plan2> {
                         height: 45.0,
                         alignment: Alignment.center,
                         child: Text(
-                          '\$5.00',
+                          '\$14.25',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
@@ -439,7 +439,7 @@ class _Plan2State extends State<Plan2> {
                         height: 45.0,
                         alignment: Alignment.center,
                         child: Text(
-                          '\$1,475',
+                          '\$5,475',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.grey[400],
@@ -451,7 +451,7 @@ class _Plan2State extends State<Plan2> {
                         height: 45.0,
                         alignment: Alignment.center,
                         child: Text(
-                          '1,975',
+                          '10,975',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.grey[400],
@@ -482,7 +482,7 @@ class _Plan2State extends State<Plan2> {
                         height: 45.0,
                         alignment: Alignment.center,
                         child: Text(
-                          '\$5,000',
+                          '\$7,000',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -493,7 +493,7 @@ class _Plan2State extends State<Plan2> {
                         height: 45.0,
                         alignment: Alignment.center,
                         child: Text(
-                          '\$7.00',
+                          '\$19.75',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
@@ -504,7 +504,7 @@ class _Plan2State extends State<Plan2> {
                         height: 45.0,
                         alignment: Alignment.center,
                         child: Text(
-                          '\$3,475',
+                          '\$7,975',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.grey[400],
@@ -516,7 +516,7 @@ class _Plan2State extends State<Plan2> {
                         height: 45.0,
                         alignment: Alignment.center,
                         child: Text(
-                          '5,975',
+                          '15,975',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.grey[400],
@@ -549,7 +549,7 @@ class _Plan2State extends State<Plan2> {
                     height: 35.0,
                     alignment: Alignment.center,
                     child: Text(
-                      '\$15.00',
+                      '\$26.75',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontWeight: FontWeight.w500,
@@ -560,7 +560,7 @@ class _Plan2State extends State<Plan2> {
                     height: 35.0,
                     alignment: Alignment.center,
                     child: Text(
-                      '\$7,475',
+                      '\$10,475',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.grey[400],
@@ -572,7 +572,7 @@ class _Plan2State extends State<Plan2> {
                     height: 35.0,
                     alignment: Alignment.center,
                     child: Text(
-                      '7,975',
+                      '20,975',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.grey[400],

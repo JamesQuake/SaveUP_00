@@ -22,6 +22,9 @@ import 'package:pay_or_save/widgets/fadein_widget.dart';
 // import 'package:pay_or_save/widgets/sliding_widget.dart';
 import 'package:provider/provider.dart';
 
+import '../widgets/slide_down.dart';
+import '../widgets/sliding_widget.dart';
+
 // import '../widgets/fading_texts.dart';
 // import 'saving_goals.dart';
 
@@ -254,20 +257,45 @@ class _AltLoadingPageState extends State<AltLoadingPage> {
                       ),
                     ),
                   SizedBox(
-                    height: 45.0.h,
+                    height: 50.0.h,
                   ),
-                  AnimatedContainer(
-                    height: _size,
-                    duration: Duration(seconds: 1),
-                    curve: Curves.easeIn,
-                    child: Image.asset(
-                      "assets/images/mycompany2.png",
-                      width: 250.w,
-                      // height: 300.0,
-                    ),
+                  Stack(
+                    alignment: AlignmentDirectional.center,
+                    children: [
+                      AnimatedContainer(
+                        height: _size,
+                        duration: Duration(seconds: 1),
+                        curve: Curves.easeIn,
+                        decoration: BoxDecoration(
+                          color: Color(0xff579aff),
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      SlidingWidget(
+                        widget: Image.asset(
+                          "assets/images/anim/emptycart.png",
+                          width: 300.w,
+                          // height: 300.0,
+                        ),
+                        interval: 800,
+                        isDelay: true,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 55.0),
+                        child: SlideDown(
+                          widget: Image.asset(
+                            "assets/images/anim/dollarsign.png",
+                            width: 100.w,
+                            // height: 300.0,
+                          ),
+                          interval: 800,
+                          isDelay: true,
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(
-                    height: 35.0.h,
+                    height: 60.0.h,
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,

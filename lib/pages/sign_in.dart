@@ -10,8 +10,8 @@ import 'package:pay_or_save/models/saving_goal_model.dart';
 import 'package:pay_or_save/pages/investment_goal.dart';
 // import 'package:pay_or_save/pages/congratulation_saving.dart';
 // import 'package:pay_or_save/pages/login_email.dart';
-// import 'package:pay_or_save/pages/new%20pages/forgot_password.dart';
-import 'package:pay_or_save/pages/new%20pages/open_email.dart';
+// import 'package:pay_or_save/pages/new_pages/forgot_password.dart';
+import 'package:pay_or_save/pages/new_pages/open_email.dart';
 // import 'package:pay_or_save/pages/reset_password.dart';
 import 'package:pay_or_save/pages/saving_goals.dart';
 import 'package:pay_or_save/pages/select_mode.dart';
@@ -26,7 +26,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
-// import 'new pages/reset_password.dart';
+// import 'new_pages/reset_password.dart';
 
 enum authProblems { UserNotFound, PasswordNotValid, NetworkError }
 

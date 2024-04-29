@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:pay_or_save/assets/main_drawer.dart';
-import 'package:pay_or_save/pages/new%20pages/see_you.dart';
+import 'package:pay_or_save/pages/new_pages/plan2.dart';
+import 'package:pay_or_save/pages/new_pages/see_you.dart';
 
 class LastChance extends StatefulWidget {
   // const LastChance({ Key? key }) : super(key: key);
@@ -146,12 +147,12 @@ class _LastChanceState extends State<LastChance> {
                                   // uid: widget.uid,
                                   )));
                     } else if (_selected == 'first') {
-                      // Navigator.push(
-                      //       context,
-                      //       MaterialPageRoute(
-                      //           builder: (context) => Plan2(
-                      //               // uid: widget.uid,
-                      //               )));
+                      Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Plan2(
+                                    // uid: widget.uid,
+                                    )));
                     }
                   },
                 ),

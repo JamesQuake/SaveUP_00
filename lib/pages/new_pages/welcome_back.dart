@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pay_or_save/assets/custom_button.dart';
-import 'package:pay_or_save/pages/new%20pages/reset_password.dart';
+import 'package:pay_or_save/pages/new_pages/reset_password.dart';
 
 class WelcomeBack extends StatelessWidget {
   const WelcomeBack({Key key}) : super(key: key);

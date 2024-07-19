@@ -32,7 +32,7 @@ class _HeardFromState extends State<HeardFrom> {
   _HeardFromState(this._uid);
   bool isStrechedDropDown = false;
   int groupValue;
-  String title = 'I heard about eWyzly from:';
+  String title = 'I heard about SaveUp from:';
 
   List<String> dropList = [
     "Friend or Family",
@@ -470,7 +470,7 @@ class _HeardFromState extends State<HeardFrom> {
               ),
             ),
             TextSpan(
-              text: 'eWyzly ',
+              text: 'SaveUp ',
               style: TextStyle(
                 height: 1.4,
                 fontWeight: FontWeight.bold,

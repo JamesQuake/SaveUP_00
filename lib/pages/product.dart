@@ -148,7 +148,7 @@ class _ProductPageState extends State<ProductPage> {
                   text: " to return to ",
                 ),
                 TextSpan(
-                  text: " eWyzly",
+                  text: " SaveUp",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
@@ -440,29 +440,31 @@ class _ProductPageState extends State<ProductPage> {
                             ],
                           ),
                         ),
-                        Container(
-                          margin: EdgeInsets.only(left: 20, right: 20),
-                          constraints: BoxConstraints(minHeight: 50),
-                          decoration: BoxDecoration(
-                              border: Border(
-                            bottom: BorderSide(
-                              //                   <--- left side
-                              color: Colors.black,
-                              width: 1.0,
-                            ),
-                            top: BorderSide(
-                              //                   <--- left side
-                              color: Colors.black,
-                              width: 1.0,
-                            ),
-                          )),
-                          child: Center(
-                            child: Text(
-                              projectSnap.data.condition,
-                              style: TextStyle(fontSize: 18),
+                        if(projectSnap.data.condition != null)...[
+                          Container(
+                            margin: EdgeInsets.only(left: 20, right: 20),
+                            constraints: BoxConstraints(minHeight: 50),
+                            decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(
+                                    //                   <--- left side
+                                    color: Colors.black,
+                                    width: 1.0,
+                                  ),
+                                  top: BorderSide(
+                                    //                   <--- left side
+                                    color: Colors.black,
+                                    width: 1.0,
+                                  ),
+                                )),
+                            child: Center(
+                              child: Text(
+                                projectSnap.data.condition,
+                                style: TextStyle(fontSize: 18),
+                              ),
                             ),
                           ),
-                        ),
+                        ],
                         Container(
                           padding: EdgeInsets.only(top: 30),
                           constraints: BoxConstraints(minHeight: 175),
@@ -494,33 +496,35 @@ class _ProductPageState extends State<ProductPage> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                              padding: EdgeInsets.only(
-                                                  top: 25, bottom: 5),
-                                              width: widthd,
-                                              child: Text(
-                                                'Condition',
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  color: Colors.black45,
+                                        if(projectSnap.data.condition != null)...[
+                                          Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 25, bottom: 5),
+                                                width: widthd,
+                                                child: Text(
+                                                  'Condition',
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.black45,
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                            Container(
-                                              padding: EdgeInsets.only(
-                                                  top: 25, bottom: 5),
-                                              width: widthd2,
-                                              child: Text(
-                                                projectSnap.data.condition,
-                                                style: TextStyle(fontSize: 14),
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 25, bottom: 5),
+                                                width: widthd2,
+                                                child: Text(
+                                                  projectSnap.data.condition,
+                                                  style: TextStyle(fontSize: 14),
+                                                ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
+                                            ],
+                                          ),
+                                        ],
                                         Row(
                                           children: [
                                             Container(
@@ -681,120 +685,121 @@ class _ProductPageState extends State<ProductPage> {
                             ],
                           ),
                         ),
-                        Container(
-                          padding: EdgeInsets.only(top: 30),
-                          constraints: BoxConstraints(minHeight: 175),
-                          decoration: BoxDecoration(
-                              border: Border(
-                            bottom: BorderSide(
-                              //                   <--- left side
-                              color: Colors.black38,
-                              width: 1.0,
-                            ),
-                          )),
-                          margin: EdgeInsets.only(left: 15, right: 15),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Item Description',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                        if(projectSnap.data.shortDescription != null )...[
+                          Container(
+                            padding: EdgeInsets.only(top: 30),
+                            constraints: BoxConstraints(minHeight: 175),
+                            decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(
+                                    //                   <--- left side
+                                    color: Colors.black38,
+                                    width: 1.0,
+                                  ),
+                                )),
+                            margin: EdgeInsets.only(left: 15, right: 15),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Item Description',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
-                              Row(
-                                children: [
-                                  Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                              padding: EdgeInsets.only(
-                                                  top: 25, bottom: 15),
-                                              constraints:
-                                                  BoxConstraints(maxWidth: 325),
-                                              child: Text(
-                                                projectSnap
-                                                    .data.shortDescription,
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  color: Colors.black,
+                                Row(
+                                  children: [
+                                    Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    top: 25, bottom: 15),
+                                                constraints:
+                                                BoxConstraints(maxWidth: 325),
+                                                child: Text(
+                                                  projectSnap.data.shortDescription,
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.black,
+                                                  ),
                                                 ),
                                               ),
+                                            ],
+                                          ),
+                                        ]),
+                                    Column(children: [
+                                      Material(
+                                          child: InkWell(
+                                            // onTap: () => Navigator.push(
+                                            //   context,
+                                            //   new MaterialPageRoute<String>(
+                                            //       builder: (context) =>
+                                            //           new EbayWebView(
+                                            //             url: projectSnap
+                                            //                 .data.itemWebUrl,
+                                            //             title: projectSnap.data.title,
+                                            //           )),
+                                            // ), // handle your onTap here
+                                            child: Container(
+                                              padding: EdgeInsets.only(left: 15),
+                                              // constraints:
+                                              //     BoxConstraints(minHeight: 75),
+                                              // child: Center(
+                                              //   child: Icon(
+                                              //     Icons.arrow_forward_ios_rounded,
+                                              //     size: 25,
+                                              //   ),
+                                              // )
                                             ),
-                                          ],
-                                        ),
-                                      ]),
-                                  Column(children: [
-                                    Material(
-                                        child: InkWell(
-                                      // onTap: () => Navigator.push(
-                                      //   context,
-                                      //   new MaterialPageRoute<String>(
-                                      //       builder: (context) =>
-                                      //           new EbayWebView(
-                                      //             url: projectSnap
-                                      //                 .data.itemWebUrl,
-                                      //             title: projectSnap.data.title,
-                                      //           )),
-                                      // ), // handle your onTap here
-                                      child: Container(
-                                        padding: EdgeInsets.only(left: 15),
-                                        // constraints:
-                                        //     BoxConstraints(minHeight: 75),
-                                        // child: Center(
-                                        //   child: Icon(
-                                        //     Icons.arrow_forward_ios_rounded,
-                                        //     size: 25,
-                                        //   ),
-                                        // )
-                                      ),
-                                    ))
-                                  ]),
-                                ],
-                              ),
-                              // Row(
-                              //   mainAxisAlignment: MainAxisAlignment.end,
-                              //   children: [
-                              //     Column(children: [
-                              //       Material(
-                              //           child: InkWell(
-                              //         onTap: () => Navigator.push(
-                              //           context,
-                              //           new MaterialPageRoute<String>(
-                              //               builder: (context) =>
-                              //                   new EbayWebView(
-                              //                     url: projectSnap
-                              //                         .data.itemWebUrl,
-                              //                     title: projectSnap.data.title,
-                              //                   )),
-                              //         ), // handle your onTap here
-                              //         child: Container(
-                              //           padding: EdgeInsets.only(
-                              //               right: 30, bottom: 25),
-                              //           child: Text(
-                              //             'Read more',
-                              //             style: TextStyle(
-                              //                 fontSize: 16,
-                              //                 fontWeight: FontWeight.bold,
-                              //                 color: Color(0xff0078ff)),
-                              //           ),
-                              //         ),
-                              //       ))
-                              //     ]),
-                              //   ],
-                              // )
-                            ],
+                                          ))
+                                    ]),
+                                  ],
+                                ),
+                                // Row(
+                                //   mainAxisAlignment: MainAxisAlignment.end,
+                                //   children: [
+                                //     Column(children: [
+                                //       Material(
+                                //           child: InkWell(
+                                //         onTap: () => Navigator.push(
+                                //           context,
+                                //           new MaterialPageRoute<String>(
+                                //               builder: (context) =>
+                                //                   new EbayWebView(
+                                //                     url: projectSnap
+                                //                         .data.itemWebUrl,
+                                //                     title: projectSnap.data.title,
+                                //                   )),
+                                //         ), // handle your onTap here
+                                //         child: Container(
+                                //           padding: EdgeInsets.only(
+                                //               right: 30, bottom: 25),
+                                //           child: Text(
+                                //             'Read more',
+                                //             style: TextStyle(
+                                //                 fontSize: 16,
+                                //                 fontWeight: FontWeight.bold,
+                                //                 color: Color(0xff0078ff)),
+                                //           ),
+                                //         ),
+                                //       ))
+                                //     ]),
+                                //   ],
+                                // )
+                              ],
+                            ),
                           ),
-                        ),
+                        ],
                         // Container(
                         //   // padding: EdgeInsets.only(top: 30),
                         //   constraints: BoxConstraints(minHeight: 175),

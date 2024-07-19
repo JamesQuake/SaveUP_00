@@ -67,6 +67,7 @@ class _AcquirePointsState extends State<AcquirePoints> {
     {
       try {
         offerings = await Purchases.getOfferings();
+        print('offerings -> ${offerings.all}');
       } on PlatformException catch (e) {
         await showDialog(
           context: context,
@@ -148,7 +149,7 @@ class _AcquirePointsState extends State<AcquirePoints> {
               title:
                   Image.asset('assets/images/gifs/cngrts.gif', height: 120.0),
               content: Text(
-                "Congrats!. You are now an eWyzly premium user.",
+                "Congrats!. You are now an SaveUp premium user.",
                 textAlign: TextAlign.center,
               ),
               shape: RoundedRectangleBorder(

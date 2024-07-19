@@ -76,13 +76,13 @@ class _MainDrawerState extends State<MainDrawer> {
                       ),
                       children: [
                         TextSpan(
-                          text: 'e',
+                          text: 'Save',
                           // style: TextStyle(
                           //   color: Colors.black,
                           // ),
                         ),
                         TextSpan(
-                          text: 'Wzyly',
+                          text: 'Up',
                           style: TextStyle(
                             color: Colors.blue,
                           ),

@@ -64,7 +64,7 @@ class _PaywallState extends State<Paywall> with SingleTickerProviderStateMixin {
                     height: 33.0,
                   ),
                   Text(
-                    '  eWyzly Premium',
+                    '  SaveUp Premium',
                     style: TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,

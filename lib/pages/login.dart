@@ -450,7 +450,7 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextStyle(height: 1.4, fontWeight: FontWeight.bold),
                   ),
                   TextSpan(
-                    text: 'for eWyzly',
+                    text: 'for SaveUp',
                     style: TextStyle(
                       height: 1.4,
                     ),

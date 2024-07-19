@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Ewyzly</string>
+	<string>SaveUp</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>ewyzly</string>
+	<string>SaveUp</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -21,43 +21,40 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
-    <array>
-        <dict>
-            <key>CFBundleTypeRole</key>
-            <string>Editor</string>
-            <key>CFBundleURLSchemes</key>
-            <array>
-                <string>com.googleusercontent.apps.538577078519-524pgr61b3h1url80iqiovkd8eftel8n</string>
-                <string>fb696439556011062</string>
-            </array>
-        </dict>
-    </array>
-    <key>FacebookAppID</key>
-    <string>696439556011062</string>
-    <key>FacebookClientToken</key>
-    <string>8863ed4263dc2f2762e71c2accafbc81</string>
-    <key>FacebookDisplayName</key>
-    <string>Pay or Save</string>
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-      <string>fbapi</string>
-      <string>fb696439556011062</string>
-    </array>
-
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.538577078519-524pgr61b3h1url80iqiovkd8eftel8n</string>
+				<string>fb696439556011062</string>
+			</array>
+		</dict>
+	</array>
+	<key>FacebookAppID</key>
+	<string>696439556011062</string>
+	<key>FacebookClientToken</key>
+	<string>8863ed4263dc2f2762e71c2accafbc81</string>
+	<key>FacebookDisplayName</key>
+	<string>Pay or Save</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>fbapi</string>
+		<string>fb696439556011062</string>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>FacebookAutoLogAppEventsEnabled</key>
-    <string>TRUE</string>
-    <key>FacebookAdvertiserIDCollectionEnabled</key>
-    <string>TRUE</string>
-    <key>FacebookClientToken</key>
-    <string>8863ed4263dc2f2762e71c2accafbc81</string>
-    <key>GADApplicationIdentifier</key>
-    <string>ca-app-pub-xxxxxxxxxxxx/xxxxxx</string>
-    <key>GADIsAdManagerApp</key>
-    <true/>
+	<string>TRUE</string>
+	<key>FacebookAdvertiserIDCollectionEnabled</key>
+	<string>TRUE</string>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-xxxxxxxxxxxx/xxxxxx</string>
+	<key>GADIsAdManagerApp</key>
+	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Need photos access to complete your account setup</string>
 	<key>UIBackgroundModes</key>

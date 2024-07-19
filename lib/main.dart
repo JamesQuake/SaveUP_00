@@ -94,7 +94,7 @@ class MyApp extends StatelessWidget {
             builder: (context, provider, child){
               return MaterialApp(
                 debugShowCheckedModeBanner: false,
-                title: 'eWyzly',
+                title: 'SaveUp',
                 theme: ThemeData(
                   primarySwatch: MaterialColor(0xff0070c0, color),
                 ),
@@ -171,7 +171,7 @@ class MyApp extends StatelessWidget {
                   'overdraft_reminder': (context) => OverdraftReminder(),
                   'select_Store': (context) => SelectStore(),
                   'AccountBalances': (context) => AccountBalance(),
-                  '/RewardPoints': (context) => RewardPoints(),
+                  '/RewardPoints': (context) => RewardPoints(uid: provider.user.uid),
                   // '/EditInvestment': (context) => EditInvestmentGoal(uid: uid, route: route)
                 },
               );

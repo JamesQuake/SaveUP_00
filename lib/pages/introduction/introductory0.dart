@@ -154,7 +154,7 @@ class _Introductory0State extends State<Introductory0> {
                                   text: 'Learn how ',
                                 ),
                                 TextSpan(
-                                  text: 'eWyzly ',
+                                  text: 'SaveUp ',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     // fontStyle: FontStyle.italic,

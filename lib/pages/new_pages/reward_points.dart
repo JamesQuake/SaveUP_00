@@ -212,12 +212,13 @@ class _RewardPointsState extends State<RewardPoints> {
                             onPressed: () => Timer(
                               const Duration(milliseconds: 400),
                               () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => PlaceOrder(
-                                            // uid: widget.uid,
-                                            )));
+                                Navigator.pop(context);
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: (context) => PlaceOrder(
+                                //             // uid: widget.uid,
+                                //             )));
                               },
                             ),
                             child: Container(

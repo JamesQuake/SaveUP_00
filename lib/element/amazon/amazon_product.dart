@@ -154,7 +154,7 @@ class _AmazonProductPageState extends State<AmazonProductPage> {
                   text: " to return to ",
                 ),
                 TextSpan(
-                  text: " eWyzly",
+                  text: " SaveUp",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                   ),

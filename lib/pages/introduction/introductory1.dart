@@ -140,7 +140,7 @@ class _Introductory1State extends State<Introductory1> {
                             Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                'Video 2 of 3. eWyzly, the Game',
+                                'Video 2 of 3. SaveUp, the Game',
                                 style: TextStyle(
                                   height: 1.5,
                                   fontSize: 18.h,
@@ -159,7 +159,7 @@ class _Introductory1State extends State<Introductory1> {
                                     fontSize: 18.h),
                                 children: [
                                   TextSpan(
-                                    text: 'eWyzly ',
+                                    text: 'SaveUp ',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       // fontStyle: FontStyle.italic,

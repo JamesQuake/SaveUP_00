@@ -2169,7 +2169,7 @@ class _InvestNowState extends State<InvestNow>
               "The S&P 500 is widely regarded as the market. The average annualized return since it's inception in 1926 is 7%, when adjusted for inflation."),
           SizedBox(height: 20.0.h),
           Text(
-              "While it's unlikely that you'll earn 12% on your real-life investments, you can in eWyzly Game. As the graph demonstrates, term and rate have a huge impact on the future value of today's investment. Due to the power of compound interest, your investments grow exponentially the longer they sit.")
+              "While it's unlikely that you'll earn 12% on your real-life investments, you can in SaveUp Game. As the graph demonstrates, term and rate have a huge impact on the future value of today's investment. Due to the power of compound interest, your investments grow exponentially the longer they sit.")
         ],
       ),
       actions: [

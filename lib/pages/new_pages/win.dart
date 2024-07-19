@@ -241,7 +241,7 @@ class _WinPrizes extends State<WinPrizes> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => RewardPoints(
-                                        // uid: widget.uid,
+                                        uid: widget.uid,
                                       )));
                               // Navigator.pushNamedAndRemoveUntil(context, '/starting', (route) => false);
                             }

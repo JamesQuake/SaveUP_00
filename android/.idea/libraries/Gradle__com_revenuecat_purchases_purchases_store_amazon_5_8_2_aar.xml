@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.revenuecat.purchases:purchases-store-amazon:5.8.2@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/0968efd24f90f96fc5549696cc96139f/transformed/jetified-purchases-store-amazon-5.8.2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/0968efd24f90f96fc5549696cc96139f/transformed/jetified-purchases-store-amazon-5.8.2/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/0968efd24f90f96fc5549696cc96139f/transformed/jetified-purchases-store-amazon-5.8.2/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.revenuecat.purchases/purchases-store-amazon/5.8.2/7d271ee4aa8c1d399b210feb1379f303aa136578/purchases-store-amazon-5.8.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.revenuecat.purchases/purchases-store-amazon/5.8.2/3748df6f8bf16bd57c61a2ee1f0fa237284f00bd/purchases-store-amazon-5.8.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

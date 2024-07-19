@@ -11,7 +11,7 @@ class DialogTemp extends StatelessWidget {
     return AlertDialog(
       title: Image.asset('assets/images/gifs/cngrts.gif', height: 50.0),
       content: Text(
-        "Congrats!. You are now an eWyzly premium user. We appreciate you 🫶🏽",
+        "Congrats!. You are now an SaveUp premium user. We appreciate you 🫶🏽",
         textAlign: TextAlign.center,
       ),
       shape: RoundedRectangleBorder(

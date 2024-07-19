@@ -59,11 +59,11 @@ class _CongratsSaving extends State<CongratsSaving> {
 
 //add # to payorsave, change url
   Future share(SocialMedia socialPlatform) async {
-    final subject = 'eWyzly';
+    final subject = 'SaveUp';
     final text = "I just saved " +
         NumberFormat.simpleCurrency(locale: "en-us", decimalDigits: 2)
             .format(double.parse(widget.savedAmount)) +
-        " using eWyzly, the shopping app that makes savings fun. I'd bet that it save you money too. \n\nCheck it out and receive 1000 free reward point toward valuable prizes by entering friend code 2020 when you download the app.";
+        " using SaveUp, the shopping app that makes savings fun. I'd bet that it save you money too. \n\nCheck it out and receive 1000 free reward point toward valuable prizes by entering friend code 2020 when you download the app.";
     final urlShare = Uri.encodeComponent('https://www.saveupnow.biz');
     final urls = {
       SocialMedia.facebook:
@@ -92,12 +92,12 @@ class _CongratsSaving extends State<CongratsSaving> {
     final text = "I just saved " +
         NumberFormat.simpleCurrency(locale: "en-us", decimalDigits: 2)
             .format(double.parse(widget.savedAmount)) +
-        " using eWyzly, the shopping app that makes savings fun. I'd bet that it can help save you money too. \n\nCheck it out and receive 1000 free reward point toward valuable prizes by entering friend code 2020 when you download the app.";
+        " using SaveUp, the shopping app that makes savings fun. I'd bet that it can help save you money too. \n\nCheck it out and receive 1000 free reward point toward valuable prizes by entering friend code 2020 when you download the app.";
     final Uri launchUri = Uri(
       scheme: 'mailto',
       // path: 'smith@example.com',
       query: encodeQueryParameters(<String, String>{
-        "subject": "eWyzly",
+        "subject": "SaveUp",
         'body': text + "\n\n$urlShare",
       }),
     );

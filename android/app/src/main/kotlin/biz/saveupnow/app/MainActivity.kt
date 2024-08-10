@@ -1,4 +1,4 @@
-package com.quaketechs.ewyzly
+package biz.saveupnow.app
 
 import io.flutter.embedding.android.FlutterActivity
 

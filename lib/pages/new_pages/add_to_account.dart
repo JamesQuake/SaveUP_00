@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:pay_or_save/assets/main_drawer.dart';
 import 'package:pay_or_save/pages/new_pages/plan1.dart';
 import 'package:pay_or_save/pages/new_pages/plan2.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/auth_provider.dart';
 
 class AddToAccount extends StatefulWidget {
   // const AddToAccount({ Key? key }) : super(key: key);
@@ -14,6 +17,13 @@ class AddToAccount extends StatefulWidget {
 
 class _AddToAccountState extends State<AddToAccount> {
   bool test = true;
+
+  @override
+  void initState() {
+    Provider.of<AuthProvider>(context, listen: false).getOfferingsDetails();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +38,7 @@ class _AddToAccountState extends State<AddToAccount> {
         //   MyManue.childPopup(context)
         // ],
         title: Text(
-          "Add To Your Accounts",
+          "Buy Reward Points",
           style: TextStyle(
             fontWeight: FontWeight.w700,
             fontSize: 23.0,
@@ -41,6 +51,7 @@ class _AddToAccountState extends State<AddToAccount> {
         padding: const EdgeInsets.fromLTRB(20.0, 35.0, 20.0, 10.0),
         child: Column(
           children: [
+            /*
             Align(
               alignment: Alignment.topLeft,
               child: Text(
@@ -262,35 +273,35 @@ class _AddToAccountState extends State<AddToAccount> {
                 ),
               ),
             ),
-            SizedBox(
-              height: 35.0,
-            ),
-            Row(
-              children: [
-                Text(
-                  'PLAN 1: AD FREE',
-                  // textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Color(0xffcb0909),
-                    fontWeight: FontWeight.w800,
+            */
+
+            // SizedBox(
+            //   height: 35.0
+            // ),
+            GestureDetector(
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Plan1(
+                        // uid: widget.uid,
+                      ))),
+              child: Row(
+                children: [
+                  Text(
+                    'Plan 1: STOP Ads',
+                    // textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 18,
+                      // color: Color(0xffcb0909),
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
-                ),
-                Spacer(),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Plan1(
-                                // uid: widget.uid,
-                                )));
-                  },
-                  child: Icon(
+                  Spacer(),
+                  Icon(
                     Icons.arrow_forward_ios_outlined,
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             Divider(
               color: Colors.black,
@@ -305,23 +316,23 @@ class _AddToAccountState extends State<AddToAccount> {
                 ),
                 children: [
                   TextSpan(
-                    text: "Eliminate ads ",
+                    text: "STOP ADS ",
                     style:
-                        TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold),
+                        TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold, color: Colors.red),
                   ),
                   TextSpan(
-                    text: "and ",
+                    text: "and receive",
                     style: TextStyle(
                       fontSize: 17,
                     ),
                   ),
                   TextSpan(
-                    text: "get 1 reward point ",
+                    text: " 1 reward point ",
                     style:
-                        TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold),
+                        TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold, color: Colors.red),
                   ),
                   TextSpan(
-                    text: "with every virtual dollar that you purchase.",
+                    text: "with every virtual dollar that you purchase",
                     style: TextStyle(
                       fontSize: 17,
                     ),
@@ -332,32 +343,30 @@ class _AddToAccountState extends State<AddToAccount> {
             SizedBox(
               height: 20.0,
             ),
-            Row(
-              children: [
-                Text(
-                  'PLAN 2: AD FREE',
-                  // textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Color(0xffcb0909),
-                    fontWeight: FontWeight.w800,
+            GestureDetector(
+              onTap: ()=> Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Plan2(
+                        // uid: widget.uid,
+                      ))),
+              child: Row(
+                children: [
+                  Text(
+                    'Plan 2: STOP Ads',
+                    // textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 18,
+                      // color: Color(0xffcb0909),
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
-                ),
-                Spacer(),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Plan2(
-                                // uid: widget.uid,
-                                )));
-                  },
-                  child: Icon(
+                  Spacer(),
+                  Icon(
                     Icons.arrow_forward_ios_outlined,
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             Divider(
               color: Colors.black,
@@ -372,23 +381,23 @@ class _AddToAccountState extends State<AddToAccount> {
                 ),
                 children: [
                   TextSpan(
-                    text: "Eliminate ads ",
+                    text: "STOP ADS ",
                     style:
-                        TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold),
+                        TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold, color: Colors.red),
                   ),
                   TextSpan(
-                    text: "and ",
+                    text: "and receive ",
                     style: TextStyle(
                       fontSize: 17,
                     ),
                   ),
                   TextSpan(
-                    text: "get 2 reward point ",
+                    text: "2 reward points ",
                     style:
-                        TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold),
+                        TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold, color: Colors.red),
                   ),
                   TextSpan(
-                    text: "with every virtual dollar that you purchase.",
+                    text: "with every virtual dollar that you purchase",
                     style: TextStyle(
                       fontSize: 17,
                     ),

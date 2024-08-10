@@ -8,8 +8,10 @@ import 'package:intl/intl.dart';
 import 'package:pay_or_save/assets/main_drawer.dart';
 import 'package:pay_or_save/models/account_model.dart';
 import 'package:pay_or_save/pages/starting_instructions.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../providers/auth_provider.dart';
 import 'select_mode.dart';
 // import 'package:pay_or_save/widgets/menu.dart';
 
@@ -60,6 +62,7 @@ class _StartingBalancesState extends State<StartingBalances> {
     // _getBalances();
     getUserPrefs().then((_) {
       Timer(Duration(seconds: 1), ()=>_setPrefs(false));
+      Provider.of<AuthProvider>(context, listen: false).getBalances(_uid);
     });
   }
 

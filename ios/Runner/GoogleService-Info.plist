@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>538577078519-524pgr61b3h1url80iqiovkd8eftel8n.apps.googleusercontent.com</string>
+	<string>538577078519-cdg4aphf9rrqp87h1qmhfk0oou0oh5jk.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.538577078519-524pgr61b3h1url80iqiovkd8eftel8n</string>
+	<string>com.googleusercontent.apps.538577078519-cdg4aphf9rrqp87h1qmhfk0oou0oh5jk</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>538577078519-0o8spfmpbanh6ovajjp1j421tj02n0p1.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.quaketechs.ewyzly</string>
+	<string>biz.saveupnow.app</string>
 	<key>PROJECT_ID</key>
 	<string>pay-or-save</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,7 +31,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:538577078519:ios:3a04a0adf1307cf2876bf2</string>
+	<string>1:538577078519:ios:ec2e8f2517108137876bf2</string>
 	<key>DATABASE_URL</key>
 	<string>https://pay-or-save.firebaseio.com</string>
 </dict>

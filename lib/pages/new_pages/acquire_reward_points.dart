@@ -33,30 +33,30 @@ class _AcquirePointsState extends State<AcquirePoints> {
 
   @override
   void initState() {
-    initPlatformState();
+    // initPlatformState();
     // dispDialog();
     super.initState();
   }
 
-  Future<void> initPlatformState() async {
-    await Purchases.setDebugLogsEnabled(true);
-
-    PurchasesConfiguration configuration;
-    if (Platform.isAndroid) {
-      configuration =
-          PurchasesConfiguration("goog_mTnovWESImOkGyILfzVxWrllpsg");
-      // print("this gibberish");
-      // if (buildingForAmazon) {
-      //   // use your preferred way to determine if this build is for Amazon store
-      //   // checkout our MagicWeather sample for a suggestion
-      //   configuration = AmazonConfiguration("public_amazon_sdk_key");
-      // }
-    } else if (Platform.isIOS) {
-      configuration = PurchasesConfiguration("public_ios_sdk_key");
-    }
-    await Purchases.configure(configuration);
-    // print("this a benchmark");
-  }
+  // Future<void> initPlatformState() async {
+  //   await Purchases.setDebugLogsEnabled(true);
+  //
+  //   PurchasesConfiguration configuration;
+  //   if (Platform.isAndroid) {
+  //     configuration =
+  //         PurchasesConfiguration("goog_ROKUqNPFksWwfOPyvIcvyZKDPvC");
+  //     // print("this gibberish");
+  //     // if (buildingForAmazon) {
+  //     //   // use your preferred way to determine if this build is for Amazon store
+  //     //   // checkout our MagicWeather sample for a suggestion
+  //     //   configuration = AmazonConfiguration("public_amazon_sdk_key");
+  //     // }
+  //   } else if (Platform.isIOS) {
+  //     configuration = PurchasesConfiguration("appl_TyEUZYmaqrFBvyvETDxAnSatMwM");
+  //   }
+  //   await Purchases.configure(configuration);
+  //   // print("this a benchmark");
+  // }
 
   altFunc() async {
     setState(() {

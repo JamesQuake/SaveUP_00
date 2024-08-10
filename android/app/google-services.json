@@ -8,6 +8,50 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:538577078519:android:ed644734c7fff53d876bf2",
+        "android_client_info": {
+          "package_name": "biz.saveupnow.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "538577078519-emmla68b71tj2nfgpjbevonuim15uac6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "biz.saveupnow.app",
+            "certificate_hash": "54e83e7493136c76172f9087071f68c6e1ffcfc5"
+          }
+        },
+        {
+          "client_id": "538577078519-2atp59vkkjotbmibei2h9d4bd2vdtvmb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0_R2OObB2d8SGsIXO6BSX9QggqHUE8LI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "538577078519-2atp59vkkjotbmibei2h9d4bd2vdtvmb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "538577078519-524pgr61b3h1url80iqiovkd8eftel8n.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.quaketechs.ewyzly"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:538577078519:android:7c844a1553a8a3d5876bf2",
         "android_client_info": {
           "package_name": "com.example.pay_or_save"

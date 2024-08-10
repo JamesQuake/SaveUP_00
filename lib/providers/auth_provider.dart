@@ -1,5 +1,9 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 
 enum Status { Uninitialized, Authenticated, Authenticating, Unauthenticated }
 
@@ -73,6 +77,61 @@ class AuthProvider extends ChangeNotifier {
   Status get status => _status;
   // UserCredential get user => _user;
   // String get uid => _uid;
+
+
+  var selectedPlan = 1;
+
+  changeSelectedPlan(int plan){
+    selectedPlan = plan;
+    notifyListeners();
+  }
+
+  Offerings offerings;
+  Future getOfferingsDetails() async {
+    await Purchases.setDebugLogsEnabled(true);
+
+    PurchasesConfiguration configuration;
+    if (Platform.isAndroid) {
+      configuration =
+          PurchasesConfiguration("goog_ROKUqNPFksWwfOPyvIcvyZKDPvC");
+      // print("this gibberish");
+      // if (buildingForAmazon) {
+      //   // use your preferred way to determine if this build is for Amazon store
+      //   // checkout our MagicWeather sample for a suggestion
+      //   configuration = AmazonConfiguration("public_amazon_sdk_key");
+      // }
+    } else if (Platform.isIOS) {
+      configuration = PurchasesConfiguration("appl_TyEUZYmaqrFBvyvETDxAnSatMwM");
+    }
+    await Purchases.configure(configuration);
+    offerings = await Purchases.getOfferings();
+  }
+
+  Future purchasePlan() async {
+    final desiredPackageId = 'Plan $selectedPlan'; // Replace with your offering ID
+
+    // Find the specific offering
+    final specificPackage = offerings.current?.availablePackages.firstWhere(
+          (package) => package.identifier == desiredPackageId,
+      orElse: () => null,
+    );
+
+    print('identifies -> -> ${specificPackage.identifier}');
+
+    final purchase = await Purchases.purchasePackage(specificPackage);
+  }
+
+  num checking, rewardPoints;
+  Future getBalances(String uid) async {
+    print('I am in get bacl');
+    await FirebaseFirestore.instance.collection("users").doc(uid).get().then((value) {
+      if (value.data != null) {
+        checking = value.data()['checking'].round();
+        rewardPoints = value.data()['reward_points'].round();
+      }
+    });
+  }
+
 }
 
 // onAuthStateChanged.listen(_onAuthStateChanged)

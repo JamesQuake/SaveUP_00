@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:pay_or_save/pages/about_investment.dart';
 import 'package:pay_or_save/pages/about_savings.dart';
@@ -91,91 +92,107 @@ class MyApp extends StatelessWidget {
           // splitScreenMode: true,
           builder: (context, snapshot) {
             return Consumer<AuthProvider>(
-            builder: (context, provider, child){
-              return MaterialApp(
-                debugShowCheckedModeBanner: false,
-                title: 'SaveUp',
-                theme: ThemeData(
-                  primarySwatch: MaterialColor(0xff0070c0, color),
-                ),
-                //  navigatorObservers: [
-                //    routeObserver.route
-                //  ],
-                home: FutureBuilder(
-                  // Initialize FlutterFire:
-                  future: _initialization,
-                  builder: (context, snapshot) {
-                    // Check for errors
+              builder: (context, provider, child) {
+                return MaterialApp(
+                  debugShowCheckedModeBanner: false,
+                  title: 'SaveUp',
+                  builder: EasyLoading.init(),
+                  theme: ThemeData(
+                    primarySwatch: MaterialColor(0xff0070c0, color),
+                  ),
+                  //  navigatorObservers: [
+                  //    routeObserver.route
+                  //  ],
+                  home: FutureBuilder(
+                    // Initialize FlutterFire:
+                    future: _initialization,
+                    builder: (context, snapshot) {
+                      // Check for errors
 
-                    // Once complete, show your application
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      return new StreamBuilder(
-                        stream: auth.authStateChanges(),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return AltLoadingPage(
-                              uid: snapshot.data.uid,
-                            );
-                          } else if (snapshot.hasError) {
-                            return LoadingPage(
-                              isUser: false,
-                              uid: '',
-                            );
-                          } else {
-                            if (snapshot.connectionState ==
-                                ConnectionState.active) {
-                              return LoadingPage(
-                                isUser: snapshot.hasData,
-                                uid: snapshot.data,
+                      // Once complete, show your application
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        return new StreamBuilder(
+                          stream: auth.authStateChanges(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return AltLoadingPage(
+                                uid: snapshot.data.uid,
                               );
+                            } else if (snapshot.hasError) {
+                              return LoadingPage(
+                                isUser: false,
+                                uid: '',
+                              );
+                            } else {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.active) {
+                                return LoadingPage(
+                                  isUser: snapshot.hasData,
+                                  uid: snapshot.data,
+                                );
+                              }
+                              return Container();
                             }
-                            return Container();
-                          }
-                        },
-                      );
-                    } else {
-                      // Otherwise, show something whilst waiting for initialization to complete
-                      return Container();
-                    }
-                  },
-                ),
-                //initialRoute: '/Introductory0',
-                routes: <String, WidgetBuilder>{
-                  // When navigating to the "/second" route, build the SecondScreen widget.
+                          },
+                        );
+                      } else {
+                        // Otherwise, show something whilst waiting for initialization to complete
+                        return Container();
+                      }
+                    },
+                  ),
+                  //initialRoute: '/Introductory0',
+                  routes: <String, WidgetBuilder>{
+                    // When navigating to the "/second" route, build the SecondScreen widget.
 
-                  '/Intoductory': (context) => Introductory(),
-                  '/Introductory0': (context) => Introductory0(),
-                  '/Introductory1': (context) => Introductory1(),
-                  '/Introductory2': (context) => Introductory2(),
-                  '/signin': (context) => SignInRegistrationPage(),
-                  '/forgot_password': (context) => ForgotPassword(),
-                  '/reset_password': (context) => ResetPassword(),
-                  '/AboutSavings': (context) => AboutSavings(),
-                  '/AboutInvestment': (context) => AboutInvestment(),
-                  '/welcomeback': (context) => WelcomeBack(),
-                  '/starting': (context) => StartingBalances(uid: provider.user.uid),
-                  '/HeardFrom': (context) => HeardFrom(),
-                  '/saving': (context) => SavingGoals(uid: provider.user.uid),
-                  '/investment': (context) => InvestmentGoals(uid: provider.user.uid),
-                  '/dashboard': (context) => DashBoard(uid: provider.user.uid),
-                  '/select_mode': (context) => SelectMode(uid: provider.user.uid),
-                  '/DashBoard': (context) => DashBoard(uid: provider.user.uid),
-                  '/virtual_closet': (context) => VirtualCloset(uid: provider.user.uid),
-                  // '/myoverdraft': (context) => MyOverdraft(),
-                  '/winprizes': (context) => WinPrizes(),
-                  '/save_now': (context) => SaveNow(),
-                  '/invest_now': (context) => InvestNow(),
-                  'acquire_points': (context) => AcquirePoints(),
-                  '/add_to_account': (context) => AddToAccount(),
-                  '/plan1': (context) => Plan1(),
-                  'overdraft_reminder': (context) => OverdraftReminder(),
-                  'select_Store': (context) => SelectStore(),
-                  'AccountBalances': (context) => AccountBalance(),
-                  '/RewardPoints': (context) => RewardPoints(uid: provider.user.uid),
-                  // '/EditInvestment': (context) => EditInvestmentGoal(uid: uid, route: route)
-                },
-              );
-            },
+                    '/Intoductory': (context) => Introductory(),
+                    '/Introductory0': (context) => Introductory0(),
+                    '/Introductory1': (context) => Introductory1(),
+                    '/Introductory2': (context) => Introductory2(),
+                    '/signin': (context) => SignInRegistrationPage(),
+                    '/forgot_password': (context) => ForgotPassword(),
+                    '/reset_password': (context) => ResetPassword(),
+                    '/AboutSavings': (context) => AboutSavings(),
+                    '/AboutInvestment': (context) => AboutInvestment(),
+                    '/welcomeback': (context) => WelcomeBack(),
+                    '/starting': (context) =>
+                        StartingBalances(uid: provider.user.uid),
+                    '/HeardFrom': (context) => HeardFrom(),
+                    '/saving': (context) => SavingGoals(uid: provider.user.uid),
+                    '/investment': (context) =>
+                        InvestmentGoals(uid: provider.user.uid),
+                    '/dashboard': (context) =>
+                        DashBoard(uid: provider.user.uid),
+                    '/select_mode': (context) =>
+                        SelectMode(uid: provider.user.uid),
+                    '/DashBoard': (context) =>
+                        DashBoard(uid: provider.user.uid),
+                    '/virtual_closet': (context) =>
+                        VirtualCloset(uid: provider.user.uid),
+                    // '/myoverdraft': (context) => MyOverdraft(),
+                    '/winprizes': (context) => WinPrizes(),
+                    '/save_now': (context) => SaveNow(),
+                    '/invest_now': (context) => InvestNow(),
+                    'acquire_points': (context) => AcquirePoints(),
+                    '/add_to_account': (context) => AddToAccount(),
+                    '/plan1': (context) => Plan1(),
+                    'overdraft_reminder': (context) => OverdraftReminder(),
+                    'select_Store': (context) => SelectStore(),
+                    'AccountBalances': (context) => AccountBalance(),
+                    '/RewardPoints': (context) =>
+                        RewardPoints(uid: provider.user.uid),
+                    // '/EditInvestment': (context) => EditInvestmentGoal(uid: uid, route: route)
+                  },
+                  // onGenerateRoute: (settings) {
+                  //   if (settings.name == '/starting') {
+                  //     return MaterialPageRoute(
+                  //         builder: (context) =>
+                  //             StartingBalances(uid: provider.user.uid));
+                  //   }
+                  //   return null;
+                  // },
+                );
+              },
             );
           }),
     );

@@ -116,6 +116,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "confetti",
+      "rootUri": "file:///Users/jeeali/.pub-cache/hosted/pub.dartlang.org/confetti-0.6.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "convert",
       "rootUri": "file:///Users/jeeali/.pub-cache/hosted/pub.dartlang.org/convert-3.1.0",
       "packageUri": "lib/",
@@ -242,6 +248,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "flutter_easyloading",
+      "rootUri": "file:///Users/jeeali/.pub-cache/hosted/pub.dartlang.org/flutter_easyloading-3.0.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter_facebook_auth",
       "rootUri": "file:///Users/jeeali/.pub-cache/hosted/pub.dartlang.org/flutter_facebook_auth-4.4.1+1",
       "packageUri": "lib/",
@@ -286,6 +298,12 @@
     {
       "name": "flutter_screenutil",
       "rootUri": "file:///Users/jeeali/.pub-cache/hosted/pub.dartlang.org/flutter_screenutil-5.7.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_spinkit",
+      "rootUri": "file:///Users/jeeali/.pub-cache/hosted/pub.dartlang.org/flutter_spinkit-5.2.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -442,6 +460,12 @@
     {
       "name": "loading_animations",
       "rootUri": "file:///Users/jeeali/.pub-cache/hosted/pub.dartlang.org/loading_animations-2.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "logger",
+      "rootUri": "file:///Users/jeeali/.pub-cache/hosted/pub.dartlang.org/logger-1.4.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -860,7 +884,7 @@
       "languageVersion": "2.7"
     }
   ],
-  "generated": "2024-08-10T02:27:19.109730Z",
+  "generated": "2024-08-22T19:30:07.752442Z",
   "generator": "pub",
   "generatorVersion": "2.16.0"
 }

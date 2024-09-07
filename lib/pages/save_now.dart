@@ -1734,14 +1734,19 @@ class _SaveNowState extends State<SaveNow> with SingleTickerProviderStateMixin {
                           //   'doc':DateTime.now(),
                           // });
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => CongratsSaving(
-                                        incomingModel: updatedModel,
-                                        modelId: _modelId,
-                                        uid: widget.uid,
-                                        savedAmount: savedAmount,
-                                      )));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CongratsSaving(
+                                incomingModel: updatedModel,
+                                modelId: _modelId,
+                                uid: widget.uid,
+                                savedAmount: savedAmount,
+                              ),
+                            ),
+                          );
+                          debugPrint('_modelId -> $_modelId');
+                          debugPrint('widget.uid -> ${widget.uid}');
+                          debugPrint('savedAmount -> ${savedAmount}');
                           // showOverdraftNotice(
                           //     context, double.parse(_checking.toString()));
                         } else {
@@ -2175,7 +2180,7 @@ class _SaveNowState extends State<SaveNow> with SingleTickerProviderStateMixin {
           //   onPressed: () {},
           // ),
           Image.asset(
-            'assets/images/Emptypockets2.png',
+            'assets/images/EmptyPockets2.png',
             height: 450.0.h,
             // width: 500.0,
             fit: BoxFit.cover,

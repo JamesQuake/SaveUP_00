@@ -114,16 +114,20 @@ class _CongratsSaving extends State<CongratsSaving> {
 
   Future<SavingModel> getModelInfo() async {
     if (widget.modelId != null && widget.uid != null) {
+      print('getModelInfo');
+      print('widget.uid -> ${widget.uid}');
+      print('widget.modelId -> ${widget.modelId}');
       var modelInstance = await firestoreInstance
           .collection("savingGoals")
           .doc("users")
           .collection(widget.uid)
           .doc((widget.modelId).trim())
           .get();
-
+          print('modelInstance.data() -> ${modelInstance.data()}');
       receivedModel =
           SavingModel.fromJson(modelInstance.id, modelInstance.data());
-
+          print('receivedModel.amount _> ${receivedModel.amount}');
+          print('receivedModel.goalAmount _> ${receivedModel.goalAmount}');
       // dec[];
 
       // print(dec);
@@ -164,6 +168,11 @@ class _CongratsSaving extends State<CongratsSaving> {
         child: FutureBuilder(
             future: _refModel,
             builder: (context, snapshot) {
+              if(snapshot.connectionState == ConnectionState.waiting){
+                return Center(child: Text('Please wait...'));
+              } else if(snapshot.hasError){
+                return Center(child: Text('Something went wrong...'));
+              } else 
               return Column(
                 children: [
                   Row(
@@ -253,10 +262,12 @@ class _CongratsSaving extends State<CongratsSaving> {
                               ),
                             ),
                             child: Ring(
-                              color: Colors.black.withOpacity(0.6),
-                              color1: Colors.black.withOpacity(0.6),
+                              innerColor: Colors.transparent,
+                              outerColor: Colors.black.withOpacity(0.6),
                               amount: int.parse(receivedModel.amount),
                               goal: int.parse(receivedModel.goalAmount),
+                              minInnerSize: 0.05,
+                              size: 230,
                             ),
                           );
                         },

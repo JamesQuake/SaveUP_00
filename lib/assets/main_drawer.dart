@@ -9,6 +9,8 @@ import 'package:pay_or_save/pages/login.dart';
 import 'package:pay_or_save/pages/saving_goals.dart';
 import 'package:pay_or_save/pages/starting_instructions.dart';
 
+import '../pages/new_pages/add_to_account.dart';
+
 class MainDrawer extends StatefulWidget {
   final String uid;
   final String incomingRoute;
@@ -197,7 +199,13 @@ class _MainDrawerState extends State<MainDrawer> {
             ),
             onTap: () {
               Navigator.pop(context);
-              Navigator.pushNamed(context, '/RewardPoints');
+              // Navigator.pushNamed(context, '/RewardPoints');
+              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AddToAccount(
+                                      // uid: widget.uid,
+                                    )));
             },
           ),
           ListTile(

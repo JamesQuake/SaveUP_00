@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 
 import '../../providers/total_provider.dart';
 import 'acquire_reward_points.dart';
+import 'add_to_account.dart';
 
 class WinPrizes extends StatefulWidget {
   final String uid;
@@ -233,18 +234,20 @@ class _WinPrizes extends State<WinPrizes> {
                             //         builder: (context) => RewardPoints(
                             //             // uid: widget.uid,
                             //             )));
+                            print('details.getRewardPoint -> ${details.getRewardPoint}');
                             if (details.getRewardPoint < 1500) {
                               _showRewardPointNotice(
                                   context, details.getRewardPoint);
-                            } else{
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => RewardPoints(
-                                        uid: widget.uid,
-                                      )));
-                              // Navigator.pushNamedAndRemoveUntil(context, '/starting', (route) => false);
                             }
+                            // else{
+                            //   Navigator.push(
+                            //       context,
+                            //       MaterialPageRoute(
+                            //           builder: (context) => RewardPoints(
+                            //             uid: widget.uid,
+                            //           ),),);
+                            //   // Navigator.pushNamedAndRemoveUntil(context, '/starting', (route) => false);
+                            // }
                           },
                         ),
                         child: Text(
@@ -457,11 +460,17 @@ class _WinPrizes extends State<WinPrizes> {
                     const Duration(milliseconds: 400),
                     () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => AcquirePoints(
-                                    uid: widget.uid,
-                                  )));
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AddToAccount(
+                                // uid: widget.uid,
+                                )));
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) => AcquirePoints(
+                      //               uid: widget.uid,
+                      //             )));
                     },
                   ),
                   child: Container(

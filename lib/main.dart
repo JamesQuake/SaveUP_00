@@ -179,8 +179,7 @@ class MyApp extends StatelessWidget {
                     'overdraft_reminder': (context) => OverdraftReminder(),
                     'select_Store': (context) => SelectStore(),
                     'AccountBalances': (context) => AccountBalance(),
-                    '/RewardPoints': (context) =>
-                        RewardPoints(uid: provider.user.uid),
+                    // '/RewardPoints': (context) => RewardPoints(uid: provider.user.uid),
                     // '/EditInvestment': (context) => EditInvestmentGoal(uid: uid, route: route)
                   },
                   // onGenerateRoute: (settings) {

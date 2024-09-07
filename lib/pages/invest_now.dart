@@ -2556,7 +2556,7 @@ class _InvestNowState extends State<InvestNow>
           //   onPressed: () {},
           // ),
           Image.asset(
-            'assets/images/Emptypockets2.png',
+            'assets/images/EmptyPockets2.png',
             height: 450.0.h,
             // width: 500.0,
             fit: BoxFit.cover,

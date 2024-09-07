@@ -273,7 +273,7 @@ class _Plan2State extends State<Plan2> {
                         TableRow(
                           decoration: BoxDecoration(
                             color: provider.selectedPlan == 1
-                                ? Color(0xfffaeae9)
+                                ? Color(0xffFFF6BC)
                                 : null,
                           ),
                           children: [
@@ -306,6 +306,9 @@ class _Plan2State extends State<Plan2> {
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontWeight: FontWeight.w500,
+                                      color: provider.selectedPlan == 1
+                                          ? Colors.black
+                                          : Colors.grey,
                                     ),
                                   ),
                                 ),
@@ -322,8 +325,10 @@ class _Plan2State extends State<Plan2> {
                                     '\$${formatter.format(provider.checking + 500)}',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      color: Colors.grey[400],
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w500,
+                                      color: provider.selectedPlan == 1
+                                          ? Colors.black
+                                          : Colors.grey,
                                     ),
                                   ),
                                 ),
@@ -337,11 +342,13 @@ class _Plan2State extends State<Plan2> {
                                   height: 35.0,
                                   alignment: Alignment.center,
                                   child: Text(
-                                    '${formatter.format(provider.rewardPoints + (500*2))}',
+                                    '${formatter.format(provider.rewardPoints + (500 * 2))}',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      color: Colors.grey[400],
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w500,
+                                      color: provider.selectedPlan == 1
+                                          ? Colors.black
+                                          : Colors.grey,
                                     ),
                                   ),
                                 ),
@@ -352,7 +359,7 @@ class _Plan2State extends State<Plan2> {
                         TableRow(
                             decoration: BoxDecoration(
                               color: provider.selectedPlan == 2
-                                  ? Color(0xfffaeae9)
+                                  ? Color(0xffFFF6BC)
                                   : null,
                               border: Border(
                                 top: BorderSide(
@@ -386,6 +393,9 @@ class _Plan2State extends State<Plan2> {
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontWeight: FontWeight.w500,
+                                      color: provider.selectedPlan == 2
+                                          ? Colors.black
+                                          : Colors.grey,
                                     ),
                                   ),
                                 ),
@@ -399,8 +409,10 @@ class _Plan2State extends State<Plan2> {
                                     '\$${formatter.format(provider.checking + 1000)}',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      color: Colors.grey[400],
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w500,
+                                      color: provider.selectedPlan == 2
+                                          ? Colors.black
+                                          : Colors.grey,
                                     ),
                                   ),
                                 ),
@@ -411,11 +423,13 @@ class _Plan2State extends State<Plan2> {
                                   height: 45.0,
                                   alignment: Alignment.center,
                                   child: Text(
-                                    '${formatter.format(provider.rewardPoints + (1000*2))}',
+                                    '${formatter.format(provider.rewardPoints + (1000 * 2))}',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      color: Colors.grey[400],
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w500,
+                                      color: provider.selectedPlan == 2
+                                          ? Colors.black
+                                          : Colors.grey,
                                     ),
                                   ),
                                 ),
@@ -424,7 +438,7 @@ class _Plan2State extends State<Plan2> {
                         TableRow(
                             decoration: BoxDecoration(
                               color: provider.selectedPlan == 3
-                                  ? Color(0xfffaeae9)
+                                  ? Color(0xffFFF6BC)
                                   : null,
                               border: Border(
                                 top: BorderSide(
@@ -458,6 +472,9 @@ class _Plan2State extends State<Plan2> {
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontWeight: FontWeight.w500,
+                                      color: provider.selectedPlan == 3
+                                          ? Colors.black
+                                          : Colors.grey,
                                     ),
                                   ),
                                 ),
@@ -471,8 +488,10 @@ class _Plan2State extends State<Plan2> {
                                     '\$${formatter.format(provider.checking + 2500)}',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      color: Colors.grey[400],
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w500,
+                                      color: provider.selectedPlan == 3
+                                          ? Colors.black
+                                          : Colors.grey,
                                     ),
                                   ),
                                 ),
@@ -483,11 +502,13 @@ class _Plan2State extends State<Plan2> {
                                   height: 45.0,
                                   alignment: Alignment.center,
                                   child: Text(
-                                    '${formatter.format(provider.rewardPoints + (2500*2))}',
+                                    '${formatter.format(provider.rewardPoints + (2500 * 2))}',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      color: Colors.grey[400],
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w500,
+                                      color: provider.selectedPlan == 3
+                                          ? Colors.black
+                                          : Colors.grey,
                                     ),
                                   ),
                                 ),
@@ -496,7 +517,7 @@ class _Plan2State extends State<Plan2> {
                         TableRow(
                             decoration: BoxDecoration(
                               color: provider.selectedPlan == 4
-                                  ? Color(0xfffaeae9)
+                                  ? Color(0xffFFF6BC)
                                   : null,
                               border: Border(
                                 top: BorderSide(
@@ -530,6 +551,9 @@ class _Plan2State extends State<Plan2> {
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontWeight: FontWeight.w500,
+                                      color: provider.selectedPlan == 4
+                                          ? Colors.black
+                                          : Colors.grey,
                                     ),
                                   ),
                                 ),
@@ -543,8 +567,10 @@ class _Plan2State extends State<Plan2> {
                                     '\$${formatter.format(provider.checking + 5000)}',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      color: Colors.grey[400],
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w500,
+                                      color: provider.selectedPlan == 4
+                                          ? Colors.black
+                                          : Colors.grey,
                                     ),
                                   ),
                                 ),
@@ -555,11 +581,13 @@ class _Plan2State extends State<Plan2> {
                                   height: 45.0,
                                   alignment: Alignment.center,
                                   child: Text(
-                                    '${formatter.format(provider.rewardPoints + (5000*2))}',
+                                    '${formatter.format(provider.rewardPoints + (5000 * 2))}',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      color: Colors.grey[400],
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w500,
+                                      color: provider.selectedPlan == 4
+                                          ? Colors.black
+                                          : Colors.grey,
                                     ),
                                   ),
                                 ),
@@ -568,7 +596,7 @@ class _Plan2State extends State<Plan2> {
                         TableRow(
                             decoration: BoxDecoration(
                               color: provider.selectedPlan == 5
-                                  ? Color(0xfffaeae9)
+                                  ? Color(0xffFFF6BC)
                                   : null,
                               border: Border(
                                 top: BorderSide(
@@ -602,6 +630,9 @@ class _Plan2State extends State<Plan2> {
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontWeight: FontWeight.w500,
+                                      color: provider.selectedPlan == 5
+                                          ? Colors.black
+                                          : Colors.grey,
                                     ),
                                   ),
                                 ),
@@ -615,8 +646,10 @@ class _Plan2State extends State<Plan2> {
                                     '\$${formatter.format(provider.checking + 7500)}',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      color: Colors.grey[400],
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w500,
+                                      color: provider.selectedPlan == 5
+                                          ? Colors.black
+                                          : Colors.grey,
                                     ),
                                   ),
                                 ),
@@ -627,11 +660,13 @@ class _Plan2State extends State<Plan2> {
                                   height: 45.0,
                                   alignment: Alignment.center,
                                   child: Text(
-                                    '${formatter.format(provider.rewardPoints + (7500*2))}',
+                                    '${formatter.format(provider.rewardPoints + (7500 * 2))}',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      color: Colors.grey[400],
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w500,
+                                      color: provider.selectedPlan == 5
+                                          ? Colors.black
+                                          : Colors.grey,
                                     ),
                                   ),
                                 ),
@@ -640,7 +675,7 @@ class _Plan2State extends State<Plan2> {
                         TableRow(
                             decoration: BoxDecoration(
                               color: provider.selectedPlan == 6
-                                  ? Color(0xfffaeae9)
+                                  ? Color(0xffFFF6BC)
                                   : null,
                               border: Border(
                                 top: BorderSide(
@@ -674,6 +709,9 @@ class _Plan2State extends State<Plan2> {
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontWeight: FontWeight.w500,
+                                      color: provider.selectedPlan == 6
+                                          ? Colors.black
+                                          : Colors.grey,
                                     ),
                                   ),
                                 ),
@@ -687,8 +725,10 @@ class _Plan2State extends State<Plan2> {
                                     '\$${formatter.format(provider.checking + 10000)}',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      color: Colors.grey[400],
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w500,
+                                      color: provider.selectedPlan == 6
+                                          ? Colors.black
+                                          : Colors.grey,
                                     ),
                                   ),
                                 ),
@@ -699,11 +739,13 @@ class _Plan2State extends State<Plan2> {
                                   height: 35.0,
                                   alignment: Alignment.center,
                                   child: Text(
-                                    '${formatter.format(provider.rewardPoints + (10000*2))}',
+                                    '${formatter.format(provider.rewardPoints + (10000 * 2))}',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      color: Colors.grey[400],
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w500,
+                                      color: provider.selectedPlan == 6
+                                          ? Colors.black
+                                          : Colors.grey,
                                     ),
                                   ),
                                 ),
@@ -751,7 +793,7 @@ class _Plan2State extends State<Plan2> {
                             style: ButtonStyle(
                               backgroundColor:
                                   MaterialStateProperty.resolveWith(
-                                (states) => Color(0xffcb0909),
+                                (states) => provider.selectedPlan < 7 ?  Color(0xffcb0909) : Color.fromARGB(217, 198, 73, 73),
                               ),
                               shape: MaterialStateProperty.all<
                                   RoundedRectangleBorder>(
@@ -762,7 +804,7 @@ class _Plan2State extends State<Plan2> {
                               overlayColor: MaterialStateProperty.resolveWith(
                                 (states) {
                                   return states.contains(MaterialState.pressed)
-                                      ? Colors.red
+                                      ? provider.selectedPlan < 7 ?   Colors.red : Color.fromARGB(217, 146, 99, 99)
                                       : null;
                                 },
                               ),
@@ -770,13 +812,9 @@ class _Plan2State extends State<Plan2> {
                             onPressed: () => Timer(
                               const Duration(milliseconds: 400),
                               () {
-                                provider.purchasePlan(context);
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) => OverdraftReminder(
-                                //           // uid: widget.uid,
-                                //         )));
+                                if(provider.selectedPlan < 7){
+                                  provider.purchasePlan(context);
+                                }
                               },
                             ),
                             child: Container(
@@ -785,13 +823,12 @@ class _Plan2State extends State<Plan2> {
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 17.0,
-                                  color: Colors.white,
+                                  color: provider.selectedPlan < 7 ? Colors.white : Colors.grey.shade300,
                                 ),
                               ),
                             ),
                           ),
                         ),
-                        
                       ],
                     ),
                   ],

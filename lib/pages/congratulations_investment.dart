@@ -244,10 +244,12 @@ class _CongratsInvestmentState extends State<CongratsInvestment> {
                               ),
                             ),
                             child: Ring(
-                              color: Colors.black.withOpacity(0.6),
-                              color1: Colors.black.withOpacity(0.6),
+                              innerColor: Colors.transparent,
+                              outerColor: Colors.black.withOpacity(0.6),
                               amount: int.parse(_receivedModel.amount),
                               goal: int.parse(_receivedModel.goalAmount),
+                              minInnerSize: 0.05,
+                              size: 230,
                             ),
                             // color: Color(0xff3790ce),
                           );

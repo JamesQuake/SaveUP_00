@@ -25,6 +25,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/productmodel.dart';
 import '../widgets/alert_pos.dart';
 import 'congrats_saving.dart';
+import 'new_pages/add_to_account.dart';
 
 // import 'edit_saving_goal.dart';
 
@@ -2214,10 +2215,18 @@ class _SaveNowState extends State<SaveNow> with SingleTickerProviderStateMixin {
               const Duration(milliseconds: 400),
               () {
                 Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AddToAccount(
+                        // uid: widget.uid,
+                        ),
+                  ),
+                );
               },
             ),
             child: Text(
-              'Return',
+              'Add Reward Points',
               style: TextStyle(
                 fontSize: 20.0.h,
                 color: Colors.white,

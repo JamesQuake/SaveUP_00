@@ -25,6 +25,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'congratulations_investment.dart';
+import 'new_pages/add_to_account.dart';
 import 'overdraft_notice.dart';
 
 class InvestNow extends StatefulWidget {
@@ -50,7 +51,7 @@ class _InvestNowState extends State<InvestNow>
   int orderPercentage, stockPercentage, years;
   double _investment, res, _orderAmount, _willBeWorth;
   int _checking, _rewardPoints;
-  double x = 0.0;
+  double x = 0.0, zzz=0.0;
   double totalInvested = 0.0;
   List<AccountModel> _list;
   InvestmentModel accountModel;
@@ -119,7 +120,7 @@ class _InvestNowState extends State<InvestNow>
   InvestmentModel updatedModel;
   String currentInvestAmount;
   double totalInv;
-  double _undoAmount;
+  double _undoAmount, _undoCheckingAmount;
   InvestmentModel _editedModel;
   bool _activeEdit = false;
   List investValues = [];
@@ -559,9 +560,13 @@ class _InvestNowState extends State<InvestNow>
         _orderAmount != 0 &&
         stockPercentage != 0 &&
         orderPercentage != 0) {
-      if (_orderAmount >= 1 && _orderAmount >= (res / 2)) {
+      print('_orderAmount -> $_orderAmount');
+      print('res -> $res');
+      print('_willBeWorth -> $_willBeWorth');
+      if (_orderAmount >= 1 && _willBeWorth >= 1) {
+        // if (_orderAmount >= 1 && _orderAmount >= (_willBeWorth / 2)) {
         if (goalSaved == false) {
-          if (_checking < res) {
+          if (_checking < _willBeWorth) {
             // navigateToOverdraft(context);
             _showOverdraftNotice(context, double.parse(_checking.toString()));
           } else
@@ -571,14 +576,22 @@ class _InvestNowState extends State<InvestNow>
           // } else
 
           {
-            x = double.parse(res.toString());
+            x = double.parse(_willBeWorth.toString());
+            zzz = double.parse(res.toString());
+            print('x $x');
+            print('zzz $zzz');
             _undoAmount = x;
-            var c = _checking - x;
+            _undoCheckingAmount = zzz;
+            var c = _checking - zzz;
+            print('_checking - zzz ${_checking - zzz}');
+            print('_checking - x ${_checking - x}');
             var s = _investment + x;
             var r = _rewardPoints + x;
             var calcChecking = num.parse(c.toStringAsFixed(2));
             var calcInvest = num.parse(s.toStringAsFixed(2));
             var calcReward = num.parse(r.toStringAsFixed(2));
+            print('calcChecking -> $calcChecking');
+            print('_undoAmount $_undoAmount');
             firestoreInstance.collection("users").doc(widget.uid).update({
               "checking": calcChecking,
               "investment": calcInvest,
@@ -617,7 +630,7 @@ class _InvestNowState extends State<InvestNow>
                 // _list[1].amount = (_checking - x).toString();
                 // _list[2].amount = (_rewardPoints + x).toString();
                 _investment = _investment + x;
-                _checking = _checking - x.toInt();
+                _checking = _checking - zzz.toInt();
                 _rewardPoints = _rewardPoints + x.toInt();
                 _activeEdit = true;
                 x = (_orderAmount / 100) * orderPercentage;
@@ -662,7 +675,7 @@ class _InvestNowState extends State<InvestNow>
 
   _undoInvest(InvestmentModel _model) {
     if (_activeEdit == true) {
-      var _c = _checking + _undoAmount;
+      var _c = _checking + _undoCheckingAmount;
       var _s = _investment - _undoAmount;
       var _r = _rewardPoints - _undoAmount;
       var calChcking = num.parse(_c.toStringAsFixed(2));
@@ -705,7 +718,7 @@ class _InvestNowState extends State<InvestNow>
           // _list[1].amount = (_checking + _undoAmount).toString();
           // _list[2].amount = (_rewardPoints - _undoAmount).toString();
           _investment = _investment - _undoAmount;
-          _checking = _checking + _undoAmount.toInt();
+          _checking = _checking + _undoCheckingAmount.toInt();
           _rewardPoints = _rewardPoints - _undoAmount.toInt();
           _activeEdit = false;
           // x = (_orderAmount / 100) * orderPercentage;
@@ -881,7 +894,7 @@ class _InvestNowState extends State<InvestNow>
                                   drawChart();
                                 });
                               },
-                              min: 0,
+                              min: 10,
                               max: 200,
                               divisions: 20,
                               label: _percents == null
@@ -961,7 +974,7 @@ class _InvestNowState extends State<InvestNow>
                     child: Row(
                       children: [
                         Text(
-                          'When invested at',
+                          'Choose rate and term',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 15.h),
                         ),
@@ -1032,7 +1045,7 @@ class _InvestNowState extends State<InvestNow>
                                   drawChart();
                                 });
                               },
-                              min: 0,
+                              min: 1,
                               max: 12,
                               divisions: 12,
                               // inactiveColor: Colors.grey[400],
@@ -1065,7 +1078,7 @@ class _InvestNowState extends State<InvestNow>
                     alignment: Alignment.topLeft,
                     // widthFactor: 10.0,
                     child: Text(
-                      'For',
+                      'Future Value',
                       style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 15.h),
                     ),
@@ -1122,7 +1135,7 @@ class _InvestNowState extends State<InvestNow>
                                   drawChart();
                                 });
                               },
-                              min: 0,
+                              min: 1,
                               max: 40,
                               divisions: 40,
                               label: _time ?? '20',
@@ -2589,10 +2602,18 @@ class _InvestNowState extends State<InvestNow>
               const Duration(milliseconds: 400),
               () {
                 Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AddToAccount(
+                        // uid: widget.uid,
+                        ),
+                  ),
+                );
               },
             ),
             child: Text(
-              'Return',
+              'Add Reward Points',
               style: TextStyle(
                 fontSize: 20.0.h,
                 color: Colors.white,

@@ -35,6 +35,7 @@ class _CongratsInvestmentState extends State<CongratsInvestment> {
   final firestoreInstance = FirebaseFirestore.instance;
   InvestmentModel _receivedModel;
   Future<InvestmentModel> _referenceModel;
+  bool _isTapped = false;
   // int _rewardPoints;
   // var _newAmount = '\$' + amount;
 
@@ -98,9 +99,11 @@ class _CongratsInvestmentState extends State<CongratsInvestment> {
           .collection(widget.uid)
           .doc((widget.modelId).trim())
           .get();
-
+      print('modelInstance.data() -> ${modelInstance.data()}');
       _receivedModel =
           InvestmentModel.fromJson(modelInstance.id, modelInstance.data());
+      print('receivedModel.amount _> ${_receivedModel.amount}');
+      print('receivedModel.goalAmount _> ${_receivedModel.goalAmount}');
     } else {
       if (widget.modelId == null) print('model ID is empty');
       if (widget.uid == null) print('uid is empty');
@@ -151,295 +154,311 @@ class _CongratsInvestmentState extends State<CongratsInvestment> {
         child: FutureBuilder(
             future: _referenceModel,
             builder: (context, snapshot) {
-              return Column(
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        child: Container(
-                          width: 40.0.w,
-                          height: 40.0.h,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              image: (_receivedModel != null)
-                                  ? NetworkImage(_receivedModel.url)
-                                  : AssetImage('assets/images/posmob.png'),
-                              colorFilter: (_receivedModel == null)
-                                  ? ColorFilter.mode(
-                                      Colors.white.withOpacity(0.6),
-                                      BlendMode.dstATop)
-                                  : null,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 10.0.w,
-                      ),
-                      Expanded(
-                        child: RichText(
-                          // overflow: TextOverflow.visible,
-                          text: TextSpan(
-                            style: TextStyle(
-                              color: Colors.black,
-                              height: 1.5,
-                              fontSize: 18.h,
-                            ),
-                            children: [
-                              TextSpan(
-                                text:
-                                    'Congratulations! You have just invested ',
-                                style: TextStyle(
-                                  fontSize: 17.0.h,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              TextSpan(
-                                text: NumberFormat.simpleCurrency(
-                                        locale: "en-us", decimalDigits: 2)
-                                    .format(double.parse(widget.investAmount)),
-                                style: TextStyle(
-                                  fontSize: 18.h,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.blue,
-                                ),
-                              ),
-                              TextSpan(
-                                text: ' towards your investment goal.',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 50.0.h,
-                  ),
-                  Stack(
-                    // fit: StackFit.,
-                    children: [
-                      Consumer<TotalValues>(
-                        builder: (context, values, child) {
-                          return Container(
-                            // width: 230.0,
-                            height: 230.0,
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: Text('Please wait...'));
+              } else if (snapshot.hasError) {
+                return Center(child: Text('Something went wrong...'));
+              } else
+                return Column(
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          child: Container(
+                            width: 40.0.w,
+                            height: 40.0.h,
                             decoration: BoxDecoration(
-                              // color: Color(0xff3790ce),
                               shape: BoxShape.circle,
                               image: DecorationImage(
-                                image: (snapshot.data != null)
-                                    ? NetworkImage(snapshot.data.url)
+                                image: (_receivedModel != null)
+                                    ? NetworkImage(_receivedModel.url)
                                     : AssetImage('assets/images/posmob.png'),
-                                colorFilter: (snapshot.data == null)
+                                colorFilter: (_receivedModel == null)
                                     ? ColorFilter.mode(
                                         Colors.white.withOpacity(0.6),
                                         BlendMode.dstATop)
                                     : null,
-                                fit: BoxFit.contain,
                               ),
                             ),
-                            child: Ring(
-                              innerColor: Colors.transparent,
-                              outerColor: Colors.black.withOpacity(0.6),
-                              amount: int.parse(_receivedModel.amount),
-                              goal: int.parse(_receivedModel.goalAmount),
-                              minInnerSize: 0.05,
-                              size: 230,
-                            ),
-                            // color: Color(0xff3790ce),
-                          );
-                        },
-                      ),
-                      // Ring(
-                      //   radius: 93,
-                      //   innerRadius: 50,
-                      //   color: Colors.black.withOpacity(0.6),
-                      //   color1: Colors.transparent,
-                      // ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 50.h,
-                  ),
-                  Container(
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      // overflow: TextOverflow.visible,
-                      text: TextSpan(
-                        style: TextStyle(
-                          color: Colors.black,
-                          height: 1.5,
-                          fontSize: 18.h,
+                          ),
                         ),
-                        children: [
-                          TextSpan(
-                            text: 'Earn 150 Bonus Reward Points \n',
-                            style: TextStyle(
-                              fontSize: 18.0.h,
-                              fontWeight: FontWeight.bold,
+                        SizedBox(
+                          width: 10.0.w,
+                        ),
+                        Expanded(
+                          child: RichText(
+                            // overflow: TextOverflow.visible,
+                            text: TextSpan(
+                              style: TextStyle(
+                                color: Colors.black,
+                                height: 1.5,
+                                fontSize: 18.h,
+                              ),
+                              children: [
+                                TextSpan(
+                                  text:
+                                      'Congratulations! You have just invested ',
+                                  style: TextStyle(
+                                    fontSize: 17.0.h,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: NumberFormat.simpleCurrency(
+                                          locale: "en-us", decimalDigits: 2)
+                                      .format(
+                                          double.parse(widget.investAmount)),
+                                  style: TextStyle(
+                                    fontSize: 18.h,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.blue,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: ' towards your investment goal.',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          TextSpan(
-                            text:
-                                ' everytime you share your savings success with family and friends.',
-                            style: TextStyle(
-                              fontSize: 18.h,
-                            ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 50.0.h,
+                    ),
+                    Stack(
+                      // fit: StackFit.,
+                      children: [
+                        Consumer<TotalValues>(
+                          builder: (context, values, child) {
+                            return Container(
+                              // width: 230.0,
+                              height: 230.0,
+                              decoration: BoxDecoration(
+                                // color: Color(0xff3790ce),
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: (snapshot.data != null)
+                                      ? NetworkImage(snapshot.data.url)
+                                      : AssetImage('assets/images/posmob.png'),
+                                  colorFilter: (snapshot.data == null)
+                                      ? ColorFilter.mode(
+                                          Colors.white.withOpacity(0.6),
+                                          BlendMode.dstATop)
+                                      : null,
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                              child: GestureDetector(
+                                onTapDown: (TapDownDetails details) {
+                                  // This function is called when the user taps down on the widget
+                                  setState(() => _isTapped = true);
+                                },
+                                onTapUp: (TapUpDetails details) {
+                                  // This function is called when the user releases the tap on the widget
+                                  setState(() => _isTapped = false);
+                                },
+                                onTapCancel: () {
+                                  // This function is called when the user moves their finger away from the widget without releasing
+                                  setState(() => _isTapped = false);
+                                },
+                                child: Ring(
+                                  innerColor: Colors.transparent,
+                                  outerColor: _isTapped ? Colors.transparent : Colors.black.withOpacity(0.6),
+                                  amount: int.parse(_receivedModel.amount),
+                                  goal: int.parse(_receivedModel.goalAmount),
+                                  minInnerSize: 0.10,
+                                  size: 230,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 50.h,
+                    ),
+                    Container(
+                      child: RichText(
+                        textAlign: TextAlign.center,
+                        // overflow: TextOverflow.visible,
+                        text: TextSpan(
+                          style: TextStyle(
+                            color: Colors.black,
+                            height: 1.5,
+                            fontSize: 18.h,
                           ),
-                        ],
+                          children: [
+                            TextSpan(
+                              text: 'Earn 150 Bonus Reward Points \n',
+                              style: TextStyle(
+                                fontSize: 18.0.h,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            TextSpan(
+                              text:
+                                  ' everytime you share your savings success with family and friends.',
+                              style: TextStyle(
+                                fontSize: 18.h,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 20.0.h,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      // GestureDetector(
-                      //   ///can appply to all of them
-                      //   onTap: () {},
-                      //   child: CircleAvatar(
-                      //     backgroundImage: AssetImage(
-                      //         'assets/images/social/iconlinkedin.png'),
-                      //   ),
-                      // ),
-                      GestureDetector(
-                        onTap: () => _share(_SocialMedia.facebook),
-                        child: CircleAvatar(
-                          backgroundImage: AssetImage(
-                              'assets/images/Social/IconFacebook.png'),
+                    SizedBox(
+                      height: 20.0.h,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        // GestureDetector(
+                        //   ///can appply to all of them
+                        //   onTap: () {},
+                        //   child: CircleAvatar(
+                        //     backgroundImage: AssetImage(
+                        //         'assets/images/social/iconlinkedin.png'),
+                        //   ),
+                        // ),
+                        GestureDetector(
+                          onTap: () => _share(_SocialMedia.facebook),
+                          child: CircleAvatar(
+                            backgroundImage: AssetImage(
+                                'assets/images/Social/IconFacebook.png'),
+                          ),
                         ),
-                      ),
-                      // CircleAvatar(
-                      //   backgroundImage: AssetImage(
-                      //       'assets/images/social/iconpinterest.png'),
-                      // ),
-                      GestureDetector(
-                        onTap: () => _share(_SocialMedia.twitter),
-                        child: CircleAvatar(
-                          backgroundImage: AssetImage(
-                              'assets/images/Social/IconTwitter.png'),
+                        // CircleAvatar(
+                        //   backgroundImage: AssetImage(
+                        //       'assets/images/social/iconpinterest.png'),
+                        // ),
+                        GestureDetector(
+                          onTap: () => _share(_SocialMedia.twitter),
+                          child: CircleAvatar(
+                            backgroundImage: AssetImage(
+                                'assets/images/Social/IconTwitter.png'),
+                          ),
                         ),
-                      ),
-                      // CircleAvatar(
-                      //   backgroundImage: AssetImage(
-                      //       'assets/images/social/iconinstagram.png'),
-                      // ),
-                      GestureDetector(
-                        onTap: () => _sendEmail(),
-                        child: CircleAvatar(
-                          backgroundImage:
-                              AssetImage('assets/images/emailicon.png'),
+                        // CircleAvatar(
+                        //   backgroundImage: AssetImage(
+                        //       'assets/images/social/iconinstagram.png'),
+                        // ),
+                        GestureDetector(
+                          onTap: () => _sendEmail(),
+                          child: CircleAvatar(
+                            backgroundImage:
+                                AssetImage('assets/images/emailicon.png'),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  Spacer(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox.fromSize(
-                        size: Size(
-                          120.0.w,
-                          50.0.h,
-                        ),
-                        child: TextButton(
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.resolveWith(
-                              (states) => Color(0xff0e8646),
-                            ),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
+                      ],
+                    ),
+                    Spacer(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox.fromSize(
+                          size: Size(
+                            120.0.w,
+                            50.0.h,
+                          ),
+                          child: TextButton(
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.resolveWith(
+                                (states) => Color(0xff0e8646),
+                              ),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                              ),
+                              overlayColor: MaterialStateProperty.resolveWith(
+                                (states) {
+                                  return states.contains(MaterialState.pressed)
+                                      ? Colors.green
+                                      : null;
+                                },
                               ),
                             ),
-                            overlayColor: MaterialStateProperty.resolveWith(
-                              (states) {
-                                return states.contains(MaterialState.pressed)
-                                    ? Colors.green
-                                    : null;
+                            onPressed: () => Timer(
+                              const Duration(milliseconds: 400),
+                              () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => WinPrizes(
+                                              uid: widget.uid,
+                                            )));
                               },
                             ),
-                          ),
-                          onPressed: () => Timer(
-                            const Duration(milliseconds: 400),
-                            () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => WinPrizes(
-                                            uid: widget.uid,
-                                          )));
-                            },
-                          ),
-                          child: Container(
-                            child: Text(
-                              'Win Prizes',
-                              style: TextStyle(
-                                fontSize: 17.0.h,
-                                color: Colors.white,
+                            child: Container(
+                              child: Text(
+                                'Win Prizes',
+                                style: TextStyle(
+                                  fontSize: 17.0.h,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        width: 10.0.w,
-                      ),
-                      // _validateInputs();
-                      // navigateToSetInvestmentGoals(context);
-                      SizedBox.fromSize(
-                        size: Size(
-                          120.0.w,
-                          50.0.h,
+                        SizedBox(
+                          width: 10.0.w,
                         ),
-                        child: TextButton(
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.resolveWith(
-                              (states) => Color(0xff1ba0fb),
-                            ),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
+                        // _validateInputs();
+                        // navigateToSetInvestmentGoals(context);
+                        SizedBox.fromSize(
+                          size: Size(
+                            120.0.w,
+                            50.0.h,
+                          ),
+                          child: TextButton(
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.resolveWith(
+                                (states) => Color(0xff1ba0fb),
+                              ),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                              ),
+                              overlayColor: MaterialStateProperty.resolveWith(
+                                (states) {
+                                  return states.contains(MaterialState.pressed)
+                                      ? Colors.blue
+                                      : null;
+                                },
                               ),
                             ),
-                            overlayColor: MaterialStateProperty.resolveWith(
-                              (states) {
-                                return states.contains(MaterialState.pressed)
-                                    ? Colors.blue
-                                    : null;
+                            onPressed: () => Timer(
+                              const Duration(milliseconds: 400),
+                              () {
+                                Navigator.pushNamedAndRemoveUntil(
+                                    context, '/starting', (route) => false);
                               },
                             ),
-                          ),
-                          onPressed: () => Timer(
-                            const Duration(milliseconds: 400),
-                            () {
-                              Navigator.pushNamedAndRemoveUntil(context, '/starting', (route) => false);
-                            },
-                          ),
-                          child: Container(
-                            child: Text(
-                              'Done',
-                              style: TextStyle(
-                                fontSize: 17.0.h,
-                                color: Colors.white,
+                            child: Container(
+                              child: Text(
+                                'Done',
+                                style: TextStyle(
+                                  fontSize: 17.0.h,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              );
+                      ],
+                    ),
+                  ],
+                );
             }),
       ),
     );

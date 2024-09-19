@@ -102,43 +102,17 @@ class _Plan1State extends State<Plan1> {
                 padding: const EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 10.0),
                 child: Column(
                   children: [
-                    Row(
-                      children: [
-                        Text(
-                          'Plan 1: STOP Ads',
-                          // textAlign: TextAlign.left,
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Color(0xffcb0909),
-                            fontWeight: FontWeight.w800,
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                            'Plan 1: STOP Ads',
+                            // textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Color(0xffcb0909),
+                              fontWeight: FontWeight.w800,
+                            ),
                           ),
-                        ),
-                        Spacer(),
-                        GestureDetector(
-                          onTap: () {},
-                          child: Icon(
-                            Icons.arrow_back_ios_new_outlined,
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {},
-                          child: Icon(
-                            Icons.arrow_forward_ios_outlined,
-                          ),
-                        ),
-                        // IconButton(
-                        //   onPressed: () {},
-                        //   icon: Icon(
-                        //     Icons.arrow_back_ios_new_outlined,
-                        //   ),
-                        // ),
-                        // IconButton(
-                        //   onPressed: () {},
-                        //   icon: Icon(
-                        //     Icons.arrow_forward_ios_outlined,
-                        //   ),
-                        // ),
-                      ],
                     ),
                     Divider(
                       color: Colors.black,
@@ -861,14 +835,7 @@ class _Plan1State extends State<Plan1> {
                             ),
                             onPressed: () => Timer(
                               const Duration(milliseconds: 400),
-                              () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Plan2(
-                                            // uid: widget.uid,
-                                            )));
-                              },
+                              () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Plan2())),
                             ),
                             child: Container(
                               child: Text(

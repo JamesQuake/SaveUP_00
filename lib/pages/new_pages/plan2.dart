@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pay_or_save/assets/main_drawer.dart';
 import 'package:pay_or_save/pages/new_pages/overdraft_reminder.dart';
+import 'package:pay_or_save/pages/new_pages/plan1.dart';
 import 'package:pay_or_save/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -102,43 +103,17 @@ class _Plan2State extends State<Plan2> {
                 padding: const EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 10.0),
                 child: Column(
                   children: [
-                    Row(
-                      children: [
-                        Text(
-                          'Plan 2: STOP Ads',
-                          // textAlign: TextAlign.left,
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Color(0xffcb0909),
-                            fontWeight: FontWeight.w800,
-                          ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Plan 2: STOP Ads',
+                        // textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Color(0xffcb0909),
+                          fontWeight: FontWeight.w800,
                         ),
-                        Spacer(),
-                        GestureDetector(
-                          onTap: () {},
-                          child: Icon(
-                            Icons.arrow_back_ios_new_outlined,
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {},
-                          child: Icon(
-                            Icons.arrow_forward_ios_outlined,
-                          ),
-                        ),
-                        // IconButton(
-                        //   onPressed: () {},
-                        //   icon: Icon(
-                        //     Icons.arrow_back_ios_new_outlined,
-                        //   ),
-                        // ),
-                        // IconButton(
-                        //   onPressed: () {},
-                        //   icon: Icon(
-                        //     Icons.arrow_forward_ios_outlined,
-                        //   ),
-                        // ),
-                      ],
+                      ),
                     ),
                     Divider(
                       color: Colors.black,
@@ -793,7 +768,7 @@ class _Plan2State extends State<Plan2> {
                             style: ButtonStyle(
                               backgroundColor:
                                   MaterialStateProperty.resolveWith(
-                                (states) => provider.selectedPlan < 7 ?  Color(0xffcb0909) : Color.fromARGB(217, 198, 73, 73),
+                                (states) => Color(0xff000000),
                               ),
                               shape: MaterialStateProperty.all<
                                   RoundedRectangleBorder>(
@@ -804,7 +779,55 @@ class _Plan2State extends State<Plan2> {
                               overlayColor: MaterialStateProperty.resolveWith(
                                 (states) {
                                   return states.contains(MaterialState.pressed)
-                                      ? provider.selectedPlan < 7 ?   Colors.red : Color.fromARGB(217, 146, 99, 99)
+                                      ? Color(0xff2f2f2f)
+                                      : null;
+                                },
+                              ),
+                            ),
+                            onPressed: () => Timer(
+                              const Duration(milliseconds: 400),
+                              () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Plan1())),
+                            ),
+                            child: Container(
+                              child: Text(
+                                'Previous',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 17.0,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10.0,
+                        ),
+                        SizedBox.fromSize(
+                          size: Size(
+                            130.0,
+                            53.0,
+                          ),
+                          child: TextButton(
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.resolveWith(
+                                (states) => provider.selectedPlan < 7
+                                    ? Color(0xffcb0909)
+                                    : Color.fromARGB(217, 198, 73, 73),
+                              ),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                              ),
+                              overlayColor: MaterialStateProperty.resolveWith(
+                                (states) {
+                                  return states.contains(MaterialState.pressed)
+                                      ? provider.selectedPlan < 7
+                                          ? Colors.red
+                                          : Color.fromARGB(217, 146, 99, 99)
                                       : null;
                                 },
                               ),
@@ -812,7 +835,7 @@ class _Plan2State extends State<Plan2> {
                             onPressed: () => Timer(
                               const Duration(milliseconds: 400),
                               () {
-                                if(provider.selectedPlan < 7){
+                                if (provider.selectedPlan < 7) {
                                   provider.purchasePlan(context);
                                 }
                               },
@@ -823,7 +846,9 @@ class _Plan2State extends State<Plan2> {
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 17.0,
-                                  color: provider.selectedPlan < 7 ? Colors.white : Colors.grey.shade300,
+                                  color: provider.selectedPlan < 7
+                                      ? Colors.white
+                                      : Colors.grey.shade300,
                                 ),
                               ),
                             ),

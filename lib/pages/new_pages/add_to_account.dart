@@ -59,8 +59,7 @@ class _AddToAccountState extends State<AddToAccount> {
                         // uid: widget.uid,
                       ))),
               child: Column(
-                children: [
-                  Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Plan 1: STOP Ads',
@@ -71,12 +70,6 @@ class _AddToAccountState extends State<AddToAccount> {
                       fontWeight: FontWeight.w800,
                     ),
                   ),
-                  Spacer(),
-                  Icon(
-                    Icons.arrow_forward_ios_outlined,
-                  ),
-                ],
-              ),
               Divider(
                 color: Colors.black,
                 thickness: 0.4,
@@ -128,10 +121,9 @@ class _AddToAccountState extends State<AddToAccount> {
                         // uid: widget.uid,
                       ))),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-              children: [
-                Text(
+                  Text(
                   'Plan 2: STOP Ads',
                   // textAlign: TextAlign.left,
                   style: TextStyle(
@@ -140,12 +132,6 @@ class _AddToAccountState extends State<AddToAccount> {
                     fontWeight: FontWeight.w800,
                   ),
                 ),
-                Spacer(),
-                Icon(
-                  Icons.arrow_forward_ios_outlined,
-                ),
-              ],
-            ),
             Divider(
               color: Colors.black,
               thickness: 0.4,

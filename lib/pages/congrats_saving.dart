@@ -41,6 +41,7 @@ class _CongratsSaving extends State<CongratsSaving> {
   Future<SavingModel> _refModel;
   Size _widgetSize;
   final key = GlobalKey();
+  bool _isTapped = false;
   // = context.getSize();
 
   // Get the height of the widget in pixels
@@ -261,13 +262,27 @@ class _CongratsSaving extends State<CongratsSaving> {
                                 fit: BoxFit.contain,
                               ),
                             ),
-                            child: Ring(
-                              innerColor: Colors.transparent,
-                              outerColor: Colors.black.withOpacity(0.6),
-                              amount: int.parse(receivedModel.amount),
-                              goal: int.parse(receivedModel.goalAmount),
-                              minInnerSize: 0.05,
-                              size: 230,
+                            child: GestureDetector(
+                              onTapDown: (TapDownDetails details) {
+                                  // This function is called when the user taps down on the widget
+                                  setState(() => _isTapped = true);
+                                },
+                                onTapUp: (TapUpDetails details) {
+                                  // This function is called when the user releases the tap on the widget
+                                  setState(() => _isTapped = false);
+                                },
+                                onTapCancel: () {
+                                  // This function is called when the user moves their finger away from the widget without releasing
+                                  setState(() => _isTapped = false);
+                                },
+                              child: Ring(
+                                innerColor: Colors.transparent,
+                                outerColor: _isTapped ? Colors.transparent : Colors.black.withOpacity(0.6),
+                                amount: int.parse(receivedModel.amount),
+                                goal: int.parse(receivedModel.goalAmount),
+                                minInnerSize: 0.10,
+                                size: 230,
+                              ),
                             ),
                           );
                         },

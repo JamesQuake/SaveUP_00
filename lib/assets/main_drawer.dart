@@ -132,7 +132,7 @@ class _MainDrawerState extends State<MainDrawer> {
               ),
             ),
             onTap: () {
-              if (widget.uid != null){
+              if (widget.uid != null) {
                 Navigator.pop(context);
                 Navigator.push(
                     context,
@@ -155,7 +155,7 @@ class _MainDrawerState extends State<MainDrawer> {
               ),
             ),
             onTap: () {
-              if (widget.uid != null){
+              if (widget.uid != null) {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, '/investment');
               }
@@ -201,11 +201,13 @@ class _MainDrawerState extends State<MainDrawer> {
               Navigator.pop(context);
               // Navigator.pushNamed(context, '/RewardPoints');
               Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AddToAccount(
-                                      // uid: widget.uid,
-                                    )));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AddToAccount(
+                      // uid: widget.uid,
+                      ),
+                ),
+              );
             },
           ),
           ListTile(
@@ -217,7 +219,8 @@ class _MainDrawerState extends State<MainDrawer> {
               ),
             ),
             onTap: () {
-              if (widget.uid != null) if (widget.incomingRoute != '/virtual_closet'){
+              if (widget.uid != null) if (widget.incomingRoute !=
+                  '/virtual_closet') {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, '/virtual_closet');
               }
@@ -232,7 +235,8 @@ class _MainDrawerState extends State<MainDrawer> {
               ),
             ),
             onTap: () async {
-              if (widget.uid != null) if (widget.incomingRoute != '/DashBoard'){
+              if (widget.uid != null) if (widget.incomingRoute !=
+                  '/DashBoard') {
                 Navigator.pop(context);
                 await Navigator.push(
                     context,
@@ -245,7 +249,7 @@ class _MainDrawerState extends State<MainDrawer> {
               setState(() {});
             },
           ),
-          if(widget.uid != null)...[
+          if (widget.uid != null) ...[
             if (widget.incomingRoute != '/virtual_closet')
               ListTile(
                 leading: Icon(Icons.logout_outlined),

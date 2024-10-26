@@ -18,11 +18,13 @@ class SubCategory extends StatefulWidget {
   final String catId;
   final String catName;
   final String imgUrl;
+  final String uid;
 
   SubCategory({
     this.catId,
     this.catName,
     this.imgUrl,
+    this.uid,
   });
 
   @override
@@ -88,7 +90,7 @@ class _SubCategoryState extends State<SubCategory> {
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
-          new ebaybar(showtitle: false, cpage: "category"),
+          new ebaybar(showtitle: false, cpage: "category", uid: widget.uid,),
           SliverPersistentHeader(
             delegate: imageHeader(imgUrl: widget.imgUrl),
             pinned: true,
@@ -176,7 +178,8 @@ class _SubCategoryState extends State<SubCategory> {
                                     catName: projectSnap.data.categoryArray
                                         .category[index + 1].categoryName,
                                     imgUrl: widget.imgUrl,
-                                  )),
+                                    uid: widget.uid,
+                                  ),),
                         );
                       }), // handle your onTap here
                       child: Container(

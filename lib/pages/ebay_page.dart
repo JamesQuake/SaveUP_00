@@ -85,12 +85,13 @@ class _EbayState extends State<Ebay> {
                     onTap: () => Navigator.push(
                       context,
                       new MaterialPageRoute(
-                          builder: (context) => new SubCategory(
-                                catId: categoryList[index].category.categoryId,
-                                catName:
-                                    categoryList[index].category.categoryName,
-                                imgUrl: categoryList[index].category.imageUrl2,
-                              )),
+                        builder: (context) => new SubCategory(
+                          catId: categoryList[index].category.categoryId,
+                          catName: categoryList[index].category.categoryName,
+                          imgUrl: categoryList[index].category.imageUrl2,
+                          uid: widget.uid,
+                        ),
+                      ),
                     ), // handle your onTap here
                     child: Container(
                         margin: EdgeInsets.only(

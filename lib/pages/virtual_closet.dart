@@ -3,12 +3,13 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pay_or_save/assets/main_drawer.dart';
 import 'package:pay_or_save/models/virtural_closet_model.dart';
-import 'package:pay_or_save/pages/overdraft.dart';
-import 'package:pay_or_save/pages/reward_ad_banner.dart';
-import 'package:pay_or_save/widgets/menu.dart';
+import 'package:pay_or_save/models/walmart_items_model.dart';
+import 'package:pay_or_save/pages/walmart_product.dart';
 
+import '../element/authoriser.dart';
 import 'product.dart';
 
 class VirtualCloset extends StatefulWidget {
@@ -55,24 +56,27 @@ class _VirtualClosetState extends State<VirtualCloset> {
     super.dispose();
   }
 
-  // Future navigateToRewardedAd(context) async {
-  //   Navigator.push(
-  //     context,
-  //     MaterialPageRoute(builder: (context) => RewardedVideo()),
-  //   );
-  // }
+  Future<Item> _getWalmartItem(String uri) async {
+    // setState(() {
+    //   _isLoading = true;
+    // });
+    
+    String baseUrl = 'https://api.impact.com';
+    String apiUrl ='$baseUrl$uri';
 
-  // Future navigateToOverdraft(context) async {
-  //   Navigator.push(
-  //     context,
-  //     MaterialPageRoute(
-  //       builder: (context) => Overdraft(
-  //         uid: _uid,
-  //         overdraftAmount: 200,
-  //       ),
-  //     ),
-  //   );
-  // }
+    print('makeWalmartCall');
+    final response = await makeWalmartCall(apiUrl);
+    print(response.body);
+    if (response.statusCode == 200) {
+      // setState(() {
+      //   _isLoading = false;
+      // });
+      //print(response.body);
+      return walmartProductResponseFromJson(response.body);
+    } else {
+      throw Exception('Failed to load result');
+    }
+  }
 
   Widget _item(BuildContext context, int index) {
     return ListTile(
@@ -99,8 +103,9 @@ class _VirtualClosetState extends State<VirtualCloset> {
           ),
         ],
       ),
-      onTap: (){
-        Navigator.push(
+      onTap: () async {
+        if(_virtualCloset[index].platform.toLowerCase() == 'ebay'){
+          Navigator.push(
           context,
           new MaterialPageRoute(
               builder: (context) => ProductPage(
@@ -108,6 +113,19 @@ class _VirtualClosetState extends State<VirtualCloset> {
                 uid: widget.uid,
               )),
         );
+        } else if(_virtualCloset[index].platform.toLowerCase() == 'walmart'){
+          EasyLoading.show();
+          Item item = await _getWalmartItem(_virtualCloset[index].walmartUri);
+          EasyLoading.dismiss();
+          Navigator.push(
+          context,
+          new MaterialPageRoute(
+              builder: (context) => WalmartProductPage(
+                item: item,
+                uid: widget.uid,
+              )),
+        );
+        }
       },
     );
   }

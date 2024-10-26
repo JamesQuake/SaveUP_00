@@ -1,0 +1,606 @@
+[
+    {
+        "Id": "9671",
+        "Name": "02 PERSONAL CARE"
+    },
+    {
+        "Id": "9672",
+        "Name": "03 STATIONERY"
+    },
+    {
+        "Id": "9673",
+        "Name": "05 MEDIA AND GAMING"
+    },
+    {
+        "Id": "9674",
+        "Name": "06 CAMERAS AND SUPPLIES"
+    },
+    {
+        "Id": "9742",
+        "Name": "07 TOYS"
+    },
+    {
+        "Id": "9743",
+        "Name": "08 PETS AND SUPPLIES"
+    },
+    {
+        "Id": "9744",
+        "Name": "09 SPORTING GOODS"
+    },
+    {
+        "Id": "9745",
+        "Name": "10 AUTOMOTIVE"
+    },
+    {
+        "Id": "9746",
+        "Name": "11 HARDWARE AND TOOLS"
+    },
+    {
+        "Id": "9747",
+        "Name": "12 DO IT YOURSELF"
+    },
+    {
+        "Id": "9748",
+        "Name": "13 HOUSEHOLD CHEMICALS"
+    },
+    {
+        "Id": "9749",
+        "Name": "14 COOK AND DINE"
+    },
+    {
+        "Id": "9750",
+        "Name": "16 PATIO AND GARDEN"
+    },
+    {
+        "Id": "9752",
+        "Name": "17 HOME DECOR"
+    },
+    {
+        "Id": "9753",
+        "Name": "26 BABY AND TODDLER APPAREL"
+    },
+    {
+        "Id": "9754",
+        "Name": "26 INFANT APPAREL"
+    },
+    {
+        "Id": "9755",
+        "Name": "29 INTIMATE APPAREL"
+    },
+    {
+        "Id": "9756",
+        "Name": "31 ACCESSORIES"
+    },
+    {
+        "Id": "9757",
+        "Name": "32 JEWELRY"
+    },
+    {
+        "Id": "9758",
+        "Name": "33 GIRLS APPAREL"
+    },
+    {
+        "Id": "9759",
+        "Name": "33 GIRLS WEAR"
+    },
+    {
+        "Id": "9760",
+        "Name": "34 LADIES APPAREL"
+    },
+    {
+        "Id": "9761",
+        "Name": "34 WOMENS APPAREL"
+    },
+    {
+        "Id": "9762",
+        "Name": "38 PHARMACY RX"
+    },
+    {
+        "Id": "9763",
+        "Name": "46 BEAUTY"
+    },
+    {
+        "Id": "9764",
+        "Name": "49 OPTICAL RX"
+    },
+    {
+        "Id": "9765",
+        "Name": "56 HORTICULTURE"
+    },
+    {
+        "Id": "9766",
+        "Name": "67 CELEBRATION"
+    },
+    {
+        "Id": "9767",
+        "Name": "71 FURNITURE"
+    },
+    {
+        "Id": "9768",
+        "Name": "72 ELECTRONICS"
+    },
+    {
+        "Id": "9769",
+        "Name": "74 HOME MANAGEMENT"
+    },
+    {
+        "Id": "9770",
+        "Name": "79 BABY CONSUMABLES HARDLINES"
+    },
+    {
+        "Id": "9771",
+        "Name": "80 SERVICE DELI"
+    },
+    {
+        "Id": "9773",
+        "Name": "85 PHOTO SERVICES"
+    },
+    {
+        "Id": "9774",
+        "Name": "86 WALMART SERVICES"
+    },
+    {
+        "Id": "9775",
+        "Name": "87 WIRELESS"
+    },
+    {
+        "Id": "9778",
+        "Name": "18 SEASONAL"
+    },
+    {
+        "Id": "9779",
+        "Name": "19 ARTS CRAFTS SEWING AND FABRICS"
+    },
+    {
+        "Id": "9780",
+        "Name": "20 BATH AND SHOWER"
+    },
+    {
+        "Id": "9781",
+        "Name": "21 BOOKS AND MAGAZINES"
+    },
+    {
+        "Id": "9782",
+        "Name": "TOYS GAMES AND HOBBY"
+    },
+    {
+        "Id": "9783",
+        "Name": "22 BEDDING"
+    },
+    {
+        "Id": "9784",
+        "Name": "23 MENS APPAREL"
+    },
+    {
+        "Id": "9785",
+        "Name": "23 MENSWEAR"
+    },
+    {
+        "Id": "9786",
+        "Name": "24 BOYS APPAREL"
+    },
+    {
+        "Id": "9787",
+        "Name": "24 BOYS WEAR"
+    },
+    {
+        "Id": "9788",
+        "Name": "25 SHOES"
+    },
+    {
+        "Id": "9791",
+        "Name": "82 IMPULSE MERCHANDISE"
+    },
+    {
+        "Id": "9792",
+        "Name": "95 SNACKS AND BEVERAGES"
+    },
+    {
+        "Id": "9793",
+        "Name": "FUNCTIONAL ROOMS"
+    },
+    {
+        "Id": "9795",
+        "Name": "SPORTING GOODS"
+    },
+    {
+        "Id": "9961",
+        "Name": "32 JEWELRY_1"
+    },
+    {
+        "Id": "9962",
+        "Name": "10 AUTOMOTIVE_1"
+    },
+    {
+        "Id": "9963",
+        "Name": "21 BOOKS AND MAGAZINES_1"
+    },
+    {
+        "Id": "9964",
+        "Name": "17 HOME DECOR_1"
+    },
+    {
+        "Id": "9965",
+        "Name": "23 MENS APPAREL_1"
+    },
+    {
+        "Id": "9966",
+        "Name": "34 WOMENS APPAREL_1"
+    },
+    {
+        "Id": "9967",
+        "Name": "34 WOMENS APPAREL_2"
+    },
+    {
+        "Id": "9968",
+        "Name": "34 WOMENS APPAREL_3"
+    },
+    {
+        "Id": "9969",
+        "Name": "34 WOMENS APPAREL_4"
+    },
+    {
+        "Id": "9970",
+        "Name": "34 WOMENS APPAREL_5"
+    },
+    {
+        "Id": "10651",
+        "Name": "01 CANDY AND TOBACCO"
+    },
+    {
+        "Id": "10652",
+        "Name": "04 HOUSEHOLD PAPER"
+    },
+    {
+        "Id": "10653",
+        "Name": "17 HOME DECOR_2"
+    },
+    {
+        "Id": "10654",
+        "Name": "23 MENS APPAREL_2"
+    },
+    {
+        "Id": "10655",
+        "Name": "34 WOMENS APPAREL_6"
+    },
+    {
+        "Id": "10656",
+        "Name": "34 WOMENS APPAREL_7"
+    },
+    {
+        "Id": "10657",
+        "Name": "34 WOMENS APPAREL_8"
+    },
+    {
+        "Id": "10658",
+        "Name": "34 WOMENS APPAREL_9"
+    },
+    {
+        "Id": "10659",
+        "Name": "34 WOMENS APPAREL_10"
+    },
+    {
+        "Id": "10660",
+        "Name": "34 WOMENS APPAREL_11"
+    },
+    {
+        "Id": "10661",
+        "Name": "40 PHARMACY OTC"
+    },
+    {
+        "Id": "10662",
+        "Name": "81 COM BREAD"
+    },
+    {
+        "Id": "10663",
+        "Name": "90 DAIRY"
+    },
+    {
+        "Id": "10664",
+        "Name": "91 FROZEN"
+    },
+    {
+        "Id": "10665",
+        "Name": "92 GROCERY"
+    },
+    {
+        "Id": "10666",
+        "Name": "93 MEAT"
+    },
+    {
+        "Id": "10667",
+        "Name": "94 PRODUCE"
+    },
+    {
+        "Id": "10668",
+        "Name": "96 LIQUOR"
+    },
+    {
+        "Id": "10669",
+        "Name": "97 WALL DELI"
+    },
+    {
+        "Id": "10670",
+        "Name": "98 BAKERY"
+    },
+    {
+        "Id": "10698",
+        "Name": "3P 01 CANDY AND TOBACCO"
+    },
+    {
+        "Id": "10700",
+        "Name": "3P 02 PERSONAL CARE"
+    },
+    {
+        "Id": "10701",
+        "Name": "3P 03 STATIONERY"
+    },
+    {
+        "Id": "10702",
+        "Name": "3P 04 HOUSEHOLD PAPER"
+    },
+    {
+        "Id": "10713",
+        "Name": "3P 05 MEDIA AND GAMING"
+    },
+    {
+        "Id": "10714",
+        "Name": "3P 06 CAMERAS AND SUPPLIES"
+    },
+    {
+        "Id": "10715",
+        "Name": "3P 07 TOYS"
+    },
+    {
+        "Id": "10717",
+        "Name": "3P 09 SPORTING GOODS"
+    },
+    {
+        "Id": "10719",
+        "Name": "3P 11 HARDWARE AND TOOLS"
+    },
+    {
+        "Id": "10720",
+        "Name": "3P 12 DO IT YOURSELF"
+    },
+    {
+        "Id": "10721",
+        "Name": "3P 13 HOUSEHOLD CLEANING"
+    },
+    {
+        "Id": "10722",
+        "Name": "3P 14 COOK AND DINE"
+    },
+    {
+        "Id": "10724",
+        "Name": "3P 17 HOME DECOR"
+    },
+    {
+        "Id": "10725",
+        "Name": "3P 18 SEASONAL"
+    },
+    {
+        "Id": "10726",
+        "Name": "3P 19 ARTS CRAFTS SEWING AND FABRICS"
+    },
+    {
+        "Id": "10727",
+        "Name": "3P 20 BATH AND SHOWER"
+    },
+    {
+        "Id": "10728",
+        "Name": "3P 21 BOOKS AND MAGAZINES"
+    },
+    {
+        "Id": "10729",
+        "Name": "3P 22 BEDDING"
+    },
+    {
+        "Id": "10730",
+        "Name": "3P 23 MENS APPAREL"
+    },
+    {
+        "Id": "10731",
+        "Name": "3P 23 MENSWEAR"
+    },
+    {
+        "Id": "10732",
+        "Name": "3P 24 BOYS APPAREL"
+    },
+    {
+        "Id": "10733",
+        "Name": "3P 24 BOYS WEAR"
+    },
+    {
+        "Id": "10734",
+        "Name": "3P 25 SHOES"
+    },
+    {
+        "Id": "10735",
+        "Name": "3P 26 BABY AND TODDLER APPAREL"
+    },
+    {
+        "Id": "10736",
+        "Name": "3P 29 INTIMATE APPAREL"
+    },
+    {
+        "Id": "10737",
+        "Name": "3P 31 ACCESSORIES"
+    },
+    {
+        "Id": "10738",
+        "Name": "3P 32 JEWELRY"
+    },
+    {
+        "Id": "10739",
+        "Name": "3P 33 GIRLS APPAREL"
+    },
+    {
+        "Id": "10740",
+        "Name": "3P 33 GIRLS WEAR"
+    },
+    {
+        "Id": "10741",
+        "Name": "3P 34 LADIES APPAREL"
+    },
+    {
+        "Id": "10742",
+        "Name": "3P 34 WOMENS APPAREL"
+    },
+    {
+        "Id": "10743",
+        "Name": "3P 38 PHARMACY RX"
+    },
+    {
+        "Id": "10744",
+        "Name": "3P 40 PHARMACY OTC"
+    },
+    {
+        "Id": "10745",
+        "Name": "3P 46 BEAUTY"
+    },
+    {
+        "Id": "10746",
+        "Name": "3P 49 OPTICAL RX"
+    },
+    {
+        "Id": "10747",
+        "Name": "3P 56 HORTICULTURE"
+    },
+    {
+        "Id": "10748",
+        "Name": "3P 56 LIVE PLANTS"
+    },
+    {
+        "Id": "10750",
+        "Name": "3P 67 CELEBRATION"
+    },
+    {
+        "Id": "10751",
+        "Name": "3P 71 FURNITURE"
+    },
+    {
+        "Id": "10752",
+        "Name": "3P 72 ELECTRONICS"
+    },
+    {
+        "Id": "10753",
+        "Name": "3P 74 HOME MANAGEMENT"
+    },
+    {
+        "Id": "10754",
+        "Name": "3P 79 BABY CONSUMABLES HARDLINES"
+    },
+    {
+        "Id": "10755",
+        "Name": "3P 80 SERVICE DELI"
+    },
+    {
+        "Id": "10756",
+        "Name": "3P 82 IMPULSE MERCHANDISE"
+    },
+    {
+        "Id": "10757",
+        "Name": "3P 85 PHOTO SERVICES"
+    },
+    {
+        "Id": "10758",
+        "Name": "3P 86 WALMART SERVICES"
+    },
+    {
+        "Id": "10759",
+        "Name": "3P 87 WIRELESS"
+    },
+    {
+        "Id": "10760",
+        "Name": "3P 92 GROCERY"
+    },
+    {
+        "Id": "10762",
+        "Name": "3P TOYS GAMES AND HOBBY"
+    },
+    {
+        "Id": "11776",
+        "Name": "34 WOMENS APPAREL_13"
+    },
+    {
+        "Id": "11777",
+        "Name": "10 AUTOMOTIVE_2"
+    },
+    {
+        "Id": "11778",
+        "Name": "32 JEWELRY_2"
+    },
+    {
+        "Id": "11779",
+        "Name": "17 HOME DECOR_3"
+    },
+    {
+        "Id": "11780",
+        "Name": "21 BOOKS AND MAGAZINES_2"
+    },
+    {
+        "Id": "11782",
+        "Name": "13 HOUSEHOLD CLEANING"
+    },
+    {
+        "Id": "11783",
+        "Name": "56 LIVE PLANTS"
+    },
+    {
+        "Id": "11831",
+        "Name": "34 WOMENS APPAREL_12"
+    },
+    {
+        "Id": "12236",
+        "Name": "11 HARDWARE AND TOOLS_1"
+    },
+    {
+        "Id": "12239",
+        "Name": "19 ARTS CRAFTS SEWING AND FABRICS_1"
+    },
+    {
+        "Id": "12253",
+        "Name": "21 BOOKS AND MAGAZINES_3"
+    },
+    {
+        "Id": "12254",
+        "Name": "23 MENS APPAREL_3"
+    },
+    {
+        "Id": "12255",
+        "Name": "23 MENS APPAREL_4"
+    },
+    {
+        "Id": "12343",
+        "Name": "25 Shoes_1"
+    },
+    {
+        "Id": "12344",
+        "Name": "26 BABY AND TODDLER APPAREL_1"
+    },
+    {
+        "Id": "12356",
+        "Name": "34 WOMENS APPAREL_14"
+    },
+    {
+        "Id": "12357",
+        "Name": "34 WOMENS APPAREL_15"
+    },
+    {
+        "Id": "12358",
+        "Name": "34 WOMENS APPAREL_16"
+    },
+    {
+        "Id": "12359",
+        "Name": "34 WOMENS APPAREL_17"
+    },
+    {
+        "Id": "12360",
+        "Name": "34 WOMENS APPAREL_18"
+    },
+    {
+        "Id": "12361",
+        "Name": "34 WOMENS APPAREL_19"
+    }
+]

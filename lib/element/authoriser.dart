@@ -15,3 +15,17 @@ makeCall(String url) async {
   );
   return response;
 }
+
+makeWalmartCall(String url) async {
+  // Create the authorization header
+  String basicAuth = 'Basic ' + base64Encode(utf8.encode('IRms8oU5FgpC2680271TvYsYvsUcCgLDm1:W4XemHqxZELGf_fqJG5eViKPE.nSJVpq'));
+
+  final response = await http.get(
+    Uri.parse(url),
+    headers: {
+      'Authorization': basicAuth,
+      'Accept': 'application/json',
+      },
+  );
+  return response;
+}

@@ -1,7 +1,7 @@
 // import 'package:flutter/material.dart';
 
 class VirtualClosetModel {
-  String uid, pName, pPrice, pImage, pId, pUrl, platform;
+  String uid, pName, pPrice, pImage, pId, pUrl, platform, walmartUri;
   bool status;
   DateTime doc;
 
@@ -15,6 +15,7 @@ class VirtualClosetModel {
     this.platform,
     this.status,
     this.doc,
+    this.walmartUri,
   });
 
 
@@ -26,6 +27,7 @@ class VirtualClosetModel {
       pImage: json['pImage'],
       pId: json['pId'],
       pUrl: json['pUrl'],
+      walmartUri: json['walmartUri'],
       platform: json['platform'],
       status: json['status'],
       doc: DateTime.fromMillisecondsSinceEpoch(json['doc'].millisecondsSinceEpoch),

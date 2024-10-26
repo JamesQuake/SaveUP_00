@@ -42,6 +42,7 @@ import '../element/amazon/Provider/amazon_provider.dart';
 import '../element/amazon/sigV4/sigv4-client.dart';
 import 'amazon_page.dart';
 import 'ebay_page.dart';
+import 'walmart_page.dart';
 // import './new_pages/invest_new.dart';
 // import 'invest_now.dart';
 // import 'new_pages/options.dart';
@@ -144,6 +145,15 @@ class _SelectModeState extends State<SelectMode> {
           context,
           MaterialPageRoute(
               builder: (context) => Amazon(
+                    // url: "",
+                    // incomingOrder: '100',
+                    uid: _uid,
+                  )));
+    } else{
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Walmart(
                     // url: "",
                     // incomingOrder: '100',
                     uid: _uid,
@@ -321,8 +331,7 @@ class _SelectModeState extends State<SelectMode> {
                                           itemCount: dropList.length,
                                           itemBuilder: (context, index) {
                                             return RadioListTile(
-                                              title: (index == 2 ||
-                                                      index == 3 ||
+                                              title: (index == 3 ||
                                                       index == 4)
                                                   ? Text(
                                                       dropList.elementAt(index),
@@ -337,7 +346,7 @@ class _SelectModeState extends State<SelectMode> {
                                               value: index,
                                               groupValue: groupValue ?? 1,
                                               onChanged: (val) {
-                                                if (val == 0 || val == 1) {
+                                                if (val == 0 || val == 1 || val == 2) {
                                                   setState(() {
                                                     groupValue = val;
                                                     title = dropList
@@ -345,7 +354,7 @@ class _SelectModeState extends State<SelectMode> {
                                                     // retailer = val;
                                                   });
                                                 }
-                                                if (val == 0 || val == 1) {
+                                                if (val == 0 || val == 1 || val == 2) {
                                                   if (isStrechedDropDown ==
                                                       true) {
                                                     setState(() {

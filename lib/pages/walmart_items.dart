@@ -1,6 +1,7 @@
 // import 'package:pay_or_save/models/subcategory.dart';
 import 'package:intl/intl.dart';
 import 'package:pay_or_save/assets/main_drawer.dart';
+import 'package:pay_or_save/element/walmart_bar.dart';
 import 'package:pay_or_save/pages/product.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,70 +13,77 @@ import '../models/search.dart';
 import '../element/ebaybar.dart';
 // import '../models/subcategory.dart';
 import '../element/authoriser.dart';
+import '../models/walmart_items_model.dart';
 import 'sort.dart';
 import 'filter.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-class SearchResult extends StatefulWidget {
+import 'walmart_product.dart';
+
+class WalmartItemsListPage extends StatefulWidget {
   final String catId;
   final String catName;
   final String uid;
 
-  SearchResult({
+  WalmartItemsListPage({
     this.catId,
     this.catName,
     this.uid,
   });
 
   @override
-  _SearchResultState createState() => _SearchResultState();
+  _WalmartItemsListPageState createState() => _WalmartItemsListPageState();
 }
 
-class _SearchResultState extends State<SearchResult> {
+class _WalmartItemsListPageState extends State<WalmartItemsListPage> {
   bool _isLoading = false;
   String rFilterQ;
   List filterS = [];
-  Future<Result> futureResult;
+  Future<WalmartItemsResponse> futureResult;
   var token;
 
-  Future<Result> _getsearchR(String pUrl, String sorter) async {
+  Future<WalmartItemsResponse> _getsearchR(String pUrl, String sort) async {
     setState(() {
       _isLoading = true;
     });
+
     final searchQ = widget.catName;
     final searchCat = widget.catId;
     String apiUrl;
-    if (searchCat == '0') {
-      apiUrl =
-          'https://api.ebay.com/buy/browse/v1/item_summary/search?limit=50&q=$searchQ';
-    } else {
-      apiUrl =
-          'https://api.ebay.com/buy/browse/v1/item_summary/search?limit=50&category_ids=$searchCat';
-    }
 
-    if (pUrl != null) {
-      apiUrl = pUrl;
-    }
-    if (sorter != null) {
-      if (sorter == "distance") {
-        apiUrl = '$apiUrl&sort=$sorter&filter=pickupCountry:US';
-        print(apiUrl);
+    String baseUrl = 'https://api.impact.com';
+    if (pUrl == null) {
+      if (searchCat == '0') {
+        apiUrl ='$baseUrl/Mediapartners/IRms8oU5FgpC2680271TvYsYvsUcCgLDm1/Catalogs/ItemSearch?Keyword=$searchQ';
       } else {
-        apiUrl = '$apiUrl&sort=$sorter';
+        apiUrl =
+            apiUrl ='$baseUrl/Mediapartners/IRms8oU5FgpC2680271TvYsYvsUcCgLDm1/Catalogs/${widget.catId}/Items';
       }
-    }
-    if (rFilterQ != null) {
-      apiUrl = '$apiUrl&aspect_filter=$rFilterQ';
+    } else {
+      apiUrl = '$baseUrl$pUrl';
     }
 
-    final response = await makeCall(apiUrl);
+    // if (sorter != null) {
+    //   if (sorter == "distance") {
+    //     apiUrl = '$apiUrl&sort=$sorter&filter=pickupCountry:US';
+    //     print(apiUrl);
+    //   } else {
+    //     apiUrl = '$apiUrl&sort=$sorter';
+    //   }
+    // }
+    // if (rFilterQ != null) {
+    //   apiUrl = '$apiUrl&aspect_filter=$rFilterQ';
+    // }
+
+    print('makeWalmartCall');
+    final response = await makeWalmartCall(apiUrl);
     print(response.body);
     if (response.statusCode == 200) {
       setState(() {
         _isLoading = false;
       });
       //print(response.body);
-      return resultFromJson(response.body);
+      return walmartItemsResponseFromJson(response.body);
     } else {
       throw Exception('Failed to load result');
     }
@@ -93,12 +101,12 @@ class _SearchResultState extends State<SearchResult> {
       endDrawer: MainDrawer(uid: widget.uid),
       body: CustomScrollView(
         slivers: <Widget>[
-          new ebaybar(
+          new WalmartBar(
             cpage: "searchresult",
             showtitle: false,
             uid: widget.uid,
           ),
-          FutureBuilder<Result>(
+          FutureBuilder<WalmartItemsResponse>(
             future: futureResult,
             builder: (context, projectSnap) {
               if (projectSnap.connectionState != ConnectionState.done) {
@@ -115,7 +123,7 @@ class _SearchResultState extends State<SearchResult> {
                 );
               }
               if (projectSnap.hasData == null ||
-                  projectSnap.data.itemSummaries == null) {
+                  projectSnap.data.items == null) {
                 return SliverPersistentHeader(
                   delegate: titleHeader7(
                       filterS: filterS,
@@ -128,10 +136,10 @@ class _SearchResultState extends State<SearchResult> {
               }
               return SliverPersistentHeader(
                 delegate: titleHeader3(
-                    total: projectSnap.data.total,
+                    total: int.parse(projectSnap.data.total),
                     filterS: filterS,
-                    offset: projectSnap.data.offset,
-                    limit: projectSnap.data.limit,
+                    offset: int.fromEnvironment(projectSnap.data.start),
+                    limit: int.parse(projectSnap.data.end),
                     stateSetter: stateSetter,
                     catId: widget.catId,
                     catName: widget.catName,
@@ -142,7 +150,7 @@ class _SearchResultState extends State<SearchResult> {
               );
             },
           ),
-          FutureBuilder<Result>(
+          FutureBuilder<WalmartItemsResponse>(
             future: futureResult,
             builder: (context, projectSnap) {
               var childCount = 0;
@@ -151,10 +159,10 @@ class _SearchResultState extends State<SearchResult> {
               } else {
                 if (projectSnap.connectionState != ConnectionState.done ||
                     projectSnap.hasData == null ||
-                    projectSnap.data.itemSummaries == null) {
+                    projectSnap.data.items == null) {
                   childCount = 1;
                 } else {
-                  childCount = projectSnap.data.itemSummaries.length;
+                  childCount = projectSnap.data.items.length;
                 }
               }
               return SliverGrid(
@@ -180,7 +188,7 @@ class _SearchResultState extends State<SearchResult> {
                       return Container();
                     }
                     if (projectSnap.hasData == null ||
-                        projectSnap.data.itemSummaries == null) {
+                        projectSnap.data.items == null) {
                       return Container();
                     }
                     // if(index == 30){
@@ -191,9 +199,8 @@ class _SearchResultState extends State<SearchResult> {
                         onTap: () => Navigator.push(
                           context,
                           new MaterialPageRoute(
-                              builder: (context) => new ProductPage(
-                                    itemId: projectSnap
-                                        .data.itemSummaries[index].itemId,
+                              builder: (context) => new WalmartProductPage(
+                                    item: projectSnap.data.items[index],
                                     uid: widget.uid,
                                   )),
                         ), // handle your onTap here
@@ -226,10 +233,7 @@ class _SearchResultState extends State<SearchResult> {
                                                     CircularProgressIndicator()),
                                             Image.network(
                                               projectSnap
-                                                  .data
-                                                  .itemSummaries[index]
-                                                  .image
-                                                  .imageUrl,
+                                                  .data.items[index].imageUrl,
                                               fit: BoxFit.cover,
                                             ),
                                           ],
@@ -254,8 +258,7 @@ class _SearchResultState extends State<SearchResult> {
                                       width: 150,
                                       alignment: Alignment.centerLeft,
                                       child: Text(
-                                        projectSnap
-                                            .data.itemSummaries[index].title,
+                                        projectSnap.data.items[index].name,
                                         style: TextStyle(fontSize: 11),
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 2,
@@ -271,11 +274,8 @@ class _SearchResultState extends State<SearchResult> {
                                       child: Text.rich(
                                         TextSpan(
                                             text: '\$' +
-                                                projectSnap
-                                                    .data
-                                                    .itemSummaries[index]
-                                                    .price
-                                                    .value,
+                                                projectSnap.data.items[index]
+                                                    .currentPrice,
                                             style: TextStyle(
                                               fontSize: 18,
                                               fontWeight: FontWeight.bold,
@@ -288,56 +288,14 @@ class _SearchResultState extends State<SearchResult> {
                                                     fontWeight: FontWeight.bold,
                                                   )),
                                               TextSpan(
-                                                  text: projectSnap
-                                                          .data
-                                                          .itemSummaries[index]
-                                                          .itemLocation
-                                                          .country +
-                                                      ' Shipping \n',
+                                                  text: 'USA' + ' Shipping \n',
                                                   style: TextStyle(
                                                     fontSize: 13,
                                                     fontWeight:
                                                         FontWeight.normal,
                                                   )),
                                               TextSpan(
-                                                  text:
-                                                      //projectSnap.data.itemSummaries[index].shippingOptions[0].shippingCost.value == '0.00' ? 'Free Shipping' : '\$'+projectSnap.data.itemSummaries[index].shippingOptions[0].shippingCost.value + ' For Shipping \n',
-                                                      projectSnap
-                                                                  .data
-                                                                  .itemSummaries[
-                                                                      index]
-                                                                  .shippingOptions ==
-                                                              null
-                                                          ? 'Calculated Shipping'
-                                                          : projectSnap
-                                                                      .data
-                                                                      .itemSummaries[
-                                                                          index]
-                                                                      .shippingOptions[
-                                                                          0]
-                                                                      .shippingCostType ==
-                                                                  null
-                                                              ? 'Calculated Shipping'
-                                                              : projectSnap
-                                                                          .data
-                                                                          .itemSummaries[
-                                                                              index]
-                                                                          .shippingOptions[
-                                                                              0]
-                                                                          .shippingCost
-                                                                          .value ==
-                                                                      '0.00'
-                                                                  ? 'Free Shipping'
-                                                                  : '\$' +
-                                                                      projectSnap
-                                                                          .data
-                                                                          .itemSummaries[
-                                                                              index]
-                                                                          .shippingOptions[
-                                                                              0]
-                                                                          .shippingCost
-                                                                          .value +
-                                                                      ' For Shipping \n',
+                                                  text: 'Calculated Shipping',
                                                   style: TextStyle(
                                                     fontSize: 13,
                                                     fontWeight:
@@ -360,7 +318,7 @@ class _SearchResultState extends State<SearchResult> {
           ),
         ],
       ),
-      floatingActionButton: FutureBuilder<Result>(
+      floatingActionButton: FutureBuilder<WalmartItemsResponse>(
         future: futureResult,
         builder: (context, projectSnap) {
           if (projectSnap.connectionState != ConnectionState.done) {
@@ -370,12 +328,11 @@ class _SearchResultState extends State<SearchResult> {
           if (projectSnap.hasError) {
             return Container();
           }
-          if (projectSnap.hasData == null ||
-              projectSnap.data.itemSummaries == null) {
+          if (projectSnap.hasData == null || projectSnap.data.items == null) {
             return Container();
           }
           return Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-            if (projectSnap.data.prev != null)
+            if (projectSnap.data.previouspageuri != null)
               Container(
                 height: 35,
                 width: 35,
@@ -386,7 +343,8 @@ class _SearchResultState extends State<SearchResult> {
                   ),
                   onPressed: () {
                     setState(() {
-                      futureResult = _getsearchR(projectSnap.data.prev, null);
+                      futureResult =
+                          _getsearchR(projectSnap.data.previouspageuri, null);
                     });
                   },
                   heroTag: null,
@@ -396,23 +354,25 @@ class _SearchResultState extends State<SearchResult> {
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.75,
             ),
-            Container(
-              height: 35,
-              width: 35,
-              child: FloatingActionButton(
-                  child: Icon(
-                    Icons.arrow_forward_ios_rounded,
-                    size: 17,
-                  ),
-                  onPressed: () {
-                    // print('hi');
-                    setState(() {
-                      futureResult = _getsearchR(projectSnap.data.next, null);
-                    });
-                  },
-                  heroTag: null,
-                  backgroundColor: Colors.red),
-            ),
+            if (projectSnap.data.nextpageuri != null)
+              Container(
+                height: 35,
+                width: 35,
+                child: FloatingActionButton(
+                    child: Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      size: 17,
+                    ),
+                    onPressed: () {
+                      // print('hi');
+                      setState(() {
+                        futureResult =
+                            _getsearchR(projectSnap.data.nextpageuri, null);
+                      });
+                    },
+                    heroTag: null,
+                    backgroundColor: Colors.red),
+              ),
           ]);
         },
       ),
@@ -483,7 +443,7 @@ class titleHeader3 extends SliverPersistentHeaderDelegate {
             // ],
             children: <Widget>[
               StaggeredGridTile.count(
-                crossAxisCellCount: 5,
+                crossAxisCellCount: 6,
                 mainAxisCellCount: 2,
                 child: Container(
                   alignment: Alignment.topLeft,
@@ -536,52 +496,52 @@ class titleHeader3 extends SliverPersistentHeaderDelegate {
                     // ),
                     ),
               ),
-              StaggeredGridTile.count(
-                crossAxisCellCount: 2,
-                mainAxisCellCount: 1,
-                child: InkWell(
-                  onTap: () => Navigator.push(
-                    context,
-                    new MaterialPageRoute<String>(
-                        builder: (context) => new sortP()),
-                  ).then((String value) {
-                    //print(value);
-                    this.stateSetter(value);
-                  }), // handle your onTap here
-                  child: Container(
-                    alignment: Alignment.centerRight,
-                    child: Text('Sort',
-                        style: new TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: Color(0xff0078ff))),
-                  ),
-                ),
-              ),
-              StaggeredGridTile.count(
-                crossAxisCellCount: 2,
-                mainAxisCellCount: 1,
-                child: InkWell(
-                  onTap: () => Navigator.push(
-                    context,
-                    new MaterialPageRoute<String>(
-                        builder: (context) => new filterP(
-                            catId: catId, catName: catName, filterS: filterS)),
-                  ).then((String value) {
-                    print(value);
-                    List returned = jsonDecode(value);
-                    this.filterSetter(returned[1], returned[0]);
-                  }), // handle your onTap here
-                  child: Container(
-                    alignment: Alignment.centerRight,
-                    child: Text('Filter',
-                        style: new TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: Color(0xff0078ff))),
-                  ),
-                ),
-              ),
+              // StaggeredGridTile.count(
+              //   crossAxisCellCount: 2,
+              //   mainAxisCellCount: 1,
+              //   child: InkWell(
+              //     onTap: () => Navigator.push(
+              //       context,
+              //       new MaterialPageRoute<String>(
+              //           builder: (context) => new sortP()),
+              //     ).then((String value) {
+              //       //print(value);
+              //       this.stateSetter(value);
+              //     }), // handle your onTap here
+              //     child: Container(
+              //       alignment: Alignment.centerRight,
+              //       child: Text('Sort',
+              //           style: new TextStyle(
+              //               fontWeight: FontWeight.bold,
+              //               fontSize: 18,
+              //               color: Color(0xff0078ff))),
+              //     ),
+              //   ),
+              // ),
+              // StaggeredGridTile.count(
+              //   crossAxisCellCount: 2,
+              //   mainAxisCellCount: 1,
+              //   child: InkWell(
+              //     onTap: () => Navigator.push(
+              //       context,
+              //       new MaterialPageRoute<String>(
+              //           builder: (context) => new filterP(
+              //               catId: catId, catName: catName, filterS: filterS)),
+              //     ).then((String value) {
+              //       print(value);
+              //       List returned = jsonDecode(value);
+              //       this.filterSetter(returned[1], returned[0]);
+              //     }), // handle your onTap here
+              //     child: Container(
+              //       alignment: Alignment.centerRight,
+              //       child: Text('Filter',
+              //           style: new TextStyle(
+              //               fontWeight: FontWeight.bold,
+              //               fontSize: 18,
+              //               color: Color(0xff0078ff))),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),

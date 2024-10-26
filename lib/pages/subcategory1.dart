@@ -19,12 +19,14 @@ class SubCategory1 extends StatefulWidget {
   final String catId;
   final String catName;
   final String imgUrl;
+  final String uid;
 
   SubCategory1({
     this.parentName,
     this.catId,
     this.catName,
     this.imgUrl,
+    this.uid,
   });
 
   @override
@@ -66,6 +68,7 @@ class _SubCategory1State extends State<SubCategory1> {
               builder: (context) => new SearchResult(
                     catId: widget.catId,
                     catName: widget.catName,
+                    uid: widget.uid,
                   )),
         );
       }
@@ -101,7 +104,7 @@ class _SubCategory1State extends State<SubCategory1> {
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
-          new ebaybar(showtitle: false, cpage: "category"),
+          new ebaybar(showtitle: false, cpage: "category", uid: widget.uid,),
           // SliverPersistentHeader(
           //   delegate: imageHeader(imgUrl: widget.imgUrl),
           //   pinned: true,
@@ -126,7 +129,7 @@ class _SubCategory1State extends State<SubCategory1> {
                 // );
                 return SliverPersistentHeader(
                   delegate:
-                      titleHeader4(titleT: widget.catName, idT: widget.catId),
+                      titleHeader4(titleT: widget.catName, idT: widget.catId, uid: widget.uid),
                   pinned: false,
                   //floating: true,
                 );
@@ -141,7 +144,7 @@ class _SubCategory1State extends State<SubCategory1> {
                   // );
                   return SliverPersistentHeader(
                     delegate:
-                        titleHeader4(titleT: widget.catName, idT: widget.catId),
+                        titleHeader4(titleT: widget.catName, idT: widget.catId, uid: widget.uid),
                     pinned: false,
                     //floating: true,
                   );
@@ -197,7 +200,8 @@ class _SubCategory1State extends State<SubCategory1> {
                                     catName: projectSnap.data.categoryArray
                                         .category[index + 1].categoryName,
                                     imgUrl: widget.imgUrl,
-                                  )),
+                                    uid: widget.uid,
+                                  ),),
                         );
                       }),
                       // handle your onTap here
@@ -393,9 +397,9 @@ class titleHeader4 extends SliverPersistentHeaderDelegate {
   titleHeader4({
     this.titleT,
     this.idT,
+    this.uid,
   });
-  String titleT;
-  String idT;
+  String titleT, uid, idT;
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
@@ -409,7 +413,8 @@ class titleHeader4 extends SliverPersistentHeaderDelegate {
                       builder: (context) => new SearchResult(
                             catId: idT,
                             catName: titleT,
-                          )),
+                            uid: uid,
+                          ),),
                 ), // handle your onTap here
             child: Container(
                 decoration: BoxDecoration(

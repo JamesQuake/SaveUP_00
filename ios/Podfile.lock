@@ -784,7 +784,7 @@ PODS:
     - AppAuth (~> 1.5)
     - GTMAppAuth (~> 1.3)
     - GTMSessionFetcher/Core (< 3.0, >= 1.1)
-  - GoogleUserMessagingPlatform (2.5.0)
+  - GoogleUserMessagingPlatform (2.6.0)
   - GoogleUtilities/AppDelegateSwizzler (7.13.3):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -891,9 +891,9 @@ PODS:
   - PurchasesHybridCommon (4.15.0):
     - RevenueCat (= 4.18.0)
   - RevenueCat (4.18.0)
-  - SDWebImage (5.19.4):
-    - SDWebImage/Core (= 5.19.4)
-  - SDWebImage/Core (5.19.4)
+  - SDWebImage (5.19.7):
+    - SDWebImage/Core (= 5.19.7)
+  - SDWebImage/Core (5.19.7)
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -1060,7 +1060,7 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 4c19f031220c72464d460c9daa1fb5d1acce958e
   GoogleDataTransport: 6c09b596d841063d76d4288cc2d2f42cc36e1e2a
   GoogleSignIn: 5651ce3a61e56ca864160e79b484cd9ed3f49b7a
-  GoogleUserMessagingPlatform: 6b4f48a370e77ce121d034c908cc6ee4fdafaf13
+  GoogleUserMessagingPlatform: 0c3a08353e53ce8c2feab7addd0b652cde522450
   GoogleUtilities: ea963c370a38a8069cc5f7ba4ca849a60b6d7d15
   "gRPC-C++": 9675f953ace2b3de7c506039d77be1f2e77a8db2
   gRPC-Core: 943e491cb0d45598b0b0eb9e910c88080369290b
@@ -1077,7 +1077,7 @@ SPEC CHECKSUMS:
   purchases_flutter: c93638c13a96b39fc1281d4bc4c44aa81a4224c7
   PurchasesHybridCommon: da45a710d9f4f7819fd769b8efc3abbb5e4e8cab
   RevenueCat: d8f5b1477c4eb78b658e86a97fd64ed4d6b3fbfd
-  SDWebImage: 066c47b573f408f18caa467d71deace7c0f8280d
+  SDWebImage: 8a6b7b160b4d710e2a22b6900e25301075c34cb3
   shared_preferences_foundation: 297b3ebca31b34ec92be11acd7fb0ba932c822ca
   social_share: 702a5e3842addd22db515aa9e1e00a4b80a0296d
   SwiftyGif: 706c60cf65fa2bc5ee0313beece843c8eb8194d4
@@ -1088,4 +1088,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 868ac281998ea54ad3dfa8441d3d6dbd6c7fc8b8
 
-COCOAPODS: 1.14.2
+COCOAPODS: 1.15.2

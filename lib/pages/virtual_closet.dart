@@ -23,6 +23,14 @@ class VirtualCloset extends StatefulWidget {
 
 class _VirtualClosetState extends State<VirtualCloset> {
   String _uid, _sortValue;
+  var _sortItems = [
+    'Price - Low to High',
+    'Price - High to Low',
+    'Newest',
+    'Oldest',
+    'Walmart',
+    'eBay'
+  ];
 
   _VirtualClosetState(this._uid);
 
@@ -33,21 +41,69 @@ class _VirtualClosetState extends State<VirtualCloset> {
   }
 
   List<VirtualClosetModel> _virtualCloset = [];
+  bool _isLoading = true;
 
   Future _getVirtualClosetProducts() async {
-    QuerySnapshot<Map<String, dynamic>> _ff = await FirebaseFirestore.instance
-        .collection('virtualCloset')
-        .where('uid', isEqualTo: FirebaseAuth.instance.currentUser.uid).orderBy('doc', descending: true)
-        .get();
-    _virtualCloset.clear();
-    _virtualCloset = [];
-    if (_ff.docs.isNotEmpty) {
-      _ff.docs.forEach((element) {
-        _virtualCloset.add(VirtualClosetModel.fromJson(element.data()));
-      });
-      print('vvvvvvv');
-      print('${_virtualCloset.length}');
-      setState(() {});
+    try {
+      setState(() => _isLoading = true);
+
+      Query<Map<String, dynamic>> _query = FirebaseFirestore.instance
+          .collection('virtualCloset')
+          .where('uid', isEqualTo: FirebaseAuth.instance.currentUser.uid)
+          .orderBy('doc', descending: true);
+
+      if (_sortValue == null) {
+        _query = FirebaseFirestore.instance
+            .collection('virtualCloset')
+            .where('uid', isEqualTo: FirebaseAuth.instance.currentUser.uid)
+            .orderBy('doc', descending: true);
+      } else if (_sortValue == _sortItems[0]) {
+        _query = FirebaseFirestore.instance
+            .collection('virtualCloset')
+            .where('uid', isEqualTo: FirebaseAuth.instance.currentUser.uid)
+            .orderBy('pPrice', descending: true);
+      } else if (_sortValue == _sortItems[1]) {
+        _query = FirebaseFirestore.instance
+            .collection('virtualCloset')
+            .where('uid', isEqualTo: FirebaseAuth.instance.currentUser.uid)
+            .orderBy('pPrice', descending: false);
+      } else if (_sortValue == _sortItems[2]) {
+        _query = FirebaseFirestore.instance
+            .collection('virtualCloset')
+            .where('uid', isEqualTo: FirebaseAuth.instance.currentUser.uid)
+            .orderBy('doc', descending: true);
+      } else if (_sortValue == _sortItems[3]) {
+        _query = FirebaseFirestore.instance
+            .collection('virtualCloset')
+            .where('uid', isEqualTo: FirebaseAuth.instance.currentUser.uid)
+            .orderBy('doc', descending: false);
+      } else if (_sortValue == _sortItems[4]) {
+        _query = FirebaseFirestore.instance
+            .collection('virtualCloset')
+            .where('uid', isEqualTo: FirebaseAuth.instance.currentUser.uid)
+            .where('platform', isEqualTo: 'Walmart')
+            .orderBy('doc', descending: true);
+      } else if (_sortValue == _sortItems[5]) {
+        _query = FirebaseFirestore.instance
+            .collection('virtualCloset')
+            .where('uid', isEqualTo: FirebaseAuth.instance.currentUser.uid)
+            .where('platform', isEqualTo: 'eBay')
+            .orderBy('doc', descending: true);
+      }
+
+      QuerySnapshot<Map<String, dynamic>> _ff = await _query.get();
+      _virtualCloset.clear();
+      _virtualCloset = [];
+      if (_ff.docs.isNotEmpty) {
+        _ff.docs.forEach((element) {
+          _virtualCloset.add(VirtualClosetModel.fromJson(element.data()));
+        });
+        // print('vvvvvvv');
+        // print('${_virtualCloset.length}');
+      }
+      setState(() => _isLoading = false);
+    } catch (e) {
+      setState(() => _isLoading = false);
     }
   }
 
@@ -60,9 +116,9 @@ class _VirtualClosetState extends State<VirtualCloset> {
     // setState(() {
     //   _isLoading = true;
     // });
-    
+
     String baseUrl = 'https://api.impact.com';
-    String apiUrl ='$baseUrl$uri';
+    String apiUrl = '$baseUrl$uri';
 
     print('makeWalmartCall');
     final response = await makeWalmartCall(apiUrl);
@@ -104,27 +160,27 @@ class _VirtualClosetState extends State<VirtualCloset> {
         ],
       ),
       onTap: () async {
-        if(_virtualCloset[index].platform.toLowerCase() == 'ebay'){
+        if (_virtualCloset[index].platform.toLowerCase() == 'ebay') {
           Navigator.push(
-          context,
-          new MaterialPageRoute(
-              builder: (context) => ProductPage(
-                itemId: _virtualCloset[index].pId,
-                uid: widget.uid,
-              )),
-        );
-        } else if(_virtualCloset[index].platform.toLowerCase() == 'walmart'){
+            context,
+            new MaterialPageRoute(
+                builder: (context) => ProductPage(
+                      itemId: _virtualCloset[index].pId,
+                      uid: widget.uid,
+                    )),
+          );
+        } else if (_virtualCloset[index].platform.toLowerCase() == 'walmart') {
           EasyLoading.show();
           Item item = await _getWalmartItem(_virtualCloset[index].walmartUri);
           EasyLoading.dismiss();
           Navigator.push(
-          context,
-          new MaterialPageRoute(
-              builder: (context) => WalmartProductPage(
-                item: item,
-                uid: widget.uid,
-              )),
-        );
+            context,
+            new MaterialPageRoute(
+                builder: (context) => WalmartProductPage(
+                      item: item,
+                      uid: widget.uid,
+                    )),
+          );
         }
       },
     );
@@ -145,128 +201,86 @@ class _VirtualClosetState extends State<VirtualCloset> {
               // fontSize: 15.0,
               ),
         ),
-        centerTitle: true,
+        centerTitle: false,
         elevation: 0.0,
       ),
       endDrawer: MainDrawer(uid: widget.uid, incomingRoute: '/virtual_closet'),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            _virtualCloset.length > 0 ? Expanded(
-              child: ListView(
+        child: _isLoading
+            ? LinearProgressIndicator()
+            : Column(
                 children: [
-                  Column(
-                    children: <Widget>[
-                      /*Row(
-                        children: <Widget>[
-                          Text(
-                            "Sort by:",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                color: Colors.black),
-                          ),
-                          SizedBox(
-                            width: 16,
-                          ),
-                          Container(
-                            width: 250,
-                            child: DropdownButton(
-                              hint: _sortValue == null
-                                  ? Text('')
-                                  : Text(
-                                      _sortValue,
-                                      style: TextStyle(color: Colors.black),
+                  _virtualCloset.length > 0
+                      ? Expanded(
+                          child: ListView(
+                            children: [
+                              Column(
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    child: Row(
+                                      children: <Widget>[
+                                        Text(
+                                          "Sort by:",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
+                                              color: Colors.black),
+                                        ),
+                                        SizedBox(width: 30),
+                                        Container(
+                                          width: 250,
+                                          child: DropdownButton(
+                                            hint: _sortValue == null
+                                                ? Text('')
+                                                : Text(
+                                                    _sortValue,
+                                                    style: TextStyle(
+                                                        color: Colors.black),
+                                                  ),
+                                            isExpanded: true,
+                                            iconSize: 30.0,
+                                            style: TextStyle(
+                                                color: Colors.blue, fontSize: 18),
+                                            items: _sortItems.map(
+                                              (val) {
+                                                return DropdownMenuItem<String>(
+                                                  value: val,
+                                                  child: Text(val),
+                                                );
+                                              },
+                                            ).toList(),
+                                            onChanged: (val) {
+                                              setState(() => _sortValue = val);
+                                              _getVirtualClosetProducts();
+                                            },
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                              isExpanded: true,
-                              iconSize: 30.0,
-                              style:
-                                  TextStyle(color: Colors.blue, fontSize: 20),
-                              items: [
-                                'Price',
-                                'Date',
-                              ].map(
-                                (val) {
-                                  return DropdownMenuItem<String>(
-                                    value: val,
-                                    child: Text(val),
-                                  );
-                                },
-                              ).toList(),
-                              onChanged: (val) {
-                                setState(
-                                  () {
-                                    _sortValue = val;
-                                  },
-                                );
-                              },
-                            ),
+                                  ),
+                                  SizedBox(
+                                    width: 380.0,
+                                    child: ListView.builder(
+                                        physics: ClampingScrollPhysics(),
+                                        shrinkWrap: true,
+                                        scrollDirection: Axis.vertical,
+                                        itemCount: _virtualCloset.length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) =>
+                                                _item(context, index)),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      */
-                      SizedBox(
-                        width: 380.0,
-                        child: ListView.builder(
-                            physics: ClampingScrollPhysics(),
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            itemCount: _virtualCloset.length,
-                            itemBuilder: (BuildContext context, int index) =>
-                                _item(context, index)),
-                      ),
-                      // SizedBox(
-                      //   height: 50,
-                      // ),
-                      // Padding(
-                      //   padding: EdgeInsets.only(left: 0.0, right: 0.0),
-                      //   child: ButtonTheme(
-                      //     minWidth: 300.0,
-                      //     height: 50.0,
-                      //     child: RaisedButton(
-                      //       textColor: Colors.white,
-                      //       color: Color(0xff0070c0),
-                      //       child: Text("Next"),
-                      //       onPressed: () {
-                      //         navigateToOverdraft(context);
-                      //       },
-                      //       shape: new RoundedRectangleBorder(
-                      //         borderRadius: new BorderRadius.circular(10.0),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-                      // SizedBox(
-                      //   height: 50,
-                      // ),
-                    ],
-                  ),
+                        )
+                      : Center(
+                          child: Text('No products for now'),
+                        ),
                 ],
               ),
-            ) : Center(
-              child: Text('No products for now'),
-            ),
-            /*ButtonTheme(
-              minWidth: double.infinity,
-              height: 50.0,
-              child: RaisedButton(
-                textColor: Colors.white,
-                color: Color(0xff0070c0),
-                child: Text(
-                  "Next",
-                  style: TextStyle(fontSize: 20.0),
-                ),
-                onPressed: () {
-                  // navigateToOverdraft(context);
-                },
-                shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(10.0),
-                ),
-              ),
-            ),*/
-          ],
-        ),
       ),
     );
   }

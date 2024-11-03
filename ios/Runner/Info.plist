@@ -23,25 +23,31 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+            <string>com.googleusercontent.apps.538577078519-cdg4aphf9rrqp87h1qmhfk0oou0oh5jk</string>
+        </array>
+    </dict>
+		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.538577078519-524pgr61b3h1url80iqiovkd8eftel8n</string>
-				<string>fb696439556011062</string>
+				<string>com.googleusercontent.apps.538577078519-cdg4aphf9rrqp87h1qmhfk0oou0oh5jk</string>
+				<string>fb1528360214451297</string>
 			</array>
 		</dict>
 	</array>
 	<key>FacebookAppID</key>
-	<string>696439556011062</string>
+	<string>1528360214451297</string>
 	<key>FacebookClientToken</key>
-	<string>8863ed4263dc2f2762e71c2accafbc81</string>
+	<string>84bca6f0d8e5e1e5db75e9931b8bbb4b</string>
 	<key>FacebookDisplayName</key>
-	<string>Pay or Save</string>
+	<string>SaveUp</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
-		<string>fb696439556011062</string>
+		<string>fb1528360214451297</string>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>

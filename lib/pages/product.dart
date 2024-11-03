@@ -96,10 +96,11 @@ class _ProductPageState extends State<ProductPage> {
           Navigator.push(
             context,
             new MaterialPageRoute(
-                builder: (context) => new EbayWebView(
-                      url: projectSnapStorage.data.itemWebUrl,
-                      title: projectSnapStorage.data.title,
-                    )),
+              builder: (context) => new EbayWebView(
+                url: projectSnapStorage.data.itemWebUrl,
+                title: projectSnapStorage.data.title,
+              ),
+            ),
           );
         }
       },
@@ -253,16 +254,18 @@ class _ProductPageState extends State<ProductPage> {
                       ProductModel _ff;
                       await productSummary.then((value) => _ff = value);
                       print('${FirebaseAuth.instance.currentUser.uid}');
-                      FirebaseFirestore.instance.collection('virtualCloset').add({
+                      FirebaseFirestore.instance
+                          .collection('virtualCloset')
+                          .add({
                         'uid': FirebaseAuth.instance.currentUser.uid,
-                        'pName':_productTitle,
-                        'pPrice':_productPrice,
-                        'pImage':_ff.image.imageUrl,
+                        'pName': _productTitle,
+                        'pPrice': _productPrice,
+                        'pImage': _ff.image.imageUrl,
                         'pId': _ff.itemId,
                         'pUrl': _url,
-                        'status':true,
-                        'platform':'eBay',
-                        'doc':DateTime.now(),
+                        'status': true,
+                        'platform': 'eBay',
+                        'doc': DateTime.now(),
                       });
                       Navigator.push(
                           context,
@@ -440,23 +443,23 @@ class _ProductPageState extends State<ProductPage> {
                             ],
                           ),
                         ),
-                        if(projectSnap.data.condition != null)...[
+                        if (projectSnap.data.condition != null) ...[
                           Container(
                             margin: EdgeInsets.only(left: 20, right: 20),
                             constraints: BoxConstraints(minHeight: 50),
                             decoration: BoxDecoration(
                                 border: Border(
-                                  bottom: BorderSide(
-                                    //                   <--- left side
-                                    color: Colors.black,
-                                    width: 1.0,
-                                  ),
-                                  top: BorderSide(
-                                    //                   <--- left side
-                                    color: Colors.black,
-                                    width: 1.0,
-                                  ),
-                                )),
+                              bottom: BorderSide(
+                                //                   <--- left side
+                                color: Colors.black,
+                                width: 1.0,
+                              ),
+                              top: BorderSide(
+                                //                   <--- left side
+                                color: Colors.black,
+                                width: 1.0,
+                              ),
+                            )),
                             child: Center(
                               child: Text(
                                 projectSnap.data.condition,
@@ -496,10 +499,11 @@ class _ProductPageState extends State<ProductPage> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        if(projectSnap.data.condition != null)...[
+                                        if (projectSnap.data.condition !=
+                                            null) ...[
                                           Row(
                                             mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                                MainAxisAlignment.start,
                                             children: [
                                               Container(
                                                 padding: EdgeInsets.only(
@@ -519,7 +523,8 @@ class _ProductPageState extends State<ProductPage> {
                                                 width: widthd2,
                                                 child: Text(
                                                   projectSnap.data.condition,
-                                                  style: TextStyle(fontSize: 14),
+                                                  style:
+                                                      TextStyle(fontSize: 14),
                                                 ),
                                               ),
                                             ],
@@ -685,18 +690,18 @@ class _ProductPageState extends State<ProductPage> {
                             ],
                           ),
                         ),
-                        if(projectSnap.data.shortDescription != null )...[
+                        if (projectSnap.data.shortDescription != null) ...[
                           Container(
                             padding: EdgeInsets.only(top: 30),
                             constraints: BoxConstraints(minHeight: 175),
                             decoration: BoxDecoration(
                                 border: Border(
-                                  bottom: BorderSide(
-                                    //                   <--- left side
-                                    color: Colors.black38,
-                                    width: 1.0,
-                                  ),
-                                )),
+                              bottom: BorderSide(
+                                //                   <--- left side
+                                color: Colors.black38,
+                                width: 1.0,
+                              ),
+                            )),
                             margin: EdgeInsets.only(left: 15, right: 15),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -713,21 +718,22 @@ class _ProductPageState extends State<ProductPage> {
                                   children: [
                                     Column(
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         mainAxisAlignment:
-                                        MainAxisAlignment.center,
+                                            MainAxisAlignment.center,
                                         children: [
                                           Row(
                                             mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                                MainAxisAlignment.start,
                                             children: [
                                               Container(
                                                 padding: EdgeInsets.only(
                                                     top: 25, bottom: 15),
-                                                constraints:
-                                                BoxConstraints(maxWidth: 325),
+                                                constraints: BoxConstraints(
+                                                    maxWidth: 325),
                                                 child: Text(
-                                                  projectSnap.data.shortDescription,
+                                                  projectSnap
+                                                      .data.shortDescription,
                                                   style: TextStyle(
                                                     fontSize: 14,
                                                     color: Colors.black,
@@ -740,28 +746,28 @@ class _ProductPageState extends State<ProductPage> {
                                     Column(children: [
                                       Material(
                                           child: InkWell(
-                                            // onTap: () => Navigator.push(
-                                            //   context,
-                                            //   new MaterialPageRoute<String>(
-                                            //       builder: (context) =>
-                                            //           new EbayWebView(
-                                            //             url: projectSnap
-                                            //                 .data.itemWebUrl,
-                                            //             title: projectSnap.data.title,
-                                            //           )),
-                                            // ), // handle your onTap here
-                                            child: Container(
-                                              padding: EdgeInsets.only(left: 15),
-                                              // constraints:
-                                              //     BoxConstraints(minHeight: 75),
-                                              // child: Center(
-                                              //   child: Icon(
-                                              //     Icons.arrow_forward_ios_rounded,
-                                              //     size: 25,
-                                              //   ),
-                                              // )
-                                            ),
-                                          ))
+                                        // onTap: () => Navigator.push(
+                                        //   context,
+                                        //   new MaterialPageRoute<String>(
+                                        //       builder: (context) =>
+                                        //           new EbayWebView(
+                                        //             url: projectSnap
+                                        //                 .data.itemWebUrl,
+                                        //             title: projectSnap.data.title,
+                                        //           )),
+                                        // ), // handle your onTap here
+                                        child: Container(
+                                          padding: EdgeInsets.only(left: 15),
+                                          // constraints:
+                                          //     BoxConstraints(minHeight: 75),
+                                          // child: Center(
+                                          //   child: Icon(
+                                          //     Icons.arrow_forward_ios_rounded,
+                                          //     size: 25,
+                                          //   ),
+                                          // )
+                                        ),
+                                      ))
                                     ]),
                                   ],
                                 ),

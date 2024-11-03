@@ -185,6 +185,11 @@ class ebaybar extends StatelessWidget {
         expandedHeight: 82,
         collapsedHeight: 82,
         toolbarHeight: 80,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        backgroundColor: Color(0xffefecec),
         title: Padding(
           padding: EdgeInsets.only(top: 0),
           child: Image.asset(

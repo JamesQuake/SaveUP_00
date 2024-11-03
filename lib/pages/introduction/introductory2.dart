@@ -124,7 +124,7 @@ class _Introductory2State extends State<Introductory2> {
                             child: SoftVideoPlayer(
                               videoPlayerController:
                                   VideoPlayerController.asset(
-                                'assets/images/new/videoassets/ew-3.mp4',
+                                'assets/images/new/videoassets/eW-3.mp4',
                               ),
                               looping: false,
                               placeHolder: 'assets/images/Video3.png',

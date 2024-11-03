@@ -47,7 +47,7 @@ class InvestNow extends StatefulWidget {
 
 class _InvestNowState extends State<InvestNow>
     with SingleTickerProviderStateMixin {
-  String _uid, _total, _investPercents, selectedAccount, _time, _percents;
+  String _uid, _total, _investPercents = '6', selectedAccount, _time = '20', _percents;
   int orderPercentage, stockPercentage, years;
   double _investment, res, _orderAmount, _willBeWorth;
   int _checking, _rewardPoints;
@@ -974,7 +974,7 @@ class _InvestNowState extends State<InvestNow>
                     child: Row(
                       children: [
                         Text(
-                          'Choose rate and term',
+                          'Choose rate (${_investPercents})',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 15.h),
                         ),
@@ -1046,8 +1046,8 @@ class _InvestNowState extends State<InvestNow>
                                 });
                               },
                               min: 1,
-                              max: 12,
-                              divisions: 12,
+                              max: 25,
+                              divisions: 25,
                               // inactiveColor: Colors.grey[400],
                               label: _investPercents == null
                                   ? '6%'
@@ -1057,7 +1057,7 @@ class _InvestNowState extends State<InvestNow>
                         ),
                       ),
                       Text(
-                        '12%',
+                        '25%',
                         style: TextStyle(
                           fontSize: 16.h,
                           color: Colors.blue,
@@ -1078,7 +1078,7 @@ class _InvestNowState extends State<InvestNow>
                     alignment: Alignment.topLeft,
                     // widthFactor: 10.0,
                     child: Text(
-                      'Future Value',
+                      'Choose term ($_time)',
                       style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 15.h),
                     ),
@@ -1165,7 +1165,7 @@ class _InvestNowState extends State<InvestNow>
               Row(
                 children: [
                   Text(
-                    'Which will be worth',
+                    'Future Value',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                   ),
                   Spacer(),

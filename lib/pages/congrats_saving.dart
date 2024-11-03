@@ -276,7 +276,7 @@ class _CongratsSaving extends State<CongratsSaving> {
                                   setState(() => _isTapped = false);
                                 },
                               child: Ring(
-                                innerColor: Colors.transparent,
+                                innerColor: Colors.white.withOpacity(0.6),
                                 outerColor: _isTapped ? Colors.transparent : Colors.black.withOpacity(0.6),
                                 amount: int.parse(receivedModel.amount),
                                 goal: int.parse(receivedModel.goalAmount),

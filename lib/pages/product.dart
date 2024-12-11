@@ -293,8 +293,24 @@ class _ProductPageState extends State<ProductPage> {
                 height: 62,
                 child: FloatingActionButton(
                   heroTag: 'invest',
-                  onPressed: () {
+                  onPressed: () async {
                     if (_productPrice != null) {
+                      ProductModel _ff;
+                      await productSummary.then((value) => _ff = value);
+                      print('${FirebaseAuth.instance.currentUser.uid}');
+                      FirebaseFirestore.instance
+                          .collection('virtualCloset')
+                          .add({
+                        'uid': FirebaseAuth.instance.currentUser.uid,
+                        'pName': _productTitle,
+                        'pPrice': _productPrice,
+                        'pImage': _ff.image.imageUrl,
+                        'pId': _ff.itemId,
+                        'pUrl': _url,
+                        'status': true,
+                        'platform': 'eBay',
+                        'doc': DateTime.now(),
+                      });
                       Navigator.push(
                           context,
                           MaterialPageRoute(

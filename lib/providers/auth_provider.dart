@@ -121,12 +121,6 @@ class AuthProvider extends ChangeNotifier {
     if (Platform.isAndroid) {
       configuration =
           PurchasesConfiguration("goog_ROKUqNPFksWwfOPyvIcvyZKDPvC");
-      // print("this gibberish");
-      // if (buildingForAmazon) {
-      //   // use your preferred way to determine if this build is for Amazon store
-      //   // checkout our MagicWeather sample for a suggestion
-      //   configuration = AmazonConfiguration("public_amazon_sdk_key");
-      // }
     } else if (Platform.isIOS) {
       configuration =
           PurchasesConfiguration("appl_TyEUZYmaqrFBvyvETDxAnSatMwM");

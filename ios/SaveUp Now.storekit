@@ -1,0 +1,107 @@
+{
+  "identifier" : "6F2B1B3B",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "3.29",
+      "familyShareable" : false,
+      "internalID" : "6657973089",
+      "localizations" : [
+        {
+          "description" : "Plan $3.29",
+          "displayName" : "Plan $3.29",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "plan_3.25",
+      "referenceName" : "Plan $3.29",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "1.79",
+      "familyShareable" : false,
+      "internalID" : "6602884829",
+      "localizations" : [
+        {
+          "description" : "Plan $1.75",
+          "displayName" : "Plan $1.75",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "plan_1.75",
+      "referenceName" : "Plan 1.75",
+      "type" : "Consumable"
+    }
+  ],
+  "settings" : {
+    "_applicationInternalID" : "6553946129",
+    "_developerTeamID" : "Y58TW24JSX",
+    "_failTransactionsEnabled" : false,
+    "_lastSynchronizedDate" : 752414924.48409498,
+    "_locale" : "en_US",
+    "_storefront" : "USA",
+    "_storeKitErrors" : [
+      {
+        "current" : {
+          "index" : 2,
+          "type" : "generic"
+        },
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Store Sync"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Subscription Status"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Refund Request Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      }
+    ]
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "subscriptionOffersKeyPair" : {
+    "id" : "77054349",
+    "privateKey" : "MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgjhQknJwKhdXOdkwN/Q6+w9RnQO2jK7/y4W+yRIUszN6gCgYIKoZIzj0DAQehRANCAAS8VCPCZA96R27t82UUlI7wdmCqKiL7MNCZdm+WQJFzUUQY935qtvICnoUFNEjgdE51LUjFmEL9i18zubfqBQuy"
+  },
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}

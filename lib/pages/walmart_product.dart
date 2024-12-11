@@ -303,6 +303,20 @@ class _WalmartProductPageState extends State<WalmartProductPage> {
                   heroTag: 'invest',
                   onPressed: () {
                     if (widget.item.currentPrice != null) {
+                      FirebaseFirestore.instance
+                          .collection('virtualCloset')
+                          .add({
+                        'uid': FirebaseAuth.instance.currentUser.uid,
+                        'pName': widget.item.name,
+                        'pPrice': widget.item.currentPrice,
+                        'pImage': widget.item.imageUrl,
+                        'pId': widget.item.id,
+                        'pUrl': widget.item.url,
+                        'walmartUri': widget.item.uri,
+                        'status': true,
+                        'platform': 'Walmart',
+                        'doc': DateTime.now(),
+                      });
                       Navigator.push(
                         context,
                         MaterialPageRoute(

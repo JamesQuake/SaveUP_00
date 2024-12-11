@@ -185,11 +185,16 @@ class WalmartBar extends StatelessWidget {
         expandedHeight: 82,
         collapsedHeight: 82,
         toolbarHeight: 80,
+        backgroundColor: Color(0xffefecec),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
         title: Padding(
           padding: EdgeInsets.only(top: 0),
           child: Image.asset(
-            'assets/ebay.png',
-            height: 60,
+            'assets/images/new/walmart.png',
+            height: 40,
           ),
         ),
       );

@@ -9,6 +9,7 @@ import 'dart:async';
 import 'dart:convert';
 // import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:pay_or_save/pages/sort_walmart.dart';
 import '../models/search.dart';
 import '../element/ebaybar.dart';
 // import '../models/subcategory.dart';
@@ -41,8 +42,9 @@ class _WalmartItemsListPageState extends State<WalmartItemsListPage> {
   List filterS = [];
   Future<WalmartItemsResponse> futureResult;
   var token;
+  String _lastUrlUsed = '';
 
-  Future<WalmartItemsResponse> _getsearchR(String pUrl, String sort) async {
+  Future<WalmartItemsResponse> _getsearchR(String pUrl, String sorter) async {
     setState(() {
       _isLoading = true;
     });
@@ -60,17 +62,30 @@ class _WalmartItemsListPageState extends State<WalmartItemsListPage> {
             apiUrl ='$baseUrl/Mediapartners/IRms8oU5FgpC2680271TvYsYvsUcCgLDm1/Catalogs/${widget.catId}/Items';
       }
     } else {
-      apiUrl = '$baseUrl$pUrl';
+      if(pUrl.contains('api.impact.com')){
+        apiUrl = pUrl;
+      } else{
+        apiUrl = '$baseUrl$pUrl';
+      }
     }
+    _lastUrlUsed = apiUrl;
 
-    // if (sorter != null) {
-    //   if (sorter == "distance") {
-    //     apiUrl = '$apiUrl&sort=$sorter&filter=pickupCountry:US';
-    //     print(apiUrl);
-    //   } else {
-    //     apiUrl = '$apiUrl&sort=$sorter';
-    //   }
-    // }
+    if (sorter != null) {
+      if (sorter == "price") {
+        if(apiUrl.contains('?')){
+          apiUrl = '$apiUrl&SortBy=CurrentPrice&SortOrder=ASC';
+        } else{
+          apiUrl = '$apiUrl?SortBy=CurrentPrice&SortOrder=ASC';
+        }
+        print(apiUrl);
+      } else if (sorter == "-price") {
+        if(apiUrl.contains('?')){
+          apiUrl = '$apiUrl&SortBy=CurrentPrice&SortOrder=DESC';
+        } else{
+          apiUrl = '$apiUrl?SortBy=CurrentPrice&SortOrder=DESC';
+        }
+      }
+    }
     // if (rFilterQ != null) {
     //   apiUrl = '$apiUrl&aspect_filter=$rFilterQ';
     // }
@@ -381,7 +396,7 @@ class _WalmartItemsListPageState extends State<WalmartItemsListPage> {
 
   void stateSetter(String sorter) {
     setState(() {
-      futureResult = _getsearchR(null, sorter);
+      futureResult = _getsearchR(_lastUrlUsed, sorter);
     });
   }
 
@@ -496,28 +511,28 @@ class titleHeader3 extends SliverPersistentHeaderDelegate {
                     // ),
                     ),
               ),
-              // StaggeredGridTile.count(
-              //   crossAxisCellCount: 2,
-              //   mainAxisCellCount: 1,
-              //   child: InkWell(
-              //     onTap: () => Navigator.push(
-              //       context,
-              //       new MaterialPageRoute<String>(
-              //           builder: (context) => new sortP()),
-              //     ).then((String value) {
-              //       //print(value);
-              //       this.stateSetter(value);
-              //     }), // handle your onTap here
-              //     child: Container(
-              //       alignment: Alignment.centerRight,
-              //       child: Text('Sort',
-              //           style: new TextStyle(
-              //               fontWeight: FontWeight.bold,
-              //               fontSize: 18,
-              //               color: Color(0xff0078ff))),
-              //     ),
-              //   ),
-              // ),
+              StaggeredGridTile.count(
+                crossAxisCellCount: 2,
+                mainAxisCellCount: 1,
+                child: InkWell(
+                  onTap: () => Navigator.push(
+                    context,
+                    new MaterialPageRoute<String>(
+                        builder: (context) => new SortWalmart()),
+                  ).then((String value) {
+                    //print(value);
+                    this.stateSetter(value);
+                  }), // handle your onTap here
+                  child: Container(
+                    alignment: Alignment.centerRight,
+                    child: Text('Sort',
+                        style: new TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Color(0xff0078ff))),
+                  ),
+                ),
+              ),
               // StaggeredGridTile.count(
               //   crossAxisCellCount: 2,
               //   mainAxisCellCount: 1,

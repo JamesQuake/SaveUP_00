@@ -1,32 +1,22 @@
 import 'dart:async';
-// import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:pay_or_save/assets/main_drawer.dart';
 import 'package:pay_or_save/models/account_model.dart';
-//import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:pay_or_save/models/investment_goal_model.dart';
-import 'package:pay_or_save/pages/oldedits/congratulation_investment.dart';
-// import 'package:pay_or_save/pages/congratulations_investment.dart';
-// import 'package:pay_or_save/pages/oldedits/investnow.dart';
-import 'package:pay_or_save/pages/overdraft.dart';
 import 'package:pay_or_save/providers/total_provider.dart';
 import 'package:pay_or_save/utilities/validator.dart';
-import 'package:pay_or_save/widgets/alert_pos.dart';
 import 'package:pay_or_save/widgets/invest_chart.dart';
-// import 'package:pay_or_save/widgets/menu.dart';
 import 'dart:math' as math;
-// import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:confetti/confetti.dart';
 import 'congratulations_investment.dart';
 import 'new_pages/add_to_account.dart';
-import 'overdraft_notice.dart';
 
 class InvestNow extends StatefulWidget {
   final String uid, selectedAccount, incomingOrder;
@@ -47,11 +37,16 @@ class InvestNow extends StatefulWidget {
 
 class _InvestNowState extends State<InvestNow>
     with SingleTickerProviderStateMixin {
-  String _uid, _total, _investPercents = '6', selectedAccount, _time = '20', _percents;
+  String _uid,
+      _total,
+      _investPercents = '6',
+      selectedAccount,
+      _time = '20',
+      _percents;
   int orderPercentage, stockPercentage, years;
   double _investment, res, _orderAmount, _willBeWorth;
   int _checking, _rewardPoints;
-  double x = 0.0, zzz=0.0;
+  double x = 0.0, zzz = 0.0;
   double totalInvested = 0.0;
   List<AccountModel> _list;
   InvestmentModel accountModel;
@@ -134,11 +129,17 @@ class _InvestNowState extends State<InvestNow>
   Animation<double> _shopIconSizeAnimation;
   Animation<double> _hangIconSizeAnimation;
   Animation _curve;
+  ConfettiController controllerTopRight;
+  ConfettiController controllerTopLeft;
 
   _InvestNowState(this.selectedAccount, this.accountModel);
 
   @override
   void initState() {
+    controllerTopRight =
+        ConfettiController(duration: const Duration(seconds: 2));
+    controllerTopLeft =
+        ConfettiController(duration: const Duration(seconds: 2));
     super.initState();
     // _getUidFromPref();
     _getInvBal = _getBalances();
@@ -210,6 +211,8 @@ class _InvestNowState extends State<InvestNow>
   void dispose() {
     super.dispose();
     _controller.dispose();
+    controllerTopRight.dispose();
+    controllerTopLeft.dispose();
   }
 
   _getBalances() {
@@ -653,6 +656,15 @@ class _InvestNowState extends State<InvestNow>
               // years = 0;
               // res = 0;
               // setState(() {});
+              if (num.parse(_model.amount) >= num.parse(_model.goalAmount)) {
+                print('_model.amount -> ${_model.amount}');
+                print('_model.goalAmount -> ${_model.goalAmount}');
+                EasyLoading.showSuccess('${_model.goal} Goal reached!');
+                controllerTopRight.play();
+                controllerTopLeft.play();
+              } else {
+                print('NOT REACHED YET .......');
+              }
             });
           }
         } else {
@@ -789,588 +801,578 @@ class _InvestNowState extends State<InvestNow>
         elevation: 0.0,
       ),
       endDrawer: MainDrawer(uid: widget.uid, incomingRoute: _incomingRoute),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(20.0, 35.0, 20.0, 10.0),
-          child: Column(
-            children: <Widget>[
-              Row(
-                children: [
-                  Text(
-                    'Order Amount',
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 16.h),
-                  ),
-                  Spacer(),
-                  Text(
-                    NumberFormat.simpleCurrency(
-                            locale: "en-us", decimalDigits: 2)
-                        .format(_investOrderAmount),
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontSize: 16.h,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
-              Divider(
-                thickness: 0.8,
-                color: Colors.black,
-              ),
-              Column(
-                children: [
+      body: Stack(
+        children: [
+          Align(
+            alignment: Alignment.topRight,
+            child: ConfettiWidget(
+              confettiController: controllerTopRight,
+              blastDirection: 0,
+              maxBlastForce: 5, // set a lower max blast force
+              minBlastForce: 2, // set a lower min blast force
+              emissionFrequency: 0.05,
+              numberOfParticles: 30, // a lot of particles at once
+              gravity: 1,
+              minimumSize: Size(8, 8),
+              maximumSize: Size(18, 18),
+              blastDirectionality: BlastDirectionality.explosive,
+            ),
+          ),
+          Align(
+            alignment: Alignment.topLeft,
+            child: ConfettiWidget(
+              confettiController: controllerTopRight,
+              blastDirection: 0.5,
+              maxBlastForce: 5, // set a lower max blast force
+              minBlastForce: 2, // set a lower min blast force
+              emissionFrequency: 0.05,
+              numberOfParticles: 30, // a lot of particles at once
+              gravity: 1,
+              minimumSize: Size(8, 8),
+              maximumSize: Size(18, 18),
+              blastDirectionality: BlastDirectionality.directional,
+            ),
+          ),
+          SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(20.0, 35.0, 20.0, 10.0),
+              child: Column(
+                children: <Widget>[
                   Row(
                     children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width - 160,
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          // widthFactor: 10.0,
-                          child: Text(
-                            'How much of your order amount would you like to invest?.',
-                            textAlign: TextAlign.left,
-                            softWrap: true,
+                      Text(
+                        'Order Amount',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 16.h),
+                      ),
+                      Spacer(),
+                      Text(
+                        NumberFormat.simpleCurrency(
+                                locale: "en-us", decimalDigits: 2)
+                            .format(_investOrderAmount),
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 16.h,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    thickness: 0.8,
+                    color: Colors.black,
+                  ),
+                  Column(
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width - 160,
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              // widthFactor: 10.0,
+                              child: Text(
+                                'How much of your order amount would you like to invest?.',
+                                textAlign: TextAlign.left,
+                                softWrap: true,
+                                style: TextStyle(
+                                  fontSize: 15.h,
+                                  // overflow: TextOverflow.clip,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 4.0.h,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            '0%',
                             style: TextStyle(
-                              fontSize: 15.h,
-                              // overflow: TextOverflow.clip,
+                              color: Colors.blue,
+                              fontSize: 16.h,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                        ),
+                          SizedBox(
+                            width: 4.0.w,
+                          ),
+                          Container(
+                            // width: MediaQuery.of(context).size.width - 110,
+                            child: SliderTheme(
+                              data: SliderTheme.of(context).copyWith(
+                                activeTrackColor: Colors.blue,
+                                inactiveTrackColor: Colors.blue[100],
+                                trackShape: RoundedRectSliderTrackShape(),
+                                trackHeight: 7.0,
+                                thumbShape: RoundSliderThumbShape(
+                                    enabledThumbRadius: 12.0),
+                                thumbColor: Colors.blue,
+                                overlayColor: Colors.blue.withAlpha(32),
+                                overlayShape: RoundSliderOverlayShape(
+                                    overlayRadius: 28.0),
+                                tickMarkShape: RoundSliderTickMarkShape(),
+                                activeTickMarkColor: Color(0xff0070c0),
+                                inactiveTickMarkColor: Colors.blue[100],
+                                valueIndicatorShape:
+                                    PaddleSliderValueIndicatorShape(),
+                                valueIndicatorColor: Colors.blue,
+                                valueIndicatorTextStyle: TextStyle(
+                                  color: Colors.white,
+                                ),
+                                // showValueIndicator: ShowValueIndicator.always,
+                              ),
+                              child: Expanded(
+                                child: Slider(
+                                  value: (double.parse(
+                                      _percents ?? (100).toString())),
+                                  // value: 0.0,
+                                  onChanged: (val) {
+                                    setState(() {
+                                      _percents = val.toString();
+                                      orderPercentage = (val).toInt();
+                                      graphLogic();
+                                      drawChart();
+                                    });
+                                  },
+                                  min: 10,
+                                  max: 200,
+                                  divisions: 20,
+                                  label: _percents == null
+                                      ? "100%"
+                                      : double.parse(_percents)
+                                              .toStringAsFixed(0) +
+                                          "%",
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 4.0.w,
+                          ),
+                          Text(
+                            '200%',
+                            style: TextStyle(
+                              fontSize: 16.h,
+                              color: Colors.blue,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: 4.0.h,
+                  Divider(
+                    thickness: 0.8,
+                    color: Colors.black,
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        '0%',
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 16.h,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 4.0.w,
-                      ),
-                      Container(
-                        // width: MediaQuery.of(context).size.width - 110,
-                        child: SliderTheme(
-                          data: SliderTheme.of(context).copyWith(
-                            activeTrackColor: Colors.blue,
-                            inactiveTrackColor: Colors.blue[100],
-                            trackShape: RoundedRectSliderTrackShape(),
-                            trackHeight: 7.0,
-                            thumbShape:
-                                RoundSliderThumbShape(enabledThumbRadius: 12.0),
-                            thumbColor: Colors.blue,
-                            overlayColor: Colors.blue.withAlpha(32),
-                            overlayShape:
-                                RoundSliderOverlayShape(overlayRadius: 28.0),
-                            tickMarkShape: RoundSliderTickMarkShape(),
-                            activeTickMarkColor: Color(0xff0070c0),
-                            inactiveTickMarkColor: Colors.blue[100],
-                            valueIndicatorShape:
-                                PaddleSliderValueIndicatorShape(),
-                            valueIndicatorColor: Colors.blue,
-                            valueIndicatorTextStyle: TextStyle(
-                              color: Colors.white,
-                            ),
-                            // showValueIndicator: ShowValueIndicator.always,
-                          ),
-                          child: Expanded(
-                            child: Slider(
-                              value:
-                                  (double.parse(_percents ?? (100).toString())),
-                              // value: 0.0,
-                              onChanged: (val) {
-                                setState(() {
-                                  _percents = val.toString();
-                                  orderPercentage = (val).toInt();
-                                  graphLogic();
-                                  drawChart();
-                                });
-                              },
-                              min: 10,
-                              max: 200,
-                              divisions: 20,
-                              label: _percents == null
-                                  ? "100%"
-                                  : double.parse(_percents).toStringAsFixed(0) +
-                                      "%",
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 4.0.w,
-                      ),
-                      Text(
-                        '200%',
-                        style: TextStyle(
-                          fontSize: 16.h,
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              Divider(
-                thickness: 0.8,
-                color: Colors.black,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 5.0,
-                  bottom: 5.0,
-                ),
-                child: Row(
-                  children: [
-                    Text(
-                      'Total Investments',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 15.h),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 5.0,
+                      bottom: 5.0,
                     ),
-                    Spacer(),
-                    // (res == 0.0)
-                    //     ? Text(
-                    //         NumberFormat.simpleCurrency(
-                    //                 locale: "en-us", decimalDigits: 2)
-                    //             .format(_orderAmount),
-                    //         style: TextStyle(
-                    //           // color: Colors.blue,
-                    //           fontWeight: FontWeight.bold,
-                    //           fontSize: 15,
-                    //         ),
-                    //       )
-                    //     :
-                    Text(
-                      NumberFormat.simpleCurrency(
-                              locale: "en-us", decimalDigits: 2)
-                          .format(res),
-                      style: TextStyle(
-                        // color: Colors.blue,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15.h,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              Divider(
-                thickness: 0.8,
-                color: Colors.black,
-              ),
-              Column(
-                children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    // widthFactor: 10.0,
                     child: Row(
                       children: [
                         Text(
-                          'Choose rate (${_investPercents})',
+                          'Total Investments',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 15.h),
                         ),
-                        IconButton(
-                          // alignment: Alignment.topCenter,
-                          padding: EdgeInsets.all(0.0),
-                          icon: Icon(
-                            Icons.help,
-                            color: Colors.black,
-                            size: 19.h,
+                        Spacer(),
+                        // (res == 0.0)
+                        //     ? Text(
+                        //         NumberFormat.simpleCurrency(
+                        //                 locale: "en-us", decimalDigits: 2)
+                        //             .format(_orderAmount),
+                        //         style: TextStyle(
+                        //           // color: Colors.blue,
+                        //           fontWeight: FontWeight.bold,
+                        //           fontSize: 15,
+                        //         ),
+                        //       )
+                        //     :
+                        Text(
+                          NumberFormat.simpleCurrency(
+                                  locale: "en-us", decimalDigits: 2)
+                              .format(res),
+                          style: TextStyle(
+                            // color: Colors.blue,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15.h,
                           ),
-                          onPressed: () {
-                            // _showAbDialog();
-                            showInvestAtDialog(context);
-                          },
+                        )
+                      ],
+                    ),
+                  ),
+                  Divider(
+                    thickness: 0.8,
+                    color: Colors.black,
+                  ),
+                  Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.topLeft,
+                        // widthFactor: 10.0,
+                        child: Row(
+                          children: [
+                            Text(
+                              'Choose rate (${_investPercents})',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 15.h),
+                            ),
+                            IconButton(
+                              // alignment: Alignment.topCenter,
+                              padding: EdgeInsets.all(0.0),
+                              icon: Icon(
+                                Icons.help,
+                                color: Colors.black,
+                                size: 19.h,
+                              ),
+                              onPressed: () {
+                                // _showAbDialog();
+                                showInvestAtDialog(context);
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 4.0.h,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            '0%',
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 16.h,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Container(
+                            // width: MediaQuery.of(context).size.width - 100,
+                            child: Expanded(
+                              child: SliderTheme(
+                                data: SliderTheme.of(context).copyWith(
+                                  activeTrackColor: Colors.blue,
+                                  inactiveTrackColor: Colors.blue[100],
+                                  trackShape: RoundedRectSliderTrackShape(),
+                                  trackHeight: 7.0,
+                                  thumbShape: RoundSliderThumbShape(
+                                      enabledThumbRadius: 12.0),
+                                  thumbColor: Colors.blue,
+                                  overlayColor: Colors.blue.withAlpha(32),
+                                  overlayShape: RoundSliderOverlayShape(
+                                      overlayRadius: 28.0),
+                                  tickMarkShape: RoundSliderTickMarkShape(),
+                                  activeTickMarkColor: Color(0xff0070c0),
+                                  inactiveTickMarkColor: Colors.blue[100],
+                                  valueIndicatorShape:
+                                      PaddleSliderValueIndicatorShape(),
+                                  valueIndicatorColor: Colors.blue,
+                                  valueIndicatorTextStyle: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                child: Slider(
+                                  value: (double.parse(
+                                      _investPercents ?? (6).toString())),
+                                  // value: 0.0,
+                                  ///review if it breaks.
+                                  onChanged: (val) {
+                                    setState(() {
+                                      _investPercents =
+                                          (val.toInt()).toString();
+                                      stockPercentage = (val).toInt();
+                                      graphLogic();
+                                      drawChart();
+                                    });
+                                  },
+                                  min: 1,
+                                  max: 25,
+                                  divisions: 25,
+                                  // inactiveColor: Colors.grey[400],
+                                  label: _investPercents == null
+                                      ? '6%'
+                                      : _investPercents + "%",
+                                ),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            '25%',
+                            style: TextStyle(
+                              fontSize: 16.h,
+                              color: Colors.blue,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    thickness: 0.8,
+                    color: Colors.black,
+                  ),
+                  Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.topLeft,
+                        // widthFactor: 10.0,
+                        child: Text(
+                          'Choose term ($_time)',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 15.h),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 4.0.h,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            '0',
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 16.h,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 4.0.w,
+                          ),
+                          Container(
+                            // width: MediaQuery.of(context).size.width - 100,
+                            child: SliderTheme(
+                              data: SliderTheme.of(context).copyWith(
+                                activeTrackColor: Colors.blue,
+                                inactiveTrackColor: Colors.blue[100],
+                                trackShape: RoundedRectSliderTrackShape(),
+                                trackHeight: 7.0,
+                                thumbShape: RoundSliderThumbShape(
+                                    enabledThumbRadius: 12.0),
+                                thumbColor: Colors.blue,
+                                overlayColor: Colors.blue.withAlpha(32),
+                                overlayShape: RoundSliderOverlayShape(
+                                    overlayRadius: 28.0),
+                                tickMarkShape: RoundSliderTickMarkShape(),
+                                activeTickMarkColor: Color(0xff0070c0),
+                                inactiveTickMarkColor: Colors.blue[100],
+                                valueIndicatorShape:
+                                    PaddleSliderValueIndicatorShape(),
+                                valueIndicatorColor: Colors.blue,
+                                valueIndicatorTextStyle: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              child: Expanded(
+                                child: Slider(
+                                  value:
+                                      (double.parse(_time ?? (20).toString())),
+                                  // value: 0.0,
+                                  onChanged: (val) {
+                                    setState(() {
+                                      _time = (val.toInt()).toString();
+                                      years = (val).toInt();
+                                      graphLogic();
+                                      drawChart();
+                                    });
+                                  },
+                                  min: 1,
+                                  max: 40,
+                                  divisions: 40,
+                                  label: _time ?? '20',
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 4.0.w,
+                          ),
+                          Text(
+                            '40yrs',
+                            style: TextStyle(
+                              fontSize: 16.h,
+                              color: Colors.blue,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    thickness: 0.8,
+                    color: Colors.black,
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        'Future Value',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15),
+                      ),
+                      Spacer(),
+                      Text(
+                        NumberFormat.simpleCurrency(
+                                locale: "en-us", decimalDigits: 0)
+                            .format(_willBeWorth),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        style: TextStyle(
+                          // color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15.h,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    thickness: 0.8,
+                    color: Colors.black,
+                  ),
+                  // Padding(
+                  //   padding: EdgeInsets.only(left: 0.0, right: 0.0),
+                  //   child: ButtonTheme(
+                  //     minWidth: 150,
+                  //     height: 50.0,
+                  //     child: RaisedButton(
+                  //       textColor: Colors.white,
+                  //       color: Colors.green,
+                  //       child: Text("Invest"),
+                  //       onPressed: () {
+                  //         investAmount();
+                  //         // drawChart(10, 20, 30, 20);
+                  //       },
+                  //       shape: new RoundedRectangleBorder(
+                  //         borderRadius: new BorderRadius.circular(10.0),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  SizedBox(
+                    height: 17.0.h,
+                  ),
+                  (data.isNotEmpty)
+                      ? Container(
+                          height: 200.h,
+                          child: SimpleTimeSeriesChart.withSampleData(data))
+                      : Container(),
+                  SizedBox(
+                    height: 20.0.h,
+                  ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      'Investment Goals',
+                      // textAlign: TextAlign.start,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.h,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15.0.h,
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      style: TextStyle(
+                        color: Colors.black,
+                        height: 1.0,
+                        fontStyle: FontStyle.italic,
+                        fontSize: 16.h,
+                      ),
+                      children: [
+                        TextSpan(
+                          text:
+                              "These are your investment goals. Tap on the goal that you'd like to apply your savings to. ",
+                        ),
+                        TextSpan(text: "Use  "),
+                        WidgetSpan(
+                          child: Image.asset(
+                            "assets/images/buttons/add-blue.png",
+                            height: 18.h,
+                          ),
+                        ),
+                        TextSpan(text: "  to save. Use  "),
+                        WidgetSpan(
+                          child: Image.asset(
+                            "assets/images/buttons/undo-blue.png",
+                            height: 18.h,
+                          ),
+                        ),
+                        // TextSpan(
+                        //   text: " < ",
+                        //   style: TextStyle(
+                        //     color: Colors.blue,
+                        //     fontWeight: FontWeight.bold,
+                        //     fontSize: 23,
+                        //   ),
+                        // ),
+                        TextSpan(
+                          text: "  to undo.",
                         ),
                       ],
                     ),
                   ),
                   SizedBox(
-                    height: 4.0.h,
+                    height: 18.0.h,
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        '0%',
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 16.h,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Container(
-                        // width: MediaQuery.of(context).size.width - 100,
-                        child: Expanded(
-                          child: SliderTheme(
-                            data: SliderTheme.of(context).copyWith(
-                              activeTrackColor: Colors.blue,
-                              inactiveTrackColor: Colors.blue[100],
-                              trackShape: RoundedRectSliderTrackShape(),
-                              trackHeight: 7.0,
-                              thumbShape: RoundSliderThumbShape(
-                                  enabledThumbRadius: 12.0),
-                              thumbColor: Colors.blue,
-                              overlayColor: Colors.blue.withAlpha(32),
-                              overlayShape:
-                                  RoundSliderOverlayShape(overlayRadius: 28.0),
-                              tickMarkShape: RoundSliderTickMarkShape(),
-                              activeTickMarkColor: Color(0xff0070c0),
-                              inactiveTickMarkColor: Colors.blue[100],
-                              valueIndicatorShape:
-                                  PaddleSliderValueIndicatorShape(),
-                              valueIndicatorColor: Colors.blue,
-                              valueIndicatorTextStyle: TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                            child: Slider(
-                              value: (double.parse(
-                                  _investPercents ?? (6).toString())),
-                              // value: 0.0,
-                              ///review if it breaks.
-                              onChanged: (val) {
-                                setState(() {
-                                  _investPercents = (val.toInt()).toString();
-                                  stockPercentage = (val).toInt();
-                                  graphLogic();
-                                  drawChart();
-                                });
-                              },
-                              min: 1,
-                              max: 25,
-                              divisions: 25,
-                              // inactiveColor: Colors.grey[400],
-                              label: _investPercents == null
-                                  ? '6%'
-                                  : _investPercents + "%",
-                            ),
-                          ),
-                        ),
-                      ),
-                      Text(
-                        '25%',
-                        style: TextStyle(
-                          fontSize: 16.h,
-                          color: Colors.blue,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              Divider(
-                thickness: 0.8,
-                color: Colors.black,
-              ),
-              Column(
-                children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    // widthFactor: 10.0,
-                    child: Text(
-                      'Choose term ($_time)',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 15.h),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 4.0.h,
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        '0',
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 16.h,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 4.0.w,
-                      ),
-                      Container(
-                        // width: MediaQuery.of(context).size.width - 100,
-                        child: SliderTheme(
-                          data: SliderTheme.of(context).copyWith(
-                            activeTrackColor: Colors.blue,
-                            inactiveTrackColor: Colors.blue[100],
-                            trackShape: RoundedRectSliderTrackShape(),
-                            trackHeight: 7.0,
-                            thumbShape:
-                                RoundSliderThumbShape(enabledThumbRadius: 12.0),
-                            thumbColor: Colors.blue,
-                            overlayColor: Colors.blue.withAlpha(32),
-                            overlayShape:
-                                RoundSliderOverlayShape(overlayRadius: 28.0),
-                            tickMarkShape: RoundSliderTickMarkShape(),
-                            activeTickMarkColor: Color(0xff0070c0),
-                            inactiveTickMarkColor: Colors.blue[100],
-                            valueIndicatorShape:
-                                PaddleSliderValueIndicatorShape(),
-                            valueIndicatorColor: Colors.blue,
-                            valueIndicatorTextStyle: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                          child: Expanded(
-                            child: Slider(
-                              value: (double.parse(_time ?? (20).toString())),
-                              // value: 0.0,
-                              onChanged: (val) {
-                                setState(() {
-                                  _time = (val.toInt()).toString();
-                                  years = (val).toInt();
-                                  graphLogic();
-                                  drawChart();
-                                });
-                              },
-                              min: 1,
-                              max: 40,
-                              divisions: 40,
-                              label: _time ?? '20',
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 4.0.w,
-                      ),
-                      Text(
-                        '40yrs',
-                        style: TextStyle(
-                          fontSize: 16.h,
-                          color: Colors.blue,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              Divider(
-                thickness: 0.8,
-                color: Colors.black,
-              ),
-              Row(
-                children: [
-                  Text(
-                    'Future Value',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                  ),
-                  Spacer(),
-                  Text(
-                    NumberFormat.simpleCurrency(
-                            locale: "en-us", decimalDigits: 0)
-                        .format(_willBeWorth),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    style: TextStyle(
-                      // color: Colors.blue,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15.h,
-                    ),
-                  ),
-                ],
-              ),
-              Divider(
-                thickness: 0.8,
-                color: Colors.black,
-              ),
-              // Padding(
-              //   padding: EdgeInsets.only(left: 0.0, right: 0.0),
-              //   child: ButtonTheme(
-              //     minWidth: 150,
-              //     height: 50.0,
-              //     child: RaisedButton(
-              //       textColor: Colors.white,
-              //       color: Colors.green,
-              //       child: Text("Invest"),
-              //       onPressed: () {
-              //         investAmount();
-              //         // drawChart(10, 20, 30, 20);
-              //       },
-              //       shape: new RoundedRectangleBorder(
-              //         borderRadius: new BorderRadius.circular(10.0),
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              SizedBox(
-                height: 17.0.h,
-              ),
-              (data.isNotEmpty)
-                  ? Container(
-                      height: 200.h,
-                      child: SimpleTimeSeriesChart.withSampleData(data))
-                  : Container(),
-              SizedBox(
-                height: 20.0.h,
-              ),
-              Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  'Investment Goals',
-                  // textAlign: TextAlign.start,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.h,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 15.0.h,
-              ),
-              RichText(
-                text: TextSpan(
-                  style: TextStyle(
-                    color: Colors.black,
-                    height: 1.0,
-                    fontStyle: FontStyle.italic,
-                    fontSize: 16.h,
-                  ),
-                  children: [
-                    TextSpan(
-                      text:
-                          "These are your investment goals. Tap on the goal that you'd like to apply your savings to. ",
-                    ),
-                    TextSpan(text: "Use  "),
-                    WidgetSpan(
-                      child: Image.asset(
-                        "assets/images/buttons/add-blue.png",
-                        height: 18.h,
-                      ),
-                    ),
-                    TextSpan(text: "  to save. Use  "),
-                    WidgetSpan(
-                      child: Image.asset(
-                        "assets/images/buttons/undo-blue.png",
-                        height: 18.h,
-                      ),
-                    ),
-                    // TextSpan(
-                    //   text: " < ",
-                    //   style: TextStyle(
-                    //     color: Colors.blue,
-                    //     fontWeight: FontWeight.bold,
-                    //     fontSize: 23,
-                    //   ),
-                    // ),
-                    TextSpan(
-                      text: "  to undo.",
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 18.0.h,
-              ),
-              Consumer<TotalValues>(
-                builder: (context, valuesProvider, child) {
-                  return Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 4.0),
-                        child: Row(
-                          children: [
-                            Spacer(),
-                            Container(
-                              width: 50.w,
-                              child: Text(
-                                'Invest To Date',
-                                // textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  color: Colors.grey[700],
+                  Consumer<TotalValues>(
+                    builder: (context, valuesProvider, child) {
+                      return Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 4.0),
+                            child: Row(
+                              children: [
+                                Spacer(),
+                                Container(
+                                  width: 50.w,
+                                  child: Text(
+                                    'Invest To Date',
+                                    // textAlign: TextAlign.right,
+                                    style: TextStyle(
+                                      color: Colors.grey[700],
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 15.0.w,
-                            ),
-                            Container(
-                              width: 50.w,
-                              child: Text(
-                                'Invest Goal',
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  color: Colors.grey,
+                                SizedBox(
+                                  width: 15.0.w,
                                 ),
-                              ),
+                                Container(
+                                  width: 50.w,
+                                  child: Text(
+                                    'Invest Goal',
+                                    textAlign: TextAlign.right,
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ),
-                      FutureBuilder(
-                        future: valuesProvider
-                            .getInvestmentProvider(widget.uid), // async work
-                        builder: (BuildContext context, snapshot) {
-                          if (valuesProvider.investModelInstance != null) {
-                            return ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              itemCount: (valuesProvider.investModelInstance !=
-                                      null)
-                                  ? valuesProvider.investModelInstance.length
-                                  : 0,
-                              itemBuilder: (BuildContext context, int index) {
-                                return GestureDetector(
-                                  onDoubleTap: () {
-                                    if (_highlightedIndex.contains(index) ==
-                                        true) {
-                                      _unSelect(index);
-                                    } else {
-                                      print('Not selected');
-                                    }
-                                  },
-                                  onTap: () {
-                                    if (_highlightedIndex.contains(index) ==
-                                        false) {
-                                      _highlightedIndex.clear();
-                                      _highlightRow(index);
-                                    } else {
-                                      print('Selected');
-                                    }
-                                  },
-                                  child: Container(
-                                      color: _highlightedIndex.contains(index)
-                                          ? Color(0xfff4ccc9)
-                                          : index == _savedIndex
-                                              ? Color(0xffc3e9d5)
-                                              : Colors.transparent,
-                                      child: _item(
-                                          context,
-                                          index,
-                                          valuesProvider
-                                              .investModelInstance[index])),
-                                );
-                              },
-                            );
-                          }
-                          switch (snapshot.connectionState) {
-                            case ConnectionState.waiting:
-                              return new Text('Loading....');
-                            default:
-                              if (snapshot.hasError)
-                                return new Text('Error: ${snapshot.error}');
-                              else
+                          ),
+                          FutureBuilder(
+                            future: valuesProvider.getInvestmentProvider(
+                                widget.uid), // async work
+                            builder: (BuildContext context, snapshot) {
+                              if (valuesProvider.investNowList != null) {
                                 return ListView.builder(
                                   physics: NeverScrollableScrollPhysics(),
                                   scrollDirection: Axis.vertical,
                                   shrinkWrap: true,
-                                  itemCount: (snapshot.data != null)
-                                      ? snapshot.data.length
-                                      : 0,
+                                  itemCount:
+                                      (valuesProvider.investNowList !=
+                                              null)
+                                          ? valuesProvider
+                                              .investNowList.length
+                                          : 0,
                                   itemBuilder:
                                       (BuildContext context, int index) {
                                     return GestureDetector(
@@ -1402,581 +1404,164 @@ class _InvestNowState extends State<InvestNow>
                                               context,
                                               index,
                                               valuesProvider
-                                                  .investModelInstance[index])),
+                                                  .investNowList[index])),
                                     );
                                   },
                                 );
-                          }
-                        },
-                      ),
-                      Divider(
-                        height: 0.0,
-                        thickness: 0.8,
-                        color: Colors.black,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5.0),
-                        child: Row(
-                          children: [
-                            // Container(width: 14.5),
-                            SizedBox(
-                              width: 30.0.w,
-                            ),
-                            // Spacer(),
-                            Container(
-                              // width: 50,
-                              child: CircleAvatar(
-                                backgroundImage: AssetImage(
-                                    'assets/images/Accounts/AcctSavings.png'),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10.0.w,
-                            ),
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  Row(
+                              }
+                              switch (snapshot.connectionState) {
+                                case ConnectionState.waiting:
+                                  return new Text('Loading....');
+                                default:
+                                  if (snapshot.hasError)
+                                    return new Text('Error: ${snapshot.error}');
+                                  else
+                                    return ListView.builder(
+                                      physics: NeverScrollableScrollPhysics(),
+                                      scrollDirection: Axis.vertical,
+                                      shrinkWrap: true,
+                                      itemCount: (snapshot.data != null)
+                                          ? snapshot.data.length
+                                          : 0,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return GestureDetector(
+                                          onDoubleTap: () {
+                                            if (_highlightedIndex
+                                                    .contains(index) ==
+                                                true) {
+                                              _unSelect(index);
+                                            } else {
+                                              print('Not selected');
+                                            }
+                                          },
+                                          onTap: () {
+                                            if (_highlightedIndex
+                                                    .contains(index) ==
+                                                false) {
+                                              _highlightedIndex.clear();
+                                              _highlightRow(index);
+                                            } else {
+                                              print('Selected');
+                                            }
+                                          },
+                                          child: Container(
+                                              color: _highlightedIndex
+                                                      .contains(index)
+                                                  ? Color(0xfff4ccc9)
+                                                  : index == _savedIndex
+                                                      ? Color(0xffc3e9d5)
+                                                      : Colors.transparent,
+                                              child: _item(
+                                                  context,
+                                                  index,
+                                                  valuesProvider
+                                                          .investNowList[
+                                                      index])),
+                                        );
+                                      },
+                                    );
+                              }
+                            },
+                          ),
+                          Divider(
+                            height: 0.0,
+                            thickness: 0.8,
+                            color: Colors.black,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5.0),
+                            child: Row(
+                              children: [
+                                // Container(width: 14.5),
+                                SizedBox(
+                                  width: 30.0.w,
+                                ),
+                                // Spacer(),
+                                Container(
+                                  // width: 50,
+                                  child: CircleAvatar(
+                                    backgroundImage: AssetImage(
+                                        'assets/images/Accounts/AcctSavings.png'),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10.0.w,
+                                ),
+                                Expanded(
+                                  child: Column(
                                     children: [
-                                      Align(
-                                        alignment: Alignment.topLeft,
-                                        child: Text(
-                                          'Total Invest Goal',
-                                          // textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                              fontSize: 13.h,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.grey[450]),
-                                        ),
-                                      ),
-                                      Spacer(),
-                                      FutureBuilder(
-                                          future: valuesProvider
-                                                      .investToDateVal ==
-                                                  null
-                                              ? valuesProvider
-                                                  .getInvestToDate(widget.uid)
-                                              : null,
-                                          builder: (context, snapshot) {
-                                            if (valuesProvider
-                                                    .investToDateVal !=
-                                                null) {
-                                              return Container(
-                                                width: 70.0.w,
-                                                child: Text(
-                                                  NumberFormat.simpleCurrency(
-                                                    locale: 'en-us',
-                                                    decimalDigits: 0,
-                                                  ).format(valuesProvider
-                                                      .investToDateVal),
-                                                  textAlign: TextAlign.end,
-                                                  style: TextStyle(
-                                                    fontSize: 13.0.h,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              );
-                                            } else
-                                              switch (
-                                                  snapshot.connectionState) {
-                                                case ConnectionState.waiting:
+                                      Row(
+                                        children: [
+                                          Align(
+                                            alignment: Alignment.topLeft,
+                                            child: Text(
+                                              'Total Invest Goal',
+                                              // textAlign: TextAlign.left,
+                                              style: TextStyle(
+                                                  fontSize: 13.h,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.grey[450]),
+                                            ),
+                                          ),
+                                          Spacer(),
+                                          FutureBuilder(
+                                              future: valuesProvider
+                                                          .investToDateVal ==
+                                                      null
+                                                  ? valuesProvider
+                                                      .getInvestToDate(
+                                                          widget.uid)
+                                                  : null,
+                                              builder: (context, snapshot) {
+                                                if (valuesProvider
+                                                        .investToDateVal !=
+                                                    null) {
                                                   return Container(
-                                                    width: 50.0.w,
+                                                    width: 70.0.w,
                                                     child: Text(
-                                                      '--',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: TextStyle(
-                                                        fontSize: 20.0.h,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                    ),
-                                                  );
-                                                default:
-                                                  if (snapshot.hasError) {
-                                                    print(
-                                                        'Error: ${snapshot.error}');
-                                                    return Container(
-                                                      width: 50.0.w,
-                                                      child: Text(
-                                                        '--',
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: TextStyle(
-                                                          fontSize: 20.0.h,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                      ),
-                                                    );
-                                                  } else
-                                                    return Container(
-                                                      width: 70.0.w,
-                                                      child: Text(
-                                                        NumberFormat
-                                                            .simpleCurrency(
-                                                          locale: 'en-us',
-                                                          decimalDigits: 0,
-                                                        ).format(valuesProvider
-                                                            .investToDateVal),
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: TextStyle(
-                                                          fontSize: 13.0.h,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                      ),
-                                                    );
-                                              }
-                                          }),
-                                      // SizedBox(
-                                      //   width: 15.0,
-                                      // ),
-                                      FutureBuilder(
-                                          future: valuesProvider.invTot == null
-                                              ? valuesProvider
-                                                  .getInvestTotal(widget.uid)
-                                              : null,
-                                          builder: (context, snapshot) {
-                                            if (valuesProvider.invTot != null) {
-                                              return Container(
-                                                width: 70.0.w,
-                                                child: Text(
-                                                  NumberFormat.simpleCurrency(
-                                                    locale: 'en-us',
-                                                    decimalDigits: 0,
-                                                  ).format(
-                                                      valuesProvider.invTot),
-                                                  textAlign: TextAlign.end,
-                                                  style: TextStyle(
-                                                    fontSize: 13.0.h,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              );
-                                            } else
-                                              switch (
-                                                  snapshot.connectionState) {
-                                                case ConnectionState.waiting:
-                                                  return Container(
-                                                    width: 50.0.w,
-                                                    child: Text(
-                                                      '--',
+                                                      NumberFormat
+                                                          .simpleCurrency(
+                                                        locale: 'en-us',
+                                                        decimalDigits: 0,
+                                                      ).format(valuesProvider
+                                                          .investToDateVal),
                                                       textAlign: TextAlign.end,
                                                       style: TextStyle(
-                                                        fontSize: 20.0.h,
+                                                        fontSize: 13.0.h,
                                                         fontWeight:
                                                             FontWeight.bold,
                                                       ),
                                                     ),
                                                   );
-                                                default:
-                                                  if (snapshot.hasError) {
-                                                    print(
-                                                        'Error: ${snapshot.error}');
-                                                    return Container(
-                                                      width: 50.0.w,
-                                                      child: Text(
-                                                        '--',
-                                                        textAlign:
-                                                            TextAlign.end,
-                                                        style: TextStyle(
-                                                          fontSize: 20.0.h,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                      ),
-                                                    );
-                                                  } else
-                                                    return Container(
-                                                      width: 70.0.w,
-                                                      child: Text(
-                                                        NumberFormat
-                                                            .simpleCurrency(
-                                                          locale: 'en-us',
-                                                          decimalDigits: 0,
-                                                        ).format(valuesProvider
-                                                            .invTot),
-                                                        textAlign:
-                                                            TextAlign.end,
-                                                        style: TextStyle(
-                                                          fontSize: 13.0.h,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                      ),
-                                                    );
-                                              }
-                                          }),
-                                    ],
-                                  ),
-                                  Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    child: LinearProgressIndicator(
-                                      // semanticsLabel: 'Balling',
-                                      backgroundColor: Colors.grey[350],
-                                      minHeight: 7.0,
-                                      color: Colors.green,
-                                      value: convertToDecimal(
-                                          (valuesProvider.investToDateVal !=
-                                                  null)
-                                              ? valuesProvider.investToDateVal
-                                                  .toString()
-                                              : '0',
-                                          (valuesProvider.invTot != null)
-                                              ? valuesProvider.invTot.toString()
-                                              : '0'),
-                                      // valueColor: ,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15.0.h,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          // ElevatedButton(
-                          //   onPressed: () {
-                          //     // if (_highlightedIndex.isNotEmpty) {
-                          //     //   saveAmount(
-                          //     //       context,
-                          //     //       savingProvider.savingModelInstance[
-                          //     //           _highlightedIndex[0]]);
-                          //     // } else {
-                          //     //   _selectGoalDialog(context);
-                          //     // }
-                          //     // Navigator.pop(context);
-                          //     if (_editedModel != null) {
-                          //       _undoInvest(_editedModel);
-                          //     }
-                          //   },
-                          //   child: Text(
-                          //     '<',
-                          //     style: TextStyle(
-                          //       fontSize: 37.5,
-                          //       color: Colors.white,
-                          //     ),
-                          //   ),
-                          //   style: ElevatedButton.styleFrom(
-                          //     shape: CircleBorder(),
-                          //     primary: Colors.blue,
-                          //     // padding: EdgeInsets.all(10),
-                          //   ),
-                          // ),
-                          GestureDetector(
-                            onTap: () {
-                              // if (_undoEdited == false) {
-                              if (_editedModel != null) {
-                                _undoInvest(_editedModel);
-                                // setState(() {
-                                //   _undoEdited = true;
-                                // });
-                              }
-                              // } else
-                              //   showDialog(
-                              //     context: context,
-                              //     builder: (BuildContext context) {
-                              //       return PosAlert();
-                              //     },
-                              //   );
-                            },
-                            child: Image.asset(
-                              "assets/images/buttons/undo-blue.png",
-                              height: 38.h,
-                            ),
-                          ),
-                          // ElevatedButton(
-                          //   onPressed: () {
-                          //     if (_highlightedIndex.isNotEmpty) {
-                          //       investAmount(valuesProvider
-                          //           .investModelInstance[_highlightedIndex[0]]);
-                          //     } else {
-                          //       _selectInvestGoalDialog(context);
-                          //     }
-                          //   },
-                          //   child: Text(
-                          //     '+',
-                          //     style: TextStyle(
-                          //       fontSize: 37.5,
-                          //       color: Colors.white,
-                          //     ),
-                          //   ),
-                          //   style: ElevatedButton.styleFrom(
-                          //     shape: CircleBorder(),
-                          //     primary: Colors.blue,
-                          //     // padding: EdgeInsets.all(10),
-                          //   ),
-                          // ),
-                          SizedBox(width: 10.w),
-                          GestureDetector(
-                            onTap: () {
-                              // if (_editedGoal == false) {
-                              if (_highlightedIndex.isNotEmpty) {
-                                investAmount(valuesProvider
-                                    .investModelInstance[_highlightedIndex[0]]);
-                                // setState(() {
-                                //   _editedGoal = true;
-                                // });
-                              } else {
-                                _selectInvestGoalDialog(context);
-                              }
-                              // } else {
-                              //   showDialog(
-                              //     context: context,
-                              //     builder: (BuildContext context) {
-                              //       return PosAlert();
-                              //     },
-                              //   );
-                              // }
-                            },
-                            child: Image.asset(
-                              "assets/images/buttons/add-blue.png",
-                              height: 38.h,
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      SizedBox(
-                        height: 9.0.h,
-                      ),
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Row(
-                          children: [
-                            Text(
-                              'Account Balances',
-                              // textAlign: TextAlign.start,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16.h,
-                              ),
-                            ),
-                            IconButton(
-                              // padding: EdgeInsets.only(left: 0.0),
-                              icon: Icon(
-                                Icons.help,
-                                color: Colors.black,
-                                size: 19.h,
-                              ),
-                              onPressed: () {
-                                _showAlertDialog(context);
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                      // Divider(
-                      //   thickness: 0.8,
-                      //   color: Colors.black,
-                      // ),
-                      FutureBuilder(
-                        future: _getInvBal, // async work
-                        builder: (BuildContext context, snapshot) {
-                          switch (snapshot.connectionState) {
-                            case ConnectionState.waiting:
-                              return new Text('Loading....');
-                            default:
-                              if (snapshot.hasError)
-                                return new Text('Error: ${snapshot.error}');
-                              else {
-                                return Column(
-                                  children: <Widget>[
-                                    Divider(
-                                      color: Colors.black,
-                                      thickness: 0.4,
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {},
-                                      child: Row(
-                                        children: [
-                                          // Container(width: 11.5),
-                                          SizedBox(
-                                            width: 26.5.w,
-                                          ),
-                                          // Spacer(),
-                                          Container(
-                                            // width: 50,
-                                            child: CircleAvatar(
-                                              backgroundImage: AssetImage(
-                                                  'assets/images/Accounts/AcctChecking.png'),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 10.0.w,
-                                          ),
-                                          Expanded(
-                                            child: Column(
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    Align(
-                                                      alignment:
-                                                          Alignment.topLeft,
-                                                      child: Text(
-                                                        'Checking Account',
-                                                        // textAlign: TextAlign.left,
-                                                        style: TextStyle(
-                                                            fontSize: 13.h,
+                                                } else
+                                                  switch (snapshot
+                                                      .connectionState) {
+                                                    case ConnectionState
+                                                        .waiting:
+                                                      return Container(
+                                                        width: 50.0.w,
+                                                        child: Text(
+                                                          '--',
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: TextStyle(
+                                                            fontSize: 20.0.h,
                                                             fontWeight:
-                                                                FontWeight.w600,
-                                                            color: Colors
-                                                                .grey[450]),
-                                                      ),
-                                                    ),
-                                                    Spacer(),
-                                                    // Container(
-                                                    //   width: 50,
-                                                    //   child: Text(
-                                                    //     '\$0',
-                                                    //     style: TextStyle(
-                                                    //       color: Colors.black,
-                                                    //       fontWeight:
-                                                    //           FontWeight.bold,
-                                                    //     ),
-                                                    //   ),
-                                                    // ),
-                                                    // SizedBox(
-                                                    //   width: 15.0,
-                                                    // ),
-                                                    (_checking != null)
-                                                        ? Container(
-                                                            width: 80.w,
-                                                            child: Text(
-                                                              NumberFormat.simpleCurrency(
-                                                                      locale:
-                                                                          "en-us",
-                                                                      decimalDigits:
-                                                                          0)
-                                                                  .format(int.parse(
-                                                                      _checking
-                                                                          .toString())),
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .right,
-                                                              style: TextStyle(
-                                                                color:
-                                                                    Colors.grey,
-                                                                fontSize:
-                                                                    13.0.h,
-                                                              ),
-                                                            ),
-                                                          )
-                                                        : Container(
-                                                            width: 50.0.w,
-                                                            child: Text(
-                                                              '--',
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .right,
-                                                              style: TextStyle(
-                                                                fontSize:
-                                                                    20.0.h,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                              ),
-                                                            ),
+                                                                FontWeight.bold,
                                                           ),
-                                                  ],
-                                                ),
-                                                Container(
-                                                  width: MediaQuery.of(context)
-                                                      .size
-                                                      .width,
-                                                  child:
-                                                      LinearProgressIndicator(
-                                                    // semanticsLabel: 'Balling',
-                                                    backgroundColor:
-                                                        Colors.grey[350],
-                                                    minHeight: 7.0,
-                                                    color: Colors.green,
-                                                    value: 0.8,
-                                                    // valueColor: ,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Divider(
-                                      color: Colors.black,
-                                      thickness: 0.4,
-                                    ),
-                                    Row(
-                                      children: [
-                                        // Text('5.'),
-                                        // Container(width: 11.5),
-                                        SizedBox(
-                                          width: 26.5.w,
-                                        ),
-                                        // Spacer(),
-                                        Container(
-                                          // width: 50,
-                                          child: CircleAvatar(
-                                            backgroundImage: AssetImage(
-                                                'assets/images/Accounts/AcctReward.png'),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 10.0.w,
-                                        ),
-                                        Expanded(
-                                          child: Column(
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  Align(
-                                                    alignment:
-                                                        Alignment.topLeft,
-                                                    child: Text(
-                                                      'Reward Points',
-                                                      // textAlign: TextAlign.left,
-                                                      style: TextStyle(
-                                                          fontSize: 13.h,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          color:
-                                                              Colors.grey[450]),
-                                                    ),
-                                                  ),
-                                                  Spacer(),
-                                                  (_rewardPoints != null)
-                                                      ? Container(
-                                                          width: 70.w,
-                                                          child: Text(
-                                                            NumberFormat()
-                                                                .format(
-                                                              int.parse(
-                                                                  _rewardPoints
-                                                                      .toString()),
-                                                            ),
-                                                            textAlign:
-                                                                TextAlign.right,
-                                                            style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontSize: 13.0.h,
-                                                            ),
-                                                          ),
-                                                        )
-                                                      : Container(
-                                                          width: 60.0.w,
+                                                        ),
+                                                      );
+                                                    default:
+                                                      if (snapshot.hasError) {
+                                                        print(
+                                                            'Error: ${snapshot.error}');
+                                                        return Container(
+                                                          width: 50.0.w,
                                                           child: Text(
                                                             '--',
-                                                            textAlign:
-                                                                TextAlign.right,
+                                                            textAlign: TextAlign
+                                                                .center,
                                                             style: TextStyle(
                                                               fontSize: 20.0.h,
                                                               fontWeight:
@@ -1984,164 +1569,671 @@ class _InvestNowState extends State<InvestNow>
                                                                       .bold,
                                                             ),
                                                           ),
+                                                        );
+                                                      } else
+                                                        return Container(
+                                                          width: 70.0.w,
+                                                          child: Text(
+                                                            NumberFormat
+                                                                .simpleCurrency(
+                                                              locale: 'en-us',
+                                                              decimalDigits: 0,
+                                                            ).format(valuesProvider
+                                                                .investToDateVal),
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: TextStyle(
+                                                              fontSize: 13.0.h,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                        );
+                                                  }
+                                              }),
+                                          // SizedBox(
+                                          //   width: 15.0,
+                                          // ),
+                                          FutureBuilder(
+                                              future:
+                                                  valuesProvider.invTot == null
+                                                      ? valuesProvider
+                                                          .getInvestTotal(
+                                                              widget.uid)
+                                                      : null,
+                                              builder: (context, snapshot) {
+                                                if (valuesProvider.invTot !=
+                                                    null) {
+                                                  return Container(
+                                                    width: 70.0.w,
+                                                    child: Text(
+                                                      NumberFormat
+                                                          .simpleCurrency(
+                                                        locale: 'en-us',
+                                                        decimalDigits: 0,
+                                                      ).format(valuesProvider
+                                                          .invTot),
+                                                      textAlign: TextAlign.end,
+                                                      style: TextStyle(
+                                                        fontSize: 13.0.h,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  );
+                                                } else
+                                                  switch (snapshot
+                                                      .connectionState) {
+                                                    case ConnectionState
+                                                        .waiting:
+                                                      return Container(
+                                                        width: 50.0.w,
+                                                        child: Text(
+                                                          '--',
+                                                          textAlign:
+                                                              TextAlign.end,
+                                                          style: TextStyle(
+                                                            fontSize: 20.0.h,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
                                                         ),
-                                                ],
+                                                      );
+                                                    default:
+                                                      if (snapshot.hasError) {
+                                                        print(
+                                                            'Error: ${snapshot.error}');
+                                                        return Container(
+                                                          width: 50.0.w,
+                                                          child: Text(
+                                                            '--',
+                                                            textAlign:
+                                                                TextAlign.end,
+                                                            style: TextStyle(
+                                                              fontSize: 20.0.h,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                        );
+                                                      } else
+                                                        return Container(
+                                                          width: 70.0.w,
+                                                          child: Text(
+                                                            NumberFormat
+                                                                .simpleCurrency(
+                                                              locale: 'en-us',
+                                                              decimalDigits: 0,
+                                                            ).format(
+                                                                valuesProvider
+                                                                    .invTot),
+                                                            textAlign:
+                                                                TextAlign.end,
+                                                            style: TextStyle(
+                                                              fontSize: 13.0.h,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                        );
+                                                  }
+                                              }),
+                                        ],
+                                      ),
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        child: LinearProgressIndicator(
+                                          // semanticsLabel: 'Balling',
+                                          backgroundColor: Colors.grey[350],
+                                          minHeight: 7.0,
+                                          color: Colors.green,
+                                          value: convertToDecimal(
+                                              (valuesProvider.investToDateVal !=
+                                                      null)
+                                                  ? valuesProvider
+                                                      .investToDateVal
+                                                      .toString()
+                                                  : '0',
+                                              (valuesProvider.invTot != null)
+                                                  ? valuesProvider.invTot
+                                                      .toString()
+                                                  : '0'),
+                                          // valueColor: ,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 15.0.h,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              // ElevatedButton(
+                              //   onPressed: () {
+                              //     // if (_highlightedIndex.isNotEmpty) {
+                              //     //   saveAmount(
+                              //     //       context,
+                              //     //       savingProvider.savingModelInstance[
+                              //     //           _highlightedIndex[0]]);
+                              //     // } else {
+                              //     //   _selectGoalDialog(context);
+                              //     // }
+                              //     // Navigator.pop(context);
+                              //     if (_editedModel != null) {
+                              //       _undoInvest(_editedModel);
+                              //     }
+                              //   },
+                              //   child: Text(
+                              //     '<',
+                              //     style: TextStyle(
+                              //       fontSize: 37.5,
+                              //       color: Colors.white,
+                              //     ),
+                              //   ),
+                              //   style: ElevatedButton.styleFrom(
+                              //     shape: CircleBorder(),
+                              //     primary: Colors.blue,
+                              //     // padding: EdgeInsets.all(10),
+                              //   ),
+                              // ),
+                              GestureDetector(
+                                onTap: () {
+                                  // if (_undoEdited == false) {
+                                  if (_editedModel != null) {
+                                    _undoInvest(_editedModel);
+                                    // setState(() {
+                                    //   _undoEdited = true;
+                                    // });
+                                  }
+                                  // } else
+                                  //   showDialog(
+                                  //     context: context,
+                                  //     builder: (BuildContext context) {
+                                  //       return PosAlert();
+                                  //     },
+                                  //   );
+                                },
+                                child: Image.asset(
+                                  "assets/images/buttons/undo-blue.png",
+                                  height: 38.h,
+                                ),
+                              ),
+                              // ElevatedButton(
+                              //   onPressed: () {
+                              //     if (_highlightedIndex.isNotEmpty) {
+                              //       investAmount(valuesProvider
+                              //           .investNowList[_highlightedIndex[0]]);
+                              //     } else {
+                              //       _selectInvestGoalDialog(context);
+                              //     }
+                              //   },
+                              //   child: Text(
+                              //     '+',
+                              //     style: TextStyle(
+                              //       fontSize: 37.5,
+                              //       color: Colors.white,
+                              //     ),
+                              //   ),
+                              //   style: ElevatedButton.styleFrom(
+                              //     shape: CircleBorder(),
+                              //     primary: Colors.blue,
+                              //     // padding: EdgeInsets.all(10),
+                              //   ),
+                              // ),
+                              SizedBox(width: 10.w),
+                              GestureDetector(
+                                onTap: () {
+                                  // if (_editedGoal == false) {
+                                  if (_highlightedIndex.isNotEmpty) {
+                                    investAmount(
+                                        valuesProvider.investNowList[
+                                            _highlightedIndex[0]]);
+                                    // setState(() {
+                                    //   _editedGoal = true;
+                                    // });
+                                  } else {
+                                    _selectInvestGoalDialog(context);
+                                  }
+                                  // } else {
+                                  //   showDialog(
+                                  //     context: context,
+                                  //     builder: (BuildContext context) {
+                                  //       return PosAlert();
+                                  //     },
+                                  //   );
+                                  // }
+                                },
+                                child: Image.asset(
+                                  "assets/images/buttons/add-blue.png",
+                                  height: 38.h,
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          SizedBox(
+                            height: 9.0.h,
+                          ),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Account Balances',
+                                  // textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16.h,
+                                  ),
+                                ),
+                                IconButton(
+                                  // padding: EdgeInsets.only(left: 0.0),
+                                  icon: Icon(
+                                    Icons.help,
+                                    color: Colors.black,
+                                    size: 19.h,
+                                  ),
+                                  onPressed: () {
+                                    _showAlertDialog(context);
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                          // Divider(
+                          //   thickness: 0.8,
+                          //   color: Colors.black,
+                          // ),
+                          FutureBuilder(
+                            future: _getInvBal, // async work
+                            builder: (BuildContext context, snapshot) {
+                              switch (snapshot.connectionState) {
+                                case ConnectionState.waiting:
+                                  return new Text('Loading....');
+                                default:
+                                  if (snapshot.hasError)
+                                    return new Text('Error: ${snapshot.error}');
+                                  else {
+                                    return Column(
+                                      children: <Widget>[
+                                        Divider(
+                                          color: Colors.black,
+                                          thickness: 0.4,
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {},
+                                          child: Row(
+                                            children: [
+                                              // Container(width: 11.5),
+                                              SizedBox(
+                                                width: 26.5.w,
                                               ),
+                                              // Spacer(),
                                               Container(
-                                                width: MediaQuery.of(context)
-                                                    .size
-                                                    .width,
-                                                child: LinearProgressIndicator(
-                                                  // semanticsLabel: 'Balling',
-                                                  backgroundColor:
-                                                      Colors.grey[350],
-                                                  minHeight: 7.0,
-                                                  color: Colors.blue,
-                                                  value: 0.1,
-                                                  // valueColor: ,
+                                                // width: 50,
+                                                child: CircleAvatar(
+                                                  backgroundImage: AssetImage(
+                                                      'assets/images/Accounts/AcctChecking.png'),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 10.0.w,
+                                              ),
+                                              Expanded(
+                                                child: Column(
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        Align(
+                                                          alignment:
+                                                              Alignment.topLeft,
+                                                          child: Text(
+                                                            'Checking Account',
+                                                            // textAlign: TextAlign.left,
+                                                            style: TextStyle(
+                                                                fontSize: 13.h,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                color: Colors
+                                                                    .grey[450]),
+                                                          ),
+                                                        ),
+                                                        Spacer(),
+                                                        // Container(
+                                                        //   width: 50,
+                                                        //   child: Text(
+                                                        //     '\$0',
+                                                        //     style: TextStyle(
+                                                        //       color: Colors.black,
+                                                        //       fontWeight:
+                                                        //           FontWeight.bold,
+                                                        //     ),
+                                                        //   ),
+                                                        // ),
+                                                        // SizedBox(
+                                                        //   width: 15.0,
+                                                        // ),
+                                                        (_checking != null)
+                                                            ? Container(
+                                                                width: 80.w,
+                                                                child: Text(
+                                                                  NumberFormat.simpleCurrency(
+                                                                          locale:
+                                                                              "en-us",
+                                                                          decimalDigits:
+                                                                              0)
+                                                                      .format(int.parse(
+                                                                          _checking
+                                                                              .toString())),
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .right,
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: Colors
+                                                                        .grey,
+                                                                    fontSize:
+                                                                        13.0.h,
+                                                                  ),
+                                                                ),
+                                                              )
+                                                            : Container(
+                                                                width: 50.0.w,
+                                                                child: Text(
+                                                                  '--',
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .right,
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        20.0.h,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                      ],
+                                                    ),
+                                                    Container(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                              .size
+                                                              .width,
+                                                      child:
+                                                          LinearProgressIndicator(
+                                                        // semanticsLabel: 'Balling',
+                                                        backgroundColor:
+                                                            Colors.grey[350],
+                                                        minHeight: 7.0,
+                                                        color: Colors.green,
+                                                        value: 0.8,
+                                                        // valueColor: ,
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
                                             ],
                                           ),
                                         ),
+                                        Divider(
+                                          color: Colors.black,
+                                          thickness: 0.4,
+                                        ),
+                                        Row(
+                                          children: [
+                                            // Text('5.'),
+                                            // Container(width: 11.5),
+                                            SizedBox(
+                                              width: 26.5.w,
+                                            ),
+                                            // Spacer(),
+                                            Container(
+                                              // width: 50,
+                                              child: CircleAvatar(
+                                                backgroundImage: AssetImage(
+                                                    'assets/images/Accounts/AcctReward.png'),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 10.0.w,
+                                            ),
+                                            Expanded(
+                                              child: Column(
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Align(
+                                                        alignment:
+                                                            Alignment.topLeft,
+                                                        child: Text(
+                                                          'Reward Points',
+                                                          // textAlign: TextAlign.left,
+                                                          style: TextStyle(
+                                                              fontSize: 13.h,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              color: Colors
+                                                                  .grey[450]),
+                                                        ),
+                                                      ),
+                                                      Spacer(),
+                                                      (_rewardPoints != null)
+                                                          ? Container(
+                                                              width: 70.w,
+                                                              child: Text(
+                                                                NumberFormat()
+                                                                    .format(
+                                                                  int.parse(
+                                                                      _rewardPoints
+                                                                          .toString()),
+                                                                ),
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .right,
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize:
+                                                                      13.0.h,
+                                                                ),
+                                                              ),
+                                                            )
+                                                          : Container(
+                                                              width: 60.0.w,
+                                                              child: Text(
+                                                                '--',
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .right,
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize:
+                                                                      20.0.h,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                    ],
+                                                  ),
+                                                  Container(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                            .size
+                                                            .width,
+                                                    child:
+                                                        LinearProgressIndicator(
+                                                      // semanticsLabel: 'Balling',
+                                                      backgroundColor:
+                                                          Colors.grey[350],
+                                                      minHeight: 7.0,
+                                                      color: Colors.blue,
+                                                      value: 0.1,
+                                                      // valueColor: ,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ],
-                                    ),
-                                  ],
-                                );
+                                    );
+                                  }
                               }
-                          }
-                        },
-                      ),
-                      Divider(
-                        thickness: 0.65,
-                        color: Colors.black,
-                      ),
-                    ],
-                  );
-                },
-              ),
-              SizedBox(
-                height: 25.0.h,
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Draggable<int>(
-                      axis: Axis.horizontal,
-                      data: 20,
-                      child: Image.asset(
-                        "assets/images/Shopping-Bag.png",
-                        height: 60.h,
-                        // color: Color(0xffef4136),
-                      ),
-                      feedback: Image.asset(
-                        "assets/images/Shopping-Bag.png",
-                        height: 35.h,
-                        // color: Color(0xffef4136),
-                      ),
-                      childWhenDragging: Image.asset(
-                        "assets/images/Shopping-Bag.png",
-                        height: 54.h,
-                        color: Colors.grey[500],
-                      ),
-                      // onDraggableCanceled: ,
-                    ),
-                    SizedBox(
-                      width: 25.0.w,
-                    ),
-                    Column(
+                            },
+                          ),
+                          Divider(
+                            thickness: 0.65,
+                            color: Colors.black,
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                  SizedBox(
+                    height: 25.0.h,
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          height: 50.h,
-                          child: Icon(
-                            Icons.arrow_right_alt_outlined,
-                            size: 80.h,
-                            color: Colors.grey[400],
+                        Draggable<int>(
+                          axis: Axis.horizontal,
+                          data: 20,
+                          child: Image.asset(
+                            "assets/images/Shopping-Bag.png",
+                            height: 60.h,
+                            // color: Color(0xffef4136),
                           ),
+                          feedback: Image.asset(
+                            "assets/images/Shopping-Bag.png",
+                            height: 35.h,
+                            // color: Color(0xffef4136),
+                          ),
+                          childWhenDragging: Image.asset(
+                            "assets/images/Shopping-Bag.png",
+                            height: 54.h,
+                            color: Colors.grey[500],
+                          ),
+                          // onDraggableCanceled: ,
                         ),
-                        Container(
-                          padding: EdgeInsets.zero,
-                          width: 100.w,
-                          child: Text(
-                            'Slide to save',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
+                        SizedBox(
+                          width: 25.0.w,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              height: 50.h,
+                              child: Icon(
+                                Icons.arrow_right_alt_outlined,
+                                size: 80.h,
+                                color: Colors.grey[400],
+                              ),
                             ),
+                            Container(
+                              padding: EdgeInsets.zero,
+                              width: 100.w,
+                              child: Text(
+                                'Slide to save',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          width: 25.0.w,
+                        ),
+                        DragTarget<dynamic>(
+                          builder: (
+                            BuildContext context,
+                            List<dynamic> accepted,
+                            List<dynamic> rejected,
+                          ) {
+                            return AnimatedBuilder(
+                              animation: _controller,
+                              builder: (BuildContext context, _) {
+                                return Container(
+                                  color: Color(0xffecb948),
+                                  child: Image.asset(
+                                    'assets/images/VirtualCloset.png',
+                                    width: 55.w,
+                                    height: 70.h,
+                                    fit: BoxFit.fill,
+                                  ),
+                                );
+                                // return Icon(
+                                //   Icons.checkroom,
+                                //   color: Colors.yellow[800],
+                                //   size: _hangIconSizeAnimation.value,
+                                // );
+                              },
+                            );
+                          },
+                          onAccept: (data) {
+                            _isFav
+                                ? _controller.reverse()
+                                : _controller.forward();
+                            if (_savedIndex != null) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => CongratsInvestment(
+                                            uid: widget.uid,
+                                            incomingModel: updatedModel,
+                                            modelId: _modelId,
+                                            investAmount: currentInvestAmount,
+                                          )));
+                            } else {
+                              Validator.onErrorDialog(
+                                  "Please save a goal.", context);
+                            }
+                          },
+                        ),
+                        IconButton(
+                          alignment: Alignment.topCenter,
+                          padding: EdgeInsets.all(0.0),
+                          icon: Icon(
+                            Icons.help,
+                            color: Colors.black,
+                            size: 19.h,
                           ),
+                          onPressed: () {
+                            // _showAbDialog();
+                            showSlideDialog(context);
+                          },
                         ),
                       ],
                     ),
-                    SizedBox(
-                      width: 25.0.w,
-                    ),
-                    DragTarget<dynamic>(
-                      builder: (
-                        BuildContext context,
-                        List<dynamic> accepted,
-                        List<dynamic> rejected,
-                      ) {
-                        return AnimatedBuilder(
-                          animation: _controller,
-                          builder: (BuildContext context, _) {
-                            return Container(
-                              color: Color(0xffecb948),
-                              child: Image.asset(
-                                'assets/images/VirtualCloset.png',
-                                width: 55.w,
-                                height: 70.h,
-                                fit: BoxFit.fill,
-                              ),
-                            );
-                            // return Icon(
-                            //   Icons.checkroom,
-                            //   color: Colors.yellow[800],
-                            //   size: _hangIconSizeAnimation.value,
-                            // );
-                          },
-                        );
-                      },
-                      onAccept: (data) {
-                        _isFav ? _controller.reverse() : _controller.forward();
-                        if (_savedIndex != null) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => CongratsInvestment(
-                                        uid: widget.uid,
-                                        incomingModel: updatedModel,
-                                        modelId: _modelId,
-                                        investAmount: currentInvestAmount,
-                                      )));
-                        } else {
-                          Validator.onErrorDialog(
-                              "Please save a goal.", context);
-                        }
-                      },
-                    ),
-                    IconButton(
-                      alignment: Alignment.topCenter,
-                      padding: EdgeInsets.all(0.0),
-                      icon: Icon(
-                        Icons.help,
-                        color: Colors.black,
-                        size: 19.h,
-                      ),
-                      onPressed: () {
-                        // _showAbDialog();
-                        showSlideDialog(context);
-                      },
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

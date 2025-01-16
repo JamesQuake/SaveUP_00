@@ -744,8 +744,10 @@ class _DashBoardState extends State<DashBoard> {
                                               ),
                                               Spacer(),
                                               (_rewardPoints != null)
-                                                  ? Text(
-                                                      _rewardPoints,
+                                                  ? Text(NumberFormat
+                                                              .decimalPattern("en-us",)
+                                                          .format(int.parse(
+                                                              _rewardPoints)),
                                                       style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,

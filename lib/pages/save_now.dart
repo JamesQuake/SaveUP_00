@@ -2,7 +2,9 @@ import 'dart:async';
 // import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -101,6 +103,9 @@ class _SaveNowState extends State<SaveNow> with SingleTickerProviderStateMixin {
   bool _editedGoal = false;
   bool _undoEdited = false;
   bool goalSaved = false;
+
+  ConfettiController controllerTopRight;
+  ConfettiController controllerTopLeft;
   // int a;
   // var finalVal;
 
@@ -108,6 +113,10 @@ class _SaveNowState extends State<SaveNow> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
+    controllerTopRight =
+        ConfettiController(duration: const Duration(seconds: 2));
+    controllerTopLeft =
+        ConfettiController(duration: const Duration(seconds: 2));
     super.initState();
     // Future.delayed(Duration.zero, () async {
     //   _prefs = await SharedPreferences.getInstance();
@@ -183,6 +192,8 @@ class _SaveNowState extends State<SaveNow> with SingleTickerProviderStateMixin {
   void dispose() {
     super.dispose();
     _controller.dispose();
+    controllerTopRight.dispose();
+    controllerTopLeft.dispose();
   }
 
   int percentage = 100;
@@ -392,6 +403,16 @@ class _SaveNowState extends State<SaveNow> with SingleTickerProviderStateMixin {
                 // x = 0;
               });
               // refreshProvider(context);
+
+              if (num.parse(_model.amount) >= num.parse(_model.goalAmount)) {
+                print('_model.amount -> ${_model.amount}');
+                print('_model.goalAmount -> ${_model.goalAmount}');
+                EasyLoading.showSuccess('${_model.goal} Goal reached!');
+                controllerTopRight.play();
+                controllerTopLeft.play();
+              } else {
+                print('NOT REACHED YET .......');
+              }
             });
           }
         } else {
@@ -677,327 +698,308 @@ class _SaveNowState extends State<SaveNow> with SingleTickerProviderStateMixin {
         elevation: 0.0,
       ),
       endDrawer: MainDrawer(uid: widget.uid, incomingRoute: _incomingRoute),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(20.0, 35.0, 20.0, 10.0),
-          child: Column(
-            children: <Widget>[
-              Row(
-                children: [
-                  Text(
-                    'Order Amount',
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 16.h),
-                  ),
-                  Spacer(),
-                  Text(
-                    NumberFormat.simpleCurrency(
-                            locale: "en-us", decimalDigits: 2)
-                        .format(_saveOrderAmount),
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontSize: 16.h,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-              Divider(
-                thickness: 0.8,
-                color: Colors.black,
-              ),
-              Column(
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width - 160,
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          // widthFactor: 10.0,
-                          child: Text(
-                            'How much of your order amount would you like to save?.',
-                            textAlign: TextAlign.left,
-                            softWrap: true,
-                            style: TextStyle(
-                              fontSize: 15.h,
-                              // overflow: TextOverflow.clip,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 4.0.h,
-                  ),
+      body: Stack(
+        children: [
+          Align(
+            alignment: Alignment.topRight,
+            child: ConfettiWidget(
+              confettiController: controllerTopRight,
+              blastDirection: 0,
+              maxBlastForce: 5, // set a lower max blast force
+              minBlastForce: 2, // set a lower min blast force
+              emissionFrequency: 0.05,
+              numberOfParticles: 30, // a lot of particles at once
+              gravity: 1,
+              minimumSize: Size(8, 8),
+              maximumSize: Size(18, 18),
+              blastDirectionality: BlastDirectionality.explosive,
+            ),
+          ),
+          Align(
+            alignment: Alignment.topLeft,
+            child: ConfettiWidget(
+              confettiController: controllerTopRight,
+              blastDirection: 0.5,
+              maxBlastForce: 5, // set a lower max blast force
+              minBlastForce: 2, // set a lower min blast force
+              emissionFrequency: 0.05,
+              numberOfParticles: 30, // a lot of particles at once
+              gravity: 1,
+              minimumSize: Size(8, 8),
+              maximumSize: Size(18, 18),
+              blastDirectionality: BlastDirectionality.directional,
+            ),
+          ),
+          SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20.0, 35.0, 20.0, 10.0),
+              child: Column(
+                children: <Widget>[
                   Row(
                     children: [
                       Text(
-                        '0%',
+                        'Order Amount',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 16.h),
+                      ),
+                      Spacer(),
+                      Text(
+                        NumberFormat.simpleCurrency(
+                                locale: "en-us", decimalDigits: 2)
+                            .format(_saveOrderAmount),
                         style: TextStyle(
                           color: Colors.blue,
                           fontSize: 16.h,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(
-                        width: 4.0,
-                      ),
-                      Container(
-                        // width: MediaQuery.of(context).size.width - 110,
-                        child: SliderTheme(
-                          data: SliderTheme.of(context).copyWith(
-                            activeTrackColor: Colors.blue,
-                            inactiveTrackColor: Colors.blue[100],
-                            trackShape: RoundedRectSliderTrackShape(),
-                            trackHeight: 7.0,
-                            thumbShape:
-                                RoundSliderThumbShape(enabledThumbRadius: 12.0),
-                            thumbColor: Colors.blue,
-                            overlayColor: Colors.blue.withAlpha(32),
-                            overlayShape:
-                                RoundSliderOverlayShape(overlayRadius: 28.0),
-                            tickMarkShape: RoundSliderTickMarkShape(),
-                            activeTickMarkColor: Color(0xff0070c0),
-                            inactiveTickMarkColor: Colors.blue[100],
-                            valueIndicatorShape:
-                                PaddleSliderValueIndicatorShape(),
-                            valueIndicatorColor: Colors.blue,
-                            valueIndicatorTextStyle: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                          child: Expanded(
-                            child: Slider(
-                              value:
-                                  (double.parse(_percents ?? (100).toString())),
-                              // value: 0.0,
-                              onChanged: (val) {
-                                setState(() {
-                                  _percents = (val.toInt()).toString();
-                                  countPecentage = val.toInt();
-                                  res = (_orderAmount / 100) * (val.toInt());
-                                });
-                              },
-                              min: 0,
-                              max: 200,
-                              divisions: 20,
-                              label:
-                                  _percents == null ? '100%' : _percents + "%",
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 4.0,
-                      ),
-                      Text(
-                        '200%',
-                        style: TextStyle(
-                          fontSize: 16.h,
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
                     ],
                   ),
-                ],
-              ),
-              Divider(
-                thickness: 0.8,
-                color: Colors.black,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 5.0,
-                  bottom: 5.0,
-                ),
-                child: Row(
-                  children: [
-                    Text(
-                      'Total Savings',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 16.h),
-                    ),
-                    Spacer(),
-                    Text(
-                      NumberFormat.simpleCurrency(
-                              locale: "en-us", decimalDigits: 2)
-                          .format(res),
-                      style: TextStyle(
-                        // color: Colors.blue,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16.h,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Divider(
-                thickness: 0.8,
-                color: Colors.black,
-              ),
-              SizedBox(
-                height: 20.0.h,
-              ),
-              Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  'Saving Goals',
-                  // textAlign: TextAlign.start,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.h,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 15.0.h,
-              ),
-              RichText(
-                text: TextSpan(
-                  style: TextStyle(
+                  Divider(
+                    thickness: 0.8,
                     color: Colors.black,
-                    height: 1.0,
-                    fontStyle: FontStyle.italic,
-                    fontSize: 16.h,
                   ),
-                  children: [
-                    TextSpan(
-                      text:
-                          "These are your savings goals. Tap on the goal that you'd like to apply your savings to. ",
-                    ),
-                    TextSpan(text: "Use  "),
-                    WidgetSpan(
-                      child: Image.asset(
-                        "assets/images/buttons/add-green.png",
-                        height: 18.h,
+                  Column(
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width - 160,
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              // widthFactor: 10.0,
+                              child: Text(
+                                'How much of your order amount would you like to save?.',
+                                textAlign: TextAlign.left,
+                                softWrap: true,
+                                style: TextStyle(
+                                  fontSize: 15.h,
+                                  // overflow: TextOverflow.clip,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    TextSpan(text: "  to save. Use  "),
-                    WidgetSpan(
-                      child: Image.asset(
-                        "assets/images/buttons/undo-green.png",
-                        height: 18.h,
+                      SizedBox(
+                        height: 4.0.h,
                       ),
-                    ),
-                    TextSpan(
-                      text: "  to undo.",
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 18.0.h,
-              ),
-              Column(
-                children: [
+                      Row(
+                        children: [
+                          Text(
+                            '0%',
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 16.h,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 4.0,
+                          ),
+                          Container(
+                            // width: MediaQuery.of(context).size.width - 110,
+                            child: SliderTheme(
+                              data: SliderTheme.of(context).copyWith(
+                                activeTrackColor: Colors.blue,
+                                inactiveTrackColor: Colors.blue[100],
+                                trackShape: RoundedRectSliderTrackShape(),
+                                trackHeight: 7.0,
+                                thumbShape: RoundSliderThumbShape(
+                                    enabledThumbRadius: 12.0),
+                                thumbColor: Colors.blue,
+                                overlayColor: Colors.blue.withAlpha(32),
+                                overlayShape: RoundSliderOverlayShape(
+                                    overlayRadius: 28.0),
+                                tickMarkShape: RoundSliderTickMarkShape(),
+                                activeTickMarkColor: Color(0xff0070c0),
+                                inactiveTickMarkColor: Colors.blue[100],
+                                valueIndicatorShape:
+                                    PaddleSliderValueIndicatorShape(),
+                                valueIndicatorColor: Colors.blue,
+                                valueIndicatorTextStyle: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              child: Expanded(
+                                child: Slider(
+                                  value: (double.parse(
+                                      _percents ?? (100).toString())),
+                                  // value: 0.0,
+                                  onChanged: (val) {
+                                    setState(() {
+                                      _percents = (val.toInt()).toString();
+                                      countPecentage = val.toInt();
+                                      res =
+                                          (_orderAmount / 100) * (val.toInt());
+                                    });
+                                  },
+                                  min: 0,
+                                  max: 200,
+                                  divisions: 20,
+                                  label: _percents == null
+                                      ? '100%'
+                                      : _percents + "%",
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 4.0,
+                          ),
+                          Text(
+                            '200%',
+                            style: TextStyle(
+                              fontSize: 16.h,
+                              color: Colors.blue,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    thickness: 0.8,
+                    color: Colors.black,
+                  ),
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 4.0),
+                    padding: const EdgeInsets.only(
+                      top: 5.0,
+                      bottom: 5.0,
+                    ),
                     child: Row(
                       children: [
+                        Text(
+                          'Total Savings',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16.h),
+                        ),
                         Spacer(),
-                        Container(
-                          width: 50.w,
-                          child: Text(
-                            'Savings to Date',
-                            style: TextStyle(
-                              color: Colors.grey[700],
-                              fontSize: 13.0.h,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 15.0.w,
-                        ),
-                        Container(
-                          width: 50.w,
-                          child: Text(
-                            'Savings Goals',
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 13.0.h,
-                            ),
+                        Text(
+                          NumberFormat.simpleCurrency(
+                                  locale: "en-us", decimalDigits: 2)
+                              .format(res),
+                          style: TextStyle(
+                            // color: Colors.blue,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.h,
                           ),
                         ),
                       ],
                     ),
                   ),
-                  Consumer<TotalValues>(
-                    builder: (context, savingProvider, child) {
-                      return Column(
-                        children: [
-                          FutureBuilder(
-                            future: savingProvider
-                                .getSavingsInProvider(widget.uid), // async work
-                            builder: (BuildContext context, snapshot) {
-                              if (savingProvider.savingModelInstance != null) {
-                                return ListView.builder(
-                                  physics: NeverScrollableScrollPhysics(),
-                                  scrollDirection: Axis.vertical,
-                                  shrinkWrap: true,
-                                  itemCount:
-                                      (savingProvider.savingModelInstance !=
-                                              null)
-                                          ? savingProvider
-                                              .savingModelInstance.length
-                                          : 0,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    // _setInitial(0);
-                                    return GestureDetector(
-                                      onDoubleTap: () {
-                                        if (_highlightedIndex.contains(index) ==
-                                            true) {
-                                          _unSelect(index);
-                                        } else {
-                                          print('Not selected');
-                                        }
-                                      },
-                                      onTap: () {
-                                        if (_highlightedIndex.contains(index) ==
-                                            false) {
-                                          _highlightedIndex.clear();
-                                          _highlightRow(index);
-                                        } else {
-                                          print('Selected');
-                                        }
-                                      },
-                                      // #
-                                      child: Container(
-                                          color:
-                                              _highlightedIndex.contains(index)
-                                                  ? Color(0xfff4ccc9)
-                                                  : index == _savedIndex
-                                                      ? Color(0xffc3e9d5)
-                                                      : Colors.transparent,
-                                          child: _item(
-                                              context,
-                                              index,
-                                              savingProvider
-                                                  .savingModelInstance[index])),
-                                    );
-                                  },
-                                );
-                              }
-                              switch (snapshot.connectionState) {
-                                case ConnectionState.waiting:
-                                  return new Text('Loading....');
-                                default:
-                                  if (snapshot.hasError)
-                                    return new Text('Error: ${snapshot.error}');
-                                  else
+                  Divider(
+                    thickness: 0.8,
+                    color: Colors.black,
+                  ),
+                  SizedBox(
+                    height: 20.0.h,
+                  ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      'Saving Goals',
+                      // textAlign: TextAlign.start,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.h,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15.0.h,
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      style: TextStyle(
+                        color: Colors.black,
+                        height: 1.0,
+                        fontStyle: FontStyle.italic,
+                        fontSize: 16.h,
+                      ),
+                      children: [
+                        TextSpan(
+                          text:
+                              "These are your savings goals. Tap on the goal that you'd like to apply your savings to. ",
+                        ),
+                        TextSpan(text: "Use  "),
+                        WidgetSpan(
+                          child: Image.asset(
+                            "assets/images/buttons/add-green.png",
+                            height: 18.h,
+                          ),
+                        ),
+                        TextSpan(text: "  to save. Use  "),
+                        WidgetSpan(
+                          child: Image.asset(
+                            "assets/images/buttons/undo-green.png",
+                            height: 18.h,
+                          ),
+                        ),
+                        TextSpan(
+                          text: "  to undo.",
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 18.0.h,
+                  ),
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 4.0),
+                        child: Row(
+                          children: [
+                            Spacer(),
+                            Container(
+                              width: 50.w,
+                              child: Text(
+                                'Savings to Date',
+                                style: TextStyle(
+                                  color: Colors.grey[700],
+                                  fontSize: 13.0.h,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 15.0.w,
+                            ),
+                            Container(
+                              width: 50.w,
+                              child: Text(
+                                'Savings Goals',
+                                textAlign: TextAlign.right,
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 13.0.h,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Consumer<TotalValues>(
+                        builder: (context, savingProvider, child) {
+                          return Column(
+                            children: [
+                              FutureBuilder(
+                                future: savingProvider.getSavingsInProvider(
+                                    widget.uid), // async work
+                                builder: (BuildContext context, snapshot) {
+                                  if (savingProvider.saveNowList != null) {
                                     return ListView.builder(
                                       physics: NeverScrollableScrollPhysics(),
                                       scrollDirection: Axis.vertical,
                                       shrinkWrap: true,
-                                      itemCount: (snapshot.data != null)
-                                          ? snapshot.data.length
+                                      itemCount: (savingProvider.saveNowList !=
+                                              null)
+                                          ? savingProvider.saveNowList.length
                                           : 0,
                                       itemBuilder:
                                           (BuildContext context, int index) {
+                                        // _setInitial(0);
                                         return GestureDetector(
                                           onDoubleTap: () {
                                             if (_highlightedIndex
@@ -1018,6 +1020,7 @@ class _SaveNowState extends State<SaveNow> with SingleTickerProviderStateMixin {
                                               print('Selected');
                                             }
                                           },
+                                          // #
                                           child: Container(
                                               color: _highlightedIndex
                                                       .contains(index)
@@ -1029,752 +1032,853 @@ class _SaveNowState extends State<SaveNow> with SingleTickerProviderStateMixin {
                                                   context,
                                                   index,
                                                   savingProvider
-                                                          .savingModelInstance[
-                                                      index])),
+                                                      .saveNowList[index])),
                                         );
                                       },
                                     );
-                              }
-                            },
-                          ),
-                          Divider(
-                            height: 0.0,
-                            thickness: 0.8,
-                            color: Colors.black,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 5.0),
-                            child: Row(
-                              children: [
-                                Container(width: 30.0.w),
-                                Container(
-                                  // width: 50,
-                                  child: CircleAvatar(
-                                    backgroundImage: AssetImage(
-                                        'assets/images/Accounts/AcctSavings.png'),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 10.0.w,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      Row(
+                                  }
+                                  switch (snapshot.connectionState) {
+                                    case ConnectionState.waiting:
+                                      return new Text('Loading....');
+                                    default:
+                                      if (snapshot.hasError)
+                                        return new Text(
+                                            'Error: ${snapshot.error}');
+                                      else
+                                        return ListView.builder(
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
+                                          scrollDirection: Axis.vertical,
+                                          shrinkWrap: true,
+                                          itemCount: (snapshot.data != null)
+                                              ? snapshot.data.length
+                                              : 0,
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            return GestureDetector(
+                                              onDoubleTap: () {
+                                                if (_highlightedIndex
+                                                        .contains(index) ==
+                                                    true) {
+                                                  _unSelect(index);
+                                                } else {
+                                                  print('Not selected');
+                                                }
+                                              },
+                                              onTap: () {
+                                                if (_highlightedIndex
+                                                        .contains(index) ==
+                                                    false) {
+                                                  _highlightedIndex.clear();
+                                                  _highlightRow(index);
+                                                } else {
+                                                  print('Selected');
+                                                }
+                                              },
+                                              child: Container(
+                                                  color: _highlightedIndex
+                                                          .contains(index)
+                                                      ? Color(0xfff4ccc9)
+                                                      : index == _savedIndex
+                                                          ? Color(0xffc3e9d5)
+                                                          : Colors.transparent,
+                                                  child: _item(
+                                                      context,
+                                                      index,
+                                                      savingProvider
+                                                          .saveNowList[index])),
+                                            );
+                                          },
+                                        );
+                                  }
+                                },
+                              ),
+                              Divider(
+                                height: 0.0,
+                                thickness: 0.8,
+                                color: Colors.black,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 5.0),
+                                child: Row(
+                                  children: [
+                                    Container(width: 30.0.w),
+                                    Container(
+                                      // width: 50,
+                                      child: CircleAvatar(
+                                        backgroundImage: AssetImage(
+                                            'assets/images/Accounts/AcctSavings.png'),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 10.0.w,
+                                    ),
+                                    Expanded(
+                                      child: Column(
                                         children: [
-                                          Align(
-                                            alignment: Alignment.topLeft,
-                                            child: Text(
-                                              'Total Savings Goal',
-                                              // textAlign: TextAlign.left,
-                                              style: TextStyle(
-                                                  fontSize: 13.h,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.grey[450]),
-                                            ),
-                                          ),
-                                          Spacer(),
-                                          FutureBuilder(
-                                              future: savingProvider != null
-                                                  ? savingProvider
-                                                      .getSavingsToDate(
-                                                          widget.uid)
-                                                  : null,
-                                              builder: (context, snapshot) {
-                                                if (savingProvider.savToDat !=
-                                                    null) {
-                                                  return Container(
-                                                    width: 70.0.w,
-                                                    child: Text(
-                                                      NumberFormat
-                                                          .simpleCurrency(
-                                                        locale: 'en-us',
-                                                        decimalDigits: 0,
-                                                      ).format(savingProvider
-                                                          .savToDat),
-                                                      textAlign: TextAlign.end,
-                                                      style: TextStyle(
-                                                        fontSize: 13.0.h,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                    ),
-                                                  );
-                                                } else
-                                                  switch (snapshot
-                                                      .connectionState) {
-                                                    case ConnectionState
-                                                        .waiting:
+                                          Row(
+                                            children: [
+                                              Align(
+                                                alignment: Alignment.topLeft,
+                                                child: Text(
+                                                  'Total Savings Goal',
+                                                  // textAlign: TextAlign.left,
+                                                  style: TextStyle(
+                                                      fontSize: 13.h,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: Colors.grey[450]),
+                                                ),
+                                              ),
+                                              Spacer(),
+                                              FutureBuilder(
+                                                  future: savingProvider != null
+                                                      ? savingProvider
+                                                          .getSavingsToDate(
+                                                              widget.uid)
+                                                      : null,
+                                                  builder: (context, snapshot) {
+                                                    if (savingProvider
+                                                            .savToDat !=
+                                                        null) {
                                                       return Container(
-                                                        width: 60.0.w,
+                                                        width: 70.0.w,
                                                         child: Text(
-                                                          '--',
+                                                          NumberFormat
+                                                              .simpleCurrency(
+                                                            locale: 'en-us',
+                                                            decimalDigits: 0,
+                                                          ).format(
+                                                              savingProvider
+                                                                  .savToDat),
                                                           textAlign:
-                                                              TextAlign.center,
+                                                              TextAlign.end,
                                                           style: TextStyle(
-                                                            fontSize: 20.0.h,
+                                                            fontSize: 13.0.h,
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                           ),
                                                         ),
                                                       );
-                                                    default:
-                                                      if (snapshot.hasError) {
-                                                        print(
-                                                            'Error: ${snapshot.error}');
-                                                        return Container(
-                                                          width: 60.0.w,
-                                                          child: Text(
-                                                            '--',
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style: TextStyle(
-                                                              fontSize: 20.0.h,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
+                                                    } else
+                                                      switch (snapshot
+                                                          .connectionState) {
+                                                        case ConnectionState
+                                                            .waiting:
+                                                          return Container(
+                                                            width: 60.0.w,
+                                                            child: Text(
+                                                              '--',
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                              style: TextStyle(
+                                                                fontSize:
+                                                                    20.0.h,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
                                                             ),
-                                                          ),
-                                                        );
-                                                      } else
-                                                        return Container(
-                                                          width: 70.0.w,
-                                                          child: Text(
-                                                            NumberFormat
-                                                                .simpleCurrency(
-                                                              locale: 'en-us',
-                                                              decimalDigits: 0,
-                                                            ).format(
-                                                                savingProvider
-                                                                    .savToDat),
-                                                            textAlign:
-                                                                TextAlign.end,
-                                                            style: TextStyle(
-                                                              fontSize: 13.0.h,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                            ),
-                                                          ),
-                                                        );
-                                                  }
-                                              }),
-                                          // SizedBox(
-                                          //   width: 15.0,
-                                          // ),
-                                          // Spacer(),
-                                          FutureBuilder(
-                                              future:
-                                                  savingProvider.savingsTot ==
+                                                          );
+                                                        default:
+                                                          if (snapshot
+                                                              .hasError) {
+                                                            print(
+                                                                'Error: ${snapshot.error}');
+                                                            return Container(
+                                                              width: 60.0.w,
+                                                              child: Text(
+                                                                '--',
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize:
+                                                                      20.0.h,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                              ),
+                                                            );
+                                                          } else
+                                                            return Container(
+                                                              width: 70.0.w,
+                                                              child: Text(
+                                                                NumberFormat
+                                                                    .simpleCurrency(
+                                                                  locale:
+                                                                      'en-us',
+                                                                  decimalDigits:
+                                                                      0,
+                                                                ).format(
+                                                                    savingProvider
+                                                                        .savToDat),
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .end,
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize:
+                                                                      13.0.h,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                              ),
+                                                            );
+                                                      }
+                                                  }),
+                                              // SizedBox(
+                                              //   width: 15.0,
+                                              // ),
+                                              // Spacer(),
+                                              FutureBuilder(
+                                                  future: savingProvider
+                                                              .savingsTot ==
                                                           null
                                                       ? savingProvider
                                                           .getSavingsTotal(
                                                               widget.uid)
                                                       : null,
-                                              builder: (context, snapshot) {
-                                                if (savingProvider.savingsTot !=
-                                                    null) {
-                                                  return Container(
-                                                    width: 70.0.w,
-                                                    child: Text(
-                                                      NumberFormat
-                                                          .simpleCurrency(
-                                                        locale: 'en-us',
-                                                        decimalDigits: 0,
-                                                      ).format(savingProvider
-                                                          .savingsTot),
-                                                      textAlign: TextAlign.end,
-                                                      style: TextStyle(
-                                                        fontSize: 13.0.h,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                    ),
-                                                  );
-                                                } else
-                                                  switch (snapshot
-                                                      .connectionState) {
-                                                    case ConnectionState
-                                                        .waiting:
+                                                  builder: (context, snapshot) {
+                                                    if (savingProvider
+                                                            .savingsTot !=
+                                                        null) {
                                                       return Container(
-                                                        width: 60.0.w,
+                                                        width: 70.0.w,
                                                         child: Text(
-                                                          '--',
+                                                          NumberFormat
+                                                              .simpleCurrency(
+                                                            locale: 'en-us',
+                                                            decimalDigits: 0,
+                                                          ).format(
+                                                              savingProvider
+                                                                  .savingsTot),
                                                           textAlign:
                                                               TextAlign.end,
                                                           style: TextStyle(
-                                                            fontSize: 20.0.h,
+                                                            fontSize: 13.0.h,
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                           ),
                                                         ),
                                                       );
-                                                    default:
-                                                      if (snapshot.hasError) {
-                                                        print(
-                                                            'Error: ${snapshot.error}');
-                                                        return Container(
-                                                          width: 60.0.w,
-                                                          child: Text(
-                                                            '--',
-                                                            textAlign:
-                                                                TextAlign.end,
-                                                            style: TextStyle(
-                                                              fontSize: 20.0.h,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                            ),
-                                                          ),
-                                                        );
-                                                      } else
-                                                        return Container(
-                                                          width: 60.0.w,
-                                                          child: Text(
-                                                            NumberFormat
-                                                                .simpleCurrency(
-                                                              locale: 'en-us',
-                                                              decimalDigits: 0,
-                                                            ).format(
-                                                                savingProvider
-                                                                    .savingsTot),
-                                                            textAlign:
-                                                                TextAlign.end,
-                                                            style: TextStyle(
-                                                              fontSize: 13.0.h,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                            ),
-                                                          ),
-                                                        );
-                                                  }
-                                              }),
-                                        ],
-                                      ),
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        child: LinearProgressIndicator(
-                                          // semanticsLabel: 'Balling',
-                                          backgroundColor: Colors.grey[350],
-                                          minHeight: 7.0,
-                                          color: Colors.green,
-                                          value: convertToDecimal(
-                                              (savingProvider.savToDat != null)
-                                                  ? savingProvider.savToDat
-                                                      .toString()
-                                                  : '0',
-                                              (savingProvider.savingsTot !=
-                                                      null)
-                                                  ? savingProvider.savingsTot
-                                                      .toString()
-                                                  : '0'),
-                                          // valueColor: ,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15.0.h,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              // ElevatedButton(
-                              //   onPressed: () {
-                              //     // if (_highlightedIndex.isNotEmpty) {
-                              //     //   saveAmount(
-                              //     //       context,
-                              //     //       savingProvider.savingModelInstance[
-                              //     //           _highlightedIndex[0]]);
-                              //     // } else {
-                              //     //   _selectGoalDialog(context);
-                              //     // }
-                              //     // Navigator.pop(context);
-                              //     if (editedModel != null) {
-                              //       _undoSave(editedModel);
-                              //     } else {
-                              //       print('empty model');
-                              //     }
-                              //   },
-                              //   child: Image.asset(
-                              //     "assets/images/buttons/undo-green.png",
-                              //     height: 38,
-                              //   ), if (_undoEdited == false) {
-                              //   style: ElevatedButton.styleFrom(
-                              //     shape: CircleBorder(),
-                              //     primary: Colors.transparent,
-                              //     // padding: EdgeInsets.all(10),
-                              //   ),
-                              // ),
-                              GestureDetector(
-                                onTap: () {
-                                  // if (_undoEdited == false) {
-                                  if (editedModel != null) {
-                                    _undoSave(editedModel);
-                                    // setState(() {
-                                    //   _undoEdited = true;
-                                    // });
-                                  } else {
-                                    print('empty model');
-                                  }
-                                  // } else {
-                                  //   showDialog(
-                                  //     context: context,
-                                  //     builder: (BuildContext context) {
-                                  //       return PosAlert();
-                                  //     },
-                                  //   );
-                                  // }
-                                },
-                                child: Image.asset(
-                                  "assets/images/buttons/undo-green.png",
-                                  height: 38.h,
-                                ),
-                              ),
-                              SizedBox(width: 10.0.w),
-                              GestureDetector(
-                                onTap: () {
-                                  // if (_editedGoal == false) {
-                                  if (_highlightedIndex.isNotEmpty) {
-                                    saveAmount(
-                                        context,
-                                        savingProvider.savingModelInstance[
-                                            _highlightedIndex[0]]);
-                                    // setState(() {
-                                    //   _editedGoal = true;
-                                    // });
-                                  } else {
-                                    _selectGoalDialog(context);
-                                  }
-                                  // } else {
-                                  //   showDialog(
-                                  //     context: context,
-                                  //     builder: (BuildContext context) {
-                                  //       return PosAlert();
-                                  //     },
-                                  //   );
-                                  // }
-                                },
-                                child: Image.asset(
-                                  "assets/images/buttons/add-green.png",
-                                  height: 38.h,
-                                ),
-                              ),
-                              // ElevatedButton(
-                              //   onPressed: () {
-                              // if (_highlightedIndex.isNotEmpty) {
-                              //   saveAmount(
-                              //       context,
-                              //       savingProvider.savingModelInstance[
-                              //           _highlightedIndex[0]]);
-                              // } else {
-                              //   _selectGoalDialog(context);
-                              // }
-                              //   },
-                              //   style: ElevatedButton.styleFrom(
-                              //     shape: CircleBorder(),
-                              //     primary: Colors.blue,
-                              //     // padding: EdgeInsets.all(10),
-                              //   ),
-                              //   child: Align(
-                              //     alignment: Alignment.centerRight,
-                              //     child: Text(
-                              //       '+',
-                              //       style: TextStyle(
-                              //         fontSize: 37.5,
-                              //         color: Colors.white,
-                              //       ),
-                              //     ),
-                              //   ),
-                              // ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10.0.h,
-                          ),
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Row(
-                              children: [
-                                Text(
-                                  'Account Balances',
-                                  // textAlign: TextAlign.start,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16.h,
-                                  ),
-                                ),
-                                IconButton(
-                                  // padding: EdgeInsets.only(left: 0.0),
-                                  icon: Icon(
-                                    Icons.help,
-                                    color: Colors.black,
-                                    size: 19.h,
-                                  ),
-                                  onPressed: () {
-                                    _showAlertDialog(context);
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                          FutureBuilder(
-                            future: _getBal, // async work
-                            builder: (BuildContext context, snapshot) {
-                              switch (snapshot.connectionState) {
-                                case ConnectionState.waiting:
-                                  return new Text('Loading....');
-                                default:
-                                  if (snapshot.hasError)
-                                    return new Text('Error: ${snapshot.error}');
-                                  else {
-                                    return Column(
-                                      children: <Widget>[
-                                        Divider(
-                                          color: Colors.black,
-                                          thickness: 0.4,
-                                        ),
-                                        GestureDetector(
-                                          onTap: () {},
-                                          child: Row(
-                                            children: [
-                                              Container(width: 11.5.w),
-                                              SizedBox(
-                                                width: 15.0.w,
-                                              ),
-                                              // Spacer(),
-                                              Container(
-                                                // width: 50,
-                                                child: CircleAvatar(
-                                                  backgroundImage: AssetImage(
-                                                      'assets/images/Accounts/AcctChecking.png'),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: 10.0.w,
-                                              ),
-                                              Expanded(
-                                                child: Column(
-                                                  children: [
-                                                    Row(
-                                                      children: [
-                                                        Align(
-                                                          alignment:
-                                                              Alignment.topLeft,
-                                                          child: Text(
-                                                            'Checking Account',
-                                                            // textAlign: TextAlign.left,
-                                                            style: TextStyle(
-                                                                fontSize: 13.h,
+                                                    } else
+                                                      switch (snapshot
+                                                          .connectionState) {
+                                                        case ConnectionState
+                                                            .waiting:
+                                                          return Container(
+                                                            width: 60.0.w,
+                                                            child: Text(
+                                                              '--',
+                                                              textAlign:
+                                                                  TextAlign.end,
+                                                              style: TextStyle(
+                                                                fontSize:
+                                                                    20.0.h,
                                                                 fontWeight:
                                                                     FontWeight
-                                                                        .w600,
-                                                                color: Colors
-                                                                    .grey[450]),
-                                                          ),
-                                                        ),
-                                                        Spacer(),
-                                                        // Container(
-                                                        //   width: 50,
-                                                        //   child: Text(
-                                                        //     '\$0',
-                                                        //     style: TextStyle(
-                                                        //       color:
-                                                        //           Colors.black,
-                                                        //       fontWeight:
-                                                        //           FontWeight
-                                                        //               .bold,
-                                                        //     ),
-                                                        //   ),
-                                                        // ),
-                                                        // SizedBox(
-                                                        //   width: 15.0,
-                                                        // ),
-                                                        Container(
-                                                          width: 80.w,
-                                                          child: Text(
-                                                            NumberFormat.simpleCurrency(
-                                                                    locale:
-                                                                        "en-us",
-                                                                    decimalDigits:
-                                                                        0)
-                                                                .format(int.parse(
-                                                                    _checking
-                                                                        .toString())),
-                                                            textAlign:
-                                                                TextAlign.right,
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.grey,
+                                                                        .bold,
+                                                              ),
                                                             ),
+                                                          );
+                                                        default:
+                                                          if (snapshot
+                                                              .hasError) {
+                                                            print(
+                                                                'Error: ${snapshot.error}');
+                                                            return Container(
+                                                              width: 60.0.w,
+                                                              child: Text(
+                                                                '--',
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .end,
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize:
+                                                                      20.0.h,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                              ),
+                                                            );
+                                                          } else
+                                                            return Container(
+                                                              width: 60.0.w,
+                                                              child: Text(
+                                                                NumberFormat
+                                                                    .simpleCurrency(
+                                                                  locale:
+                                                                      'en-us',
+                                                                  decimalDigits:
+                                                                      0,
+                                                                ).format(
+                                                                    savingProvider
+                                                                        .savingsTot),
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .end,
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize:
+                                                                      13.0.h,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                              ),
+                                                            );
+                                                      }
+                                                  }),
+                                            ],
+                                          ),
+                                          Container(
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            child: LinearProgressIndicator(
+                                              // semanticsLabel: 'Balling',
+                                              backgroundColor: Colors.grey[350],
+                                              minHeight: 7.0,
+                                              color: Colors.green,
+                                              value: convertToDecimal(
+                                                  (savingProvider.savToDat !=
+                                                          null)
+                                                      ? savingProvider.savToDat
+                                                          .toString()
+                                                      : '0',
+                                                  (savingProvider.savingsTot !=
+                                                          null)
+                                                      ? savingProvider
+                                                          .savingsTot
+                                                          .toString()
+                                                      : '0'),
+                                              // valueColor: ,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 15.0.h,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  // ElevatedButton(
+                                  //   onPressed: () {
+                                  //     // if (_highlightedIndex.isNotEmpty) {
+                                  //     //   saveAmount(
+                                  //     //       context,
+                                  //     //       savingProvider.saveNowList[
+                                  //     //           _highlightedIndex[0]]);
+                                  //     // } else {
+                                  //     //   _selectGoalDialog(context);
+                                  //     // }
+                                  //     // Navigator.pop(context);
+                                  //     if (editedModel != null) {
+                                  //       _undoSave(editedModel);
+                                  //     } else {
+                                  //       print('empty model');
+                                  //     }
+                                  //   },
+                                  //   child: Image.asset(
+                                  //     "assets/images/buttons/undo-green.png",
+                                  //     height: 38,
+                                  //   ), if (_undoEdited == false) {
+                                  //   style: ElevatedButton.styleFrom(
+                                  //     shape: CircleBorder(),
+                                  //     primary: Colors.transparent,
+                                  //     // padding: EdgeInsets.all(10),
+                                  //   ),
+                                  // ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      // if (_undoEdited == false) {
+                                      if (editedModel != null) {
+                                        _undoSave(editedModel);
+                                        // setState(() {
+                                        //   _undoEdited = true;
+                                        // });
+                                      } else {
+                                        print('empty model');
+                                      }
+                                      // } else {
+                                      //   showDialog(
+                                      //     context: context,
+                                      //     builder: (BuildContext context) {
+                                      //       return PosAlert();
+                                      //     },
+                                      //   );
+                                      // }
+                                    },
+                                    child: Image.asset(
+                                      "assets/images/buttons/undo-green.png",
+                                      height: 38.h,
+                                    ),
+                                  ),
+                                  SizedBox(width: 10.0.w),
+                                  GestureDetector(
+                                    onTap: () {
+                                      // if (_editedGoal == false) {
+                                      if (_highlightedIndex.isNotEmpty) {
+                                        saveAmount(
+                                            context,
+                                            savingProvider.saveNowList[
+                                                _highlightedIndex[0]]);
+                                        // setState(() {
+                                        //   _editedGoal = true;
+                                        // });
+                                      } else {
+                                        _selectGoalDialog(context);
+                                      }
+                                      // } else {
+                                      //   showDialog(
+                                      //     context: context,
+                                      //     builder: (BuildContext context) {
+                                      //       return PosAlert();
+                                      //     },
+                                      //   );
+                                      // }
+                                    },
+                                    child: Image.asset(
+                                      "assets/images/buttons/add-green.png",
+                                      height: 38.h,
+                                    ),
+                                  ),
+                                  // ElevatedButton(
+                                  //   onPressed: () {
+                                  // if (_highlightedIndex.isNotEmpty) {
+                                  //   saveAmount(
+                                  //       context,
+                                  //       savingProvider.saveNowList[
+                                  //           _highlightedIndex[0]]);
+                                  // } else {
+                                  //   _selectGoalDialog(context);
+                                  // }
+                                  //   },
+                                  //   style: ElevatedButton.styleFrom(
+                                  //     shape: CircleBorder(),
+                                  //     primary: Colors.blue,
+                                  //     // padding: EdgeInsets.all(10),
+                                  //   ),
+                                  //   child: Align(
+                                  //     alignment: Alignment.centerRight,
+                                  //     child: Text(
+                                  //       '+',
+                                  //       style: TextStyle(
+                                  //         fontSize: 37.5,
+                                  //         color: Colors.white,
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10.0.h,
+                              ),
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      'Account Balances',
+                                      // textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16.h,
+                                      ),
+                                    ),
+                                    IconButton(
+                                      // padding: EdgeInsets.only(left: 0.0),
+                                      icon: Icon(
+                                        Icons.help,
+                                        color: Colors.black,
+                                        size: 19.h,
+                                      ),
+                                      onPressed: () {
+                                        _showAlertDialog(context);
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              FutureBuilder(
+                                future: _getBal, // async work
+                                builder: (BuildContext context, snapshot) {
+                                  switch (snapshot.connectionState) {
+                                    case ConnectionState.waiting:
+                                      return new Text('Loading....');
+                                    default:
+                                      if (snapshot.hasError)
+                                        return new Text(
+                                            'Error: ${snapshot.error}');
+                                      else {
+                                        return Column(
+                                          children: <Widget>[
+                                            Divider(
+                                              color: Colors.black,
+                                              thickness: 0.4,
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {},
+                                              child: Row(
+                                                children: [
+                                                  Container(width: 11.5.w),
+                                                  SizedBox(
+                                                    width: 15.0.w,
+                                                  ),
+                                                  // Spacer(),
+                                                  Container(
+                                                    // width: 50,
+                                                    child: CircleAvatar(
+                                                      backgroundImage: AssetImage(
+                                                          'assets/images/Accounts/AcctChecking.png'),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 10.0.w,
+                                                  ),
+                                                  Expanded(
+                                                    child: Column(
+                                                      children: [
+                                                        Row(
+                                                          children: [
+                                                            Align(
+                                                              alignment:
+                                                                  Alignment
+                                                                      .topLeft,
+                                                              child: Text(
+                                                                'Checking Account',
+                                                                // textAlign: TextAlign.left,
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        13.h,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    color: Colors
+                                                                            .grey[
+                                                                        450]),
+                                                              ),
+                                                            ),
+                                                            Spacer(),
+                                                            // Container(
+                                                            //   width: 50,
+                                                            //   child: Text(
+                                                            //     '\$0',
+                                                            //     style: TextStyle(
+                                                            //       color:
+                                                            //           Colors.black,
+                                                            //       fontWeight:
+                                                            //           FontWeight
+                                                            //               .bold,
+                                                            //     ),
+                                                            //   ),
+                                                            // ),
+                                                            // SizedBox(
+                                                            //   width: 15.0,
+                                                            // ),
+                                                            Container(
+                                                              width: 80.w,
+                                                              child: Text(
+                                                                NumberFormat.simpleCurrency(
+                                                                        locale:
+                                                                            "en-us",
+                                                                        decimalDigits:
+                                                                            0)
+                                                                    .format(int.parse(
+                                                                        _checking
+                                                                            .toString())),
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .right,
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Colors
+                                                                      .grey,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        Container(
+                                                          width: MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .width,
+                                                          child:
+                                                              LinearProgressIndicator(
+                                                            // semanticsLabel: 'Balling',
+                                                            backgroundColor:
+                                                                Colors
+                                                                    .grey[350],
+                                                            minHeight: 7.0,
+                                                            color: Colors.green,
+                                                            value: 0.8,
+                                                            // valueColor: ,
                                                           ),
                                                         ),
                                                       ],
-                                                    ),
-                                                    Container(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                              .size
-                                                              .width,
-                                                      child:
-                                                          LinearProgressIndicator(
-                                                        // semanticsLabel: 'Balling',
-                                                        backgroundColor:
-                                                            Colors.grey[350],
-                                                        minHeight: 7.0,
-                                                        color: Colors.green,
-                                                        value: 0.8,
-                                                        // valueColor: ,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Divider(
-                                          color: Colors.black,
-                                          thickness: 0.4,
-                                        ),
-                                        Row(
-                                          children: [
-                                            // Text('5.'),
-                                            Container(width: 11.5.w),
-                                            SizedBox(
-                                              width: 15.0.w,
-                                            ),
-                                            // Spacer(),
-                                            Container(
-                                              // width: 50,
-                                              child: CircleAvatar(
-                                                backgroundImage: AssetImage(
-                                                    'assets/images/Accounts/AcctReward.png'),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: 10.0.w,
-                                            ),
-                                            Expanded(
-                                              child: Column(
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      Align(
-                                                        alignment:
-                                                            Alignment.topLeft,
-                                                        child: Text(
-                                                          'Reward Points',
-                                                          // textAlign: TextAlign.left,
-                                                          style: TextStyle(
-                                                              fontSize: 13.h,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              color: Colors
-                                                                  .grey[450]),
-                                                        ),
-                                                      ),
-                                                      Spacer(),
-                                                      Container(
-                                                        width: 70.w,
-                                                        child: Text(
-                                                          NumberFormat().format(
-                                                              int.parse(
-                                                                  _rewardPoints
-                                                                      .toString())),
-                                                          textAlign:
-                                                              TextAlign.right,
-                                                          style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                            .size
-                                                            .width,
-                                                    child:
-                                                        LinearProgressIndicator(
-                                                      // semanticsLabel: 'Balling',
-                                                      backgroundColor:
-                                                          Colors.grey[350],
-                                                      minHeight: 7.0,
-                                                      color: Colors.blue,
-                                                      value: 0.1,
-                                                      // valueColor: ,
                                                     ),
                                                   ),
                                                 ],
                                               ),
                                             ),
+                                            Divider(
+                                              color: Colors.black,
+                                              thickness: 0.4,
+                                            ),
+                                            Row(
+                                              children: [
+                                                // Text('5.'),
+                                                Container(width: 11.5.w),
+                                                SizedBox(
+                                                  width: 15.0.w,
+                                                ),
+                                                // Spacer(),
+                                                Container(
+                                                  // width: 50,
+                                                  child: CircleAvatar(
+                                                    backgroundImage: AssetImage(
+                                                        'assets/images/Accounts/AcctReward.png'),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 10.0.w,
+                                                ),
+                                                Expanded(
+                                                  child: Column(
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          Align(
+                                                            alignment: Alignment
+                                                                .topLeft,
+                                                            child: Text(
+                                                              'Reward Points',
+                                                              // textAlign: TextAlign.left,
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      13.h,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  color: Colors
+                                                                          .grey[
+                                                                      450]),
+                                                            ),
+                                                          ),
+                                                          Spacer(),
+                                                          Container(
+                                                            width: 70.w,
+                                                            child: Text(
+                                                              NumberFormat().format(
+                                                                  int.parse(
+                                                                      _rewardPoints
+                                                                          .toString())),
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .right,
+                                                              style: TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Container(
+                                                        width: MediaQuery.of(
+                                                                context)
+                                                            .size
+                                                            .width,
+                                                        child:
+                                                            LinearProgressIndicator(
+                                                          // semanticsLabel: 'Balling',
+                                                          backgroundColor:
+                                                              Colors.grey[350],
+                                                          minHeight: 7.0,
+                                                          color: Colors.blue,
+                                                          value: 0.1,
+                                                          // valueColor: ,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ],
-                                        ),
-                                      ],
-                                    );
+                                        );
+                                      }
                                   }
-                              }
-                            },
-                          ),
-                          Divider(
-                            thickness: 0.4,
-                            color: Colors.black,
-                          ),
-                        ],
-                      );
-                    },
+                                },
+                              ),
+                              Divider(
+                                thickness: 0.4,
+                                color: Colors.black,
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              SizedBox(
-                height: 25.0.h,
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Draggable<int>(
-                      axis: Axis.horizontal,
-                      data: 20,
-                      child: Image.asset(
-                        "assets/images/Shopping-Bag.png",
-                        height: 60.h,
-                        // color: Color(0xffef4136),
-                      ),
-                      feedback: Image.asset(
-                        "assets/images/Shopping-Bag.png",
-                        height: 35.h,
-                        // color: Color(0xffef4136),
-                      ),
-                      childWhenDragging: Image.asset(
-                        "assets/images/Shopping-Bag.png",
-                        height: 54.h,
-                        color: Colors.grey[500],
-                      ),
-                      // onDraggableCanceled: ,
-                    ),
-                    SizedBox(
-                      width: 25.0.w,
-                    ),
-                    Column(
+                  SizedBox(
+                    height: 25.0.h,
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          height: 50.h,
-                          child: Icon(
-                            Icons.arrow_right_alt_outlined,
-                            size: 80.h,
-                            color: Colors.grey[400],
+                        Draggable<int>(
+                          axis: Axis.horizontal,
+                          data: 20,
+                          child: Image.asset(
+                            "assets/images/Shopping-Bag.png",
+                            height: 60.h,
+                            // color: Color(0xffef4136),
                           ),
+                          feedback: Image.asset(
+                            "assets/images/Shopping-Bag.png",
+                            height: 35.h,
+                            // color: Color(0xffef4136),
+                          ),
+                          childWhenDragging: Image.asset(
+                            "assets/images/Shopping-Bag.png",
+                            height: 54.h,
+                            color: Colors.grey[500],
+                          ),
+                          // onDraggableCanceled: ,
                         ),
-                        Container(
-                          padding: EdgeInsets.zero,
-                          width: 100.w,
-                          child: Text(
-                            'Slide to save',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
+                        SizedBox(
+                          width: 25.0.w,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              height: 50.h,
+                              child: Icon(
+                                Icons.arrow_right_alt_outlined,
+                                size: 80.h,
+                                color: Colors.grey[400],
+                              ),
                             ),
+                            Container(
+                              padding: EdgeInsets.zero,
+                              width: 100.w,
+                              child: Text(
+                                'Slide to save',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          width: 25.0.w,
+                        ),
+                        DragTarget<dynamic>(
+                          builder: (
+                            BuildContext context,
+                            List<dynamic> accepted,
+                            List<dynamic> rejected,
+                          ) {
+                            return AnimatedBuilder(
+                              animation: _controller,
+                              builder: (BuildContext context, _) {
+                                return Container(
+                                  color: Color(0xffecb948),
+                                  child: Image.asset(
+                                    'assets/images/VirtualCloset.png',
+                                    width: 55.w,
+                                    height: 70.h,
+                                    fit: BoxFit.fill,
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          onAccept: (data) {
+                            isFav
+                                ? _controller.reverse()
+                                : _controller.forward();
+                            if (_savedIndex != null) {
+                              /// TODO: add the virtual closet feature here.
+                              // ProductModel _ff;
+                              // await productSummary.then((value) => _ff = value);
+                              // print('${FirebaseAuth.instance.currentUser.uid}');
+                              // FirebaseFirestore.instance.collection('virtualCloset').add({
+                              //   'uid': FirebaseAuth.instance.currentUser.uid,
+                              //   'pName':_productTitle,
+                              //   'pPrice':_productPrice,
+                              //   'pImage':_ff.image.imageUrl,
+                              //   'pId': _ff.itemId,
+                              //   'pUrl': _url,
+                              //   'status':true,
+                              //   'platform':'eBay',
+                              //   'doc':DateTime.now(),
+                              // });
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => CongratsSaving(
+                                    incomingModel: updatedModel,
+                                    modelId: _modelId,
+                                    uid: widget.uid,
+                                    savedAmount: savedAmount,
+                                  ),
+                                ),
+                              );
+                              debugPrint('_modelId -> $_modelId');
+                              debugPrint('widget.uid -> ${widget.uid}');
+                              debugPrint('savedAmount -> ${savedAmount}');
+                              // showOverdraftNotice(
+                              //     context, double.parse(_checking.toString()));
+                            } else {
+                              Validator.onErrorDialog(
+                                  "Please apply your savings to a goal.",
+                                  context);
+                            }
+                          },
+                        ),
+                        IconButton(
+                          alignment: Alignment.topCenter,
+                          padding: EdgeInsets.all(0.0),
+                          icon: Icon(
+                            Icons.help,
+                            color: Colors.black,
+                            size: 19.h,
                           ),
+                          onPressed: () {
+                            // _showAbDialog();
+                            showSlideDialog(context);
+                          },
                         ),
                       ],
                     ),
-                    SizedBox(
-                      width: 25.0.w,
-                    ),
-                    DragTarget<dynamic>(
-                      builder: (
-                        BuildContext context,
-                        List<dynamic> accepted,
-                        List<dynamic> rejected,
-                      ) {
-                        return AnimatedBuilder(
-                          animation: _controller,
-                          builder: (BuildContext context, _) {
-                            return Container(
-                              color: Color(0xffecb948),
-                              child: Image.asset(
-                                'assets/images/VirtualCloset.png',
-                                width: 55.w,
-                                height: 70.h,
-                                fit: BoxFit.fill,
-                              ),
-                            );
-                          },
-                        );
-                      },
-                      onAccept: (data) {
-                        isFav ? _controller.reverse() : _controller.forward();
-                        if (_savedIndex != null) {
-                          /// TODO: add the virtual closet feature here.
-                          // ProductModel _ff;
-                          // await productSummary.then((value) => _ff = value);
-                          // print('${FirebaseAuth.instance.currentUser.uid}');
-                          // FirebaseFirestore.instance.collection('virtualCloset').add({
-                          //   'uid': FirebaseAuth.instance.currentUser.uid,
-                          //   'pName':_productTitle,
-                          //   'pPrice':_productPrice,
-                          //   'pImage':_ff.image.imageUrl,
-                          //   'pId': _ff.itemId,
-                          //   'pUrl': _url,
-                          //   'status':true,
-                          //   'platform':'eBay',
-                          //   'doc':DateTime.now(),
-                          // });
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => CongratsSaving(
-                                incomingModel: updatedModel,
-                                modelId: _modelId,
-                                uid: widget.uid,
-                                savedAmount: savedAmount,
-                              ),
-                            ),
-                          );
-                          debugPrint('_modelId -> $_modelId');
-                          debugPrint('widget.uid -> ${widget.uid}');
-                          debugPrint('savedAmount -> ${savedAmount}');
-                          // showOverdraftNotice(
-                          //     context, double.parse(_checking.toString()));
-                        } else {
-                          Validator.onErrorDialog(
-                              "Please apply your savings to a goal.", context);
-                        }
-                      },
-                    ),
-                    IconButton(
-                      alignment: Alignment.topCenter,
-                      padding: EdgeInsets.all(0.0),
-                      icon: Icon(
-                        Icons.help,
-                        color: Colors.black,
-                        size: 19.h,
-                      ),
-                      onPressed: () {
-                        // _showAbDialog();
-                        showSlideDialog(context);
-                      },
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

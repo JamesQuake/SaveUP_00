@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pay_or_save/assets/main_drawer.dart';
 import 'package:pay_or_save/pages/new_pages/place_order.dart';
@@ -239,15 +240,17 @@ class _WinPrizes extends State<WinPrizes> {
                               _showRewardPointNotice(
                                   context, details.getRewardPoint);
                             }
-                            // else{
-                            //   Navigator.push(
-                            //       context,
-                            //       MaterialPageRoute(
-                            //           builder: (context) => RewardPoints(
-                            //             uid: widget.uid,
-                            //           ),),);
-                            //   // Navigator.pushNamedAndRemoveUntil(context, '/starting', (route) => false);
-                            // }
+                            else{
+                              EasyLoading.showSuccess('You are entered in drawing.');
+                              Future.delayed(Duration(seconds: 1)).then((_) => Navigator.pushNamedAndRemoveUntil(context, '/starting', (route) => false));
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => RewardPoints(
+                              //           uid: widget.uid,
+                              //         ),),);
+                              // Navigator.pushNamedAndRemoveUntil(context, '/starting', (route) => false);
+                            }
                           },
                         ),
                         child: Text(

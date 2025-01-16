@@ -5,7 +5,7 @@ description: A new Flutter project.
 # pub.dev using `pub publish`. This is preferred for private packages.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.16+16
+version: 1.0.18+18
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -41,7 +41,7 @@ dependencies:
   # firebase_core: ^1.1.0
   firebase_core: ^1.6.0
   animated_text_kit: ^4.1.1
-  http: ^0.13.4
+  http: ^0.13.0
   transparent_image: ^2.0.0
   # shared_preferences: ^0.5.12+2
   flutter_staggered_grid_view: ^0.6.2
@@ -57,12 +57,15 @@ dependencies:
   social_share: ^2.2.1
   cloud_functions: ^3.3.7
   purchases_flutter: ^6.30.2
-  crypto: ^3.0.2
+  crypto: ^3.0.0
   convert: ^3.1.0
   flutter_screenutil: ^5.7.0
   logger: any
   flutter_easyloading: any
   confetti: any
+  pointycastle: ^3.7.3
+  asn1lib: 
+  basic_utils: ^5.4.2
 
 dependency_overrides:
   firebase_core_platform_interface: 4.5.1

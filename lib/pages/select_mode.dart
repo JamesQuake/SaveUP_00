@@ -481,7 +481,8 @@ class _SelectModeState extends State<SelectMode> {
                       () async {
                         await _checkClientStat();
                         // if (adStat != 1)
-                        _showInterstitialAd();
+                        //TODO: Enable ads here
+                        // _showInterstitialAd();
                         navigateToStore(context);
 
                         ///

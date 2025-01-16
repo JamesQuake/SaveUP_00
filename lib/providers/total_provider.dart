@@ -17,6 +17,7 @@ class TotalValues extends ChangeNotifier {
   int _savToDate;
   List<int> _savToDateList;
   List<SavingModel> _savings;
+  List<SavingModel> _saveNow;
 
   int sumInv;
   int _invTotal;
@@ -24,6 +25,7 @@ class TotalValues extends ChangeNotifier {
   int _invToDate;
   List<int> _invToDateList;
   List<InvestmentModel> _investment;
+  List<InvestmentModel> _investNow;
   int _rewardPoints;
   String _name;
   // Future<List<SavingModel>> savFuture;
@@ -47,6 +49,12 @@ class TotalValues extends ChangeNotifier {
       savingModelInstance = querySnapshot.docs
           .map((result) => SavingModel.fromJson(result.id, result.data()))
           .toList();
+
+          saveNowList = querySnapshot.docs
+          .map((result) => SavingModel.fromJson(result.id, result.data()))
+          .toList();
+
+          saveNowList.removeWhere((element) => num.parse(element.amount) >= num.parse(element.goalAmount));
 
       // List dateCreated = querySnapshot.docs
       //     .map((result) => SavingModel.fromJson(result.id, result.data()).created)
@@ -76,6 +84,11 @@ class TotalValues extends ChangeNotifier {
       investModelInstance = querySnapshot.docs
           .map((result) => InvestmentModel.fromJson(result.id, result.data()))
           .toList();
+      investNowList = querySnapshot.docs
+          .map((result) => InvestmentModel.fromJson(result.id, result.data()))
+          .toList();
+      // investNowList = investModelInstance;
+      investNowList.removeWhere((element) => num.parse(element.amount) >= num.parse(element.goalAmount));
     }).then((_) {
       // return _investment;
     });
@@ -224,8 +237,19 @@ class TotalValues extends ChangeNotifier {
     notifyListeners();
   }
 
+  set saveNowList(List<SavingModel> list) {
+    // list.sort();
+    _saveNow = list;
+    notifyListeners();
+  }
+
   set investModelInstance(List<InvestmentModel> list) {
     _investment = list;
+    notifyListeners();
+  }
+
+  set investNowList(List<InvestmentModel> list) {
+    _investNow = list;
     notifyListeners();
   }
 
@@ -250,7 +274,9 @@ class TotalValues extends ChangeNotifier {
   //   return listOfValues;
   // }
   List<InvestmentModel> get investModelInstance => _investment;
+  List<InvestmentModel> get investNowList => _investNow;
   List<SavingModel> get savingModelInstance => _savings;
+  List<SavingModel> get saveNowList => _saveNow;
   int get savingsTot => _savTotal;
   int get savToDat => _savToDate;
   int get invTot => _invTotal;

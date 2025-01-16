@@ -1,19 +1,15 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-// import 'package:pay_or_save/assets/custom_button.dart';
 import 'package:pay_or_save/assets/main_drawer.dart';
 import 'package:pay_or_save/models/account_model.dart';
 import 'package:pay_or_save/pages/starting_instructions.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../providers/auth_provider.dart';
 import 'select_mode.dart';
-// import 'package:pay_or_save/widgets/menu.dart';
 
 class StartingBalances extends StatefulWidget {
   final String uid;

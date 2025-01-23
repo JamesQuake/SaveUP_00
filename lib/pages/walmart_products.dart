@@ -27,6 +27,13 @@ class WalmartProducts extends StatefulWidget {
 class _WalmartProductsState extends State<WalmartProducts> {
   final ScrollController _scrollController = ScrollController();
   bool _isInitialized = false;
+  String _selectedSort = 'price_asc';
+  RangeValues _priceRange = RangeValues(0, 1000);
+  Set<String> _selectedBrands = {};
+  bool _showOnlyAvailable = false;
+  bool _showOnlyFreeShipping = false;
+  bool _showOnlyClearance = false;
+  bool _isLoadingProducts = false;
 
   @override
   void initState() {
@@ -51,6 +58,240 @@ class _WalmartProductsState extends State<WalmartProducts> {
       Provider.of<WalmartProvider>(context, listen: false)
           .fetchProducts(widget.categoryId);
     }
+  }
+
+  void _showFilterSheet() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return Consumer<WalmartProvider>(
+          builder: (context, provider, child) {
+            // Get unique brands from products
+            final brands = provider.products
+                .map((p) => p.brandName)
+                .where((b) => b != null)
+                .toSet()
+                .toList()
+              ..sort();
+
+            return StatefulBuilder(
+              builder: (context, setState) {
+                return Container(
+                  height: MediaQuery.of(context).size.height * 0.8,
+                  padding: EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Filters',
+                            style: TextStyle(
+                              fontSize: 20.h,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              setState(() {
+                                _priceRange = RangeValues(0, 1000);
+                                _selectedBrands.clear();
+                                _showOnlyAvailable = false;
+                                _showOnlyFreeShipping = false;
+                                _showOnlyClearance = false;
+                              });
+                              provider.resetFilters();
+                            },
+                            child: Text('Reset All'),
+                          ),
+                        ],
+                      ),
+                      Divider(),
+                      Text(
+                        'Price Range',
+                        style: TextStyle(
+                          fontSize: 16.h,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      RangeSlider(
+                        values: _priceRange,
+                        min: 0,
+                        max: 1000,
+                        divisions: 100,
+                        labels: RangeLabels(
+                          '\$${_priceRange.start.round()}',
+                          '\$${_priceRange.end.round()}',
+                        ),
+                        onChanged: (values) {
+                          setState(() => _priceRange = values);
+                        },
+                      ),
+                      SizedBox(height: 16),
+                      Text(
+                        'Brands',
+                        style: TextStyle(
+                          fontSize: 16.h,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Container(
+                        height: 200,
+                        child: ListView.builder(
+                          itemCount: brands.length,
+                          itemBuilder: (context, index) {
+                            return CheckboxListTile(
+                              title: Text(brands[index]),
+                              value: _selectedBrands.contains(brands[index]),
+                              onChanged: (bool value) {
+                                setState(() {
+                                  if (value)
+                                    _selectedBrands.add(brands[index]);
+                                  else
+                                    _selectedBrands.remove(brands[index]);
+                                });
+                              },
+                            );
+                          },
+                        ),
+                      ),
+                      SwitchListTile(
+                        title: Text('Show Only Available Items'),
+                        value: _showOnlyAvailable,
+                        onChanged: (value) {
+                          setState(() => _showOnlyAvailable = value);
+                        },
+                      ),
+                      SwitchListTile(
+                        title: Text('Free Shipping'),
+                        value: _showOnlyFreeShipping,
+                        onChanged: (value) {
+                          setState(() => _showOnlyFreeShipping = value);
+                        },
+                      ),
+                      SwitchListTile(
+                        title: Text('Clearance Items'),
+                        value: _showOnlyClearance,
+                        onChanged: (value) {
+                          setState(() => _showOnlyClearance = value);
+                        },
+                      ),
+                      Spacer(),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Color(0xff0070c0),
+                            padding: EdgeInsets.symmetric(vertical: 16),
+                          ),
+                          onPressed: () {
+                            provider.applyFilters(
+                              priceRange: _priceRange,
+                              brands: _selectedBrands,
+                              onlyAvailable: _showOnlyAvailable,
+                              onlyFreeShipping: _showOnlyFreeShipping,
+                              onlyClearance: _showOnlyClearance,
+                            );
+                            Navigator.pop(context);
+                          },
+                          child: Text('Apply Filters'),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildSortAndFilter() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(
+          bottom: BorderSide(color: Colors.grey[200]),
+        ),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Stack(
+              alignment: Alignment.centerRight,
+              children: [
+                DropdownButton<String>(
+                  isExpanded: true,
+                  value: _selectedSort,
+                  items: [
+                    DropdownMenuItem(
+                      value: 'price_asc',
+                      child: Text('Price: Low to High'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'price_desc',
+                      child: Text('Price: High to Low'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'name_asc',
+                      child: Text('Name: A to Z'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'name_desc',
+                      child: Text('Name: Z to A'),
+                    ),
+                  ],
+                  onChanged: _isLoadingProducts 
+                    ? null  // Disable during loading
+                    : (value) async {
+                        setState(() {
+                          _selectedSort = value;
+                          _isLoadingProducts = true;
+                        });
+                        
+                        await Provider.of<WalmartProvider>(context, listen: false)
+                            .sortProducts(value, widget.categoryId);
+                            
+                        setState(() {
+                          _isLoadingProducts = false;
+                        });
+                      },
+                ),
+                if (_isLoadingProducts)
+                  Positioned(
+                    right: 30,
+                    child: SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        valueColor: AlwaysStoppedAnimation<Color>(Color(0xff0070c0)),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          SizedBox(width: 16.w),
+          TextButton.icon(
+            onPressed: _isLoadingProducts ? null : _showFilterSheet,
+            icon: Icon(Icons.filter_list),
+            label: Text('Filter'),
+            style: TextButton.styleFrom(
+              primary: Color(0xff0070c0),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildProductsGrid(WalmartProvider provider) {
@@ -385,6 +626,9 @@ class _WalmartProductsState extends State<WalmartProducts> {
                     ),
                   ),
                 ),
+              SliverToBoxAdapter(
+                child: _buildSortAndFilter(),
+              ),
               SliverPadding(
                 padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 16.h),
                 sliver: _buildProductsGrid(provider),

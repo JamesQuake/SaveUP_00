@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../pages/walmart_items.dart';
+import '../pages/walmart_search.dart';
 
 class WalmartBar extends StatelessWidget {
   //final controller = TextEditingController();
@@ -51,11 +52,25 @@ class WalmartBar extends StatelessWidget {
             builder: (context) => IconButton(
               color: Color(0xff0070c0),
               padding: EdgeInsets.only(right: 26.0),
-              icon: Icon(Icons.dehaze),
+              icon: Icon(Icons.dehaze, color: Colors.black),
               iconSize: 28.0,
               onPressed: () => Scaffold.of(context).openEndDrawer(),
               tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
             ),
+          ),
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => WalmartSearch(
+                    uid: uid,
+                    categoryId: null,
+                  ),
+                ),
+              );
+            },
           ),
         ],
         // iconTheme: IconThemeData(

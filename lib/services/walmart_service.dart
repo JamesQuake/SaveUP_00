@@ -6,8 +6,10 @@ import 'package:pointycastle/export.dart';
 import 'package:basic_utils/basic_utils.dart';
 
 class WalmartService {
-  static const String baseUrl = 'https://developer.api.walmart.com/api-proxy/service/affil/product/v2/taxonomy';
-  
+  static const String baseUrl = 'https://developer.api.walmart.com';
+  static const String taxonomyPath = '/api-proxy/service/affil/product/v2/taxonomy';
+  static const String productsPath = '/api-proxy/service/affil/product/v2/paginated/items';
+  static const String productDetailPath = '/api-proxy/service/affil/product/v2/items';
   static const String consumerID = '6a706ded-9402-440e-afa3-b2215b51f63c';
   static const String keyVersion = '1';
   static const String privateKeyPEM = '''
@@ -97,7 +99,7 @@ JW1bmFQ/Cd+zYrC46TqKdeU=
       print('Signature: $signature');
       
       final response = await http.get(
-        Uri.parse(baseUrl),
+        Uri.parse(baseUrl + taxonomyPath),
         headers: {
           'WM_SEC.KEY_VERSION': keyVersion,
           'WM_CONSUMER.ID': consumerID,
@@ -125,6 +127,7 @@ JW1bmFQ/Cd+zYrC46TqKdeU=
   Future<Map<String, dynamic>> getProducts({
     String categoryId,
     String nextPage,
+    String sortBy,
   }) async {
     try {
       final timestamp = DateTime.now().millisecondsSinceEpoch.toString();
@@ -132,14 +135,36 @@ JW1bmFQ/Cd+zYrC46TqKdeU=
       
       Uri uri;
       if (nextPage != null) {
-        uri = Uri.parse('https://developer.api.walmart.com$nextPage');
+        uri = Uri.parse(baseUrl + nextPage);
       } else {
-        uri = Uri.parse('https://developer.api.walmart.com/api-proxy/service/affil/product/v2/paginated/items')
-            .replace(queryParameters: {
+        final Map<String, String> queryParams = {
           'category': categoryId,
           'count': '20',
-          'shard': '0',
-        });
+        };
+
+        if (sortBy != null) {
+          switch (sortBy) {
+            case 'price_asc':
+              queryParams['sort'] = 'price';
+              queryParams['order'] = 'ascending';
+              break;
+            case 'price_desc':
+              queryParams['sort'] = 'price';
+              queryParams['order'] = 'descending';
+              break;
+            case 'name_asc':
+              queryParams['sort'] = 'name';
+              queryParams['order'] = 'asc';
+              break;
+            case 'name_desc':
+              queryParams['sort'] = 'name';
+              queryParams['order'] = 'desc';
+              break;
+          }
+        }
+
+        uri = Uri.parse(baseUrl + productsPath)
+            .replace(queryParameters: queryParams);
       }
 
       print('Request URL: ${uri.toString()}');
@@ -166,6 +191,76 @@ JW1bmFQ/Cd+zYrC46TqKdeU=
       }
     } catch (e) {
       print('Error fetching products: $e');
+      rethrow;
+    }
+  }
+
+  Future<Map<String, dynamic>> searchProducts({
+    String query,
+    String categoryId,
+    int start = 1,
+    String sort,
+    String order,
+    int numItems = 25,
+    String facetFilter,
+    String facetRange,
+  }) async {
+    try {
+      final timestamp = DateTime.now().millisecondsSinceEpoch.toString();
+      final signature = _generateSignature(timestamp);
+      
+      final Map<String, String> queryParams = {
+        'query': query,
+        'start': start.toString(),
+        'numItems': numItems.toString(),
+      };
+
+      if (categoryId != null) {
+        queryParams['categoryId'] = categoryId;
+      }
+
+      if (sort != null) {
+        queryParams['sort'] = sort;
+        if (sort == 'price') {
+          queryParams['order'] = order;
+        }
+      }
+
+      // Enable facets
+      queryParams['facet'] = 'on';
+      if (facetFilter != null) {
+        queryParams['facet.filter'] = facetFilter;
+      }
+      if (facetRange != null) {
+        queryParams['facet.range'] = facetRange;
+      }
+
+      final uri = Uri.parse('$baseUrl/api-proxy/service/affil/product/v2/search')
+          .replace(queryParameters: queryParams);
+
+      print('Search URL: $uri');
+      final response = await http.get(
+        uri,
+        headers: {
+          'WM_SEC.KEY_VERSION': keyVersion,
+          'WM_CONSUMER.ID': consumerID,
+          'WM_CONSUMER.INTIMESTAMP': timestamp,
+          'WM_SEC.AUTH_SIGNATURE': signature,
+          'Accept': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final decodedResponse = json.decode(response.body);
+        print('Search response query: ${decodedResponse['query']}');
+        // print('Search response body: ${response.body}');
+        print('Search response facets: ${decodedResponse['facets']}');
+        return decodedResponse;
+      } else {
+        throw Exception('Search failed: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error searching products: $e');
       rethrow;
     }
   }

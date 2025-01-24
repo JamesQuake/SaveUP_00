@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:pay_or_save/assets/main_drawer.dart';
 import 'package:pay_or_save/pages/new_pages/place_order.dart';
 import 'package:pay_or_save/pages/new_pages/reward_points.dart';
@@ -12,6 +13,7 @@ import 'package:provider/provider.dart';
 import '../../providers/total_provider.dart';
 import 'acquire_reward_points.dart';
 import 'add_to_account.dart';
+import '../../models/sweepstake_entry.dart';
 
 class WinPrizes extends StatefulWidget {
   final String uid;
@@ -71,8 +73,8 @@ class _WinPrizes extends State<WinPrizes> {
               children: [
                 Text(
                   details.getName +
-                      ". You have " +
-                      details.getRewardPoint.toString() +
+                      ", You have " +
+                      NumberFormat.decimalPattern("en-us").format(details.getRewardPoint) +
                       " points",
                   style: TextStyle(
                     color: Colors.black,
@@ -228,28 +230,12 @@ class _WinPrizes extends State<WinPrizes> {
                         ),
                         onPressed: () => Timer(
                           const Duration(milliseconds: 400),
-                          () {
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => RewardPoints(
-                            //             // uid: widget.uid,
-                            //             )));
+                          () async {
                             print('details.getRewardPoint -> ${details.getRewardPoint}');
                             if (details.getRewardPoint < 1500) {
-                              _showRewardPointNotice(
-                                  context, details.getRewardPoint);
-                            }
-                            else{
-                              EasyLoading.showSuccess('You are entered in drawing.');
-                              Future.delayed(Duration(seconds: 1)).then((_) => Navigator.pushNamedAndRemoveUntil(context, '/starting', (route) => false));
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => RewardPoints(
-                              //           uid: widget.uid,
-                              //         ),),);
-                              // Navigator.pushNamedAndRemoveUntil(context, '/starting', (route) => false);
+                              _showRewardPointNotice(context, details.getRewardPoint);
+                            } else {
+                              await _enterSweepstakes(context, details.getName);
                             }
                           },
                         ),
@@ -553,5 +539,82 @@ class _WinPrizes extends State<WinPrizes> {
         return alert;
       },
     );
+  }
+
+  Future<Map<String, dynamic>> _getCurrentUserData() async {
+    try {
+      final doc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(widget.uid)
+          .get();
+      
+      if (!doc.exists) {
+        throw Exception('User data not found');
+      }
+      
+      return doc.data();
+    } catch (e) {
+      print('Error fetching user data: $e');
+      throw e;
+    }
+  }
+
+  Future<void> _enterSweepstakes(BuildContext context, String displayName) async {
+    try {
+      EasyLoading.show(status: 'Entering drawing...');
+      
+      // Fetch current user data
+      final userData = await _getCurrentUserData();
+      final String firstName = userData['firstName'] ?? '';
+      final String lastName = userData['lastName'] ?? '';
+      final String email = userData['email'] ?? '';
+      
+      if (email.isEmpty) {
+        EasyLoading.dismiss();
+        EasyLoading.showError('Email address is required for sweepstakes entry');
+        return;
+      }
+
+      // Create sweepstake entry with full name and email
+      final entry = SweepstakeEntry(
+        userId: widget.uid,
+        fullName: '$firstName $lastName'.trim(),
+        userEmail: email,
+        optedInAt: DateTime.now(),
+        hasWon: false,
+        additionalData: {
+          'rewardPoints': Provider.of<TotalValues>(context, listen: false).getRewardPoint,
+        },
+      );
+
+      // Check if user already has an entry
+      final existingEntry = await FirebaseFirestore.instance
+          .collection('sweepstake_entries')
+          .where('userId', isEqualTo: widget.uid)
+          .get();
+
+      if (existingEntry.docs.isNotEmpty) {
+        EasyLoading.dismiss();
+        EasyLoading.showInfo('You are already entered in the drawing');
+        return;
+      }
+
+      // Add entry to Firestore
+      await FirebaseFirestore.instance
+          .collection('sweepstake_entries')
+          .add(entry.toJson());
+
+      EasyLoading.dismiss();
+      EasyLoading.showSuccess('Successfully entered in drawing!');
+      
+      // Navigate after short delay
+      await Future.delayed(Duration(seconds: 1));
+      Navigator.pushNamedAndRemoveUntil(context, '/starting', (route) => false);
+
+    } catch (e) {
+      print('Error entering sweepstakes: $e');
+      EasyLoading.dismiss();
+      EasyLoading.showError('Failed to enter drawing. Please try again.');
+    }
   }
 }

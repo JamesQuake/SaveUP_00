@@ -39,6 +39,7 @@ class WalmartBar extends StatelessWidget {
     if (cpage == 'searchresult' ||
         cpage == 'main' ||
         cpage == 'product' ||
+        cpage == 'subcategory' ||
         cpage == 'category') {
       return SliverAppBar(
         floating: true,
@@ -48,18 +49,8 @@ class WalmartBar extends StatelessWidget {
           onPressed: () => Navigator.of(context).pop(),
         ),
         actions: [
-          Builder(
-            builder: (context) => IconButton(
-              color: Color(0xff0070c0),
-              padding: EdgeInsets.only(right: 26.0),
-              icon: Icon(Icons.dehaze, color: Colors.black),
-              iconSize: 28.0,
-              onPressed: () => Scaffold.of(context).openEndDrawer(),
-              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-            ),
-          ),
           IconButton(
-            icon: Icon(Icons.search),
+            icon: Icon(Icons.search, color: Colors.black),
             onPressed: () {
               Navigator.push(
                 context,
@@ -72,6 +63,16 @@ class WalmartBar extends StatelessWidget {
               );
             },
           ),
+          Builder(
+            builder: (context) => IconButton(
+              color: Color(0xff0070c0),
+              padding: EdgeInsets.only(right: 26.0),
+              icon: Icon(Icons.dehaze, color: Colors.black),
+              iconSize: 28.0,
+              onPressed: () => Scaffold.of(context).openEndDrawer(),
+              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+            ),
+          ),
         ],
         // iconTheme: IconThemeData(
         //   color: Color(0xff0070c0),
@@ -79,7 +80,7 @@ class WalmartBar extends StatelessWidget {
         // ),
         pinned: true,
         primary: true,
-        expandedHeight: showtitle ? 185 : 142,
+        expandedHeight: showtitle ? 120 : 80,
         collapsedHeight: 82,
         toolbarHeight: 80,
         title: Padding(
@@ -98,77 +99,77 @@ class WalmartBar extends StatelessWidget {
                   child: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(
-                                  10.0, 8.0, 10.0, 5.0),
-                              child: Container(
-                                width: MediaQuery.of(context).size.width * 0.93,
-                                child: TextFormField(
-                                  //controller: controller,
-                                  onFieldSubmitted: (value) {
-                                    if (value.isEmpty) {
-                                      _showDialog();
-                                      return null;
-                                    }
-                                    if (cpage == 'searchresult') {
-                                      Navigator.push(
-                                        context,
-                                        new MaterialPageRoute(
-                                            builder: (context) =>
-                                                new WalmartItemsListPage(
-                                                  catId: '0',
-                                                  catName: value,
-                                                  uid: uid,
-                                                )),
-                                      );
-                                    } else {
-                                      Navigator.push(
-                                        context,
-                                        new MaterialPageRoute(
-                                            builder: (context) =>
-                                                new WalmartItemsListPage(
-                                                  catId: '0',
-                                                  catName: value,
-                                                  uid: uid,
-                                                )),
-                                      );
-                                    }
-                                  },
-                                  textInputAction: TextInputAction.search,
-                                  //focusNode: myFocusNode,
-                                  decoration: InputDecoration(
-                                    fillColor: Colors.white,
-                                    filled: true,
-                                    suffixIcon: Icon(Icons.search,
-                                        color: myFocusNode.hasFocus
-                                            ? Color(0xff0665c9)
-                                            : Colors.black),
-                                    hintText: 'Search for Anything...',
-                                    // focusedBorder: UnderlineInputBorder(
-                                    //   borderRadius:BorderRadius.circular(20.0),
-                                    //   borderSide: BorderSide(
-                                    //       color: Color(0xff0665c9), width: 3.0),
-                                    // ),
-                                    enabledBorder: UnderlineInputBorder(
-                                      //borderRadius:BorderRadius.circular(20.0),
-                                      borderSide: BorderSide(
-                                          color: Colors.white, width: 0),
-                                    ),
-                                  ),
-                                  validator: (value) {
-                                    if (value.isEmpty) {
-                                      return 'Please enter some text';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   children: <Widget>[
+                        //     Padding(
+                        //       padding: const EdgeInsets.fromLTRB(
+                        //           10.0, 8.0, 10.0, 5.0),
+                        //       child: Container(
+                        //         width: MediaQuery.of(context).size.width * 0.93,
+                        //         child: TextFormField(
+                        //           //controller: controller,
+                        //           onFieldSubmitted: (value) {
+                        //             if (value.isEmpty) {
+                        //               _showDialog();
+                        //               return null;
+                        //             }
+                        //             if (cpage == 'searchresult') {
+                        //               Navigator.push(
+                        //                 context,
+                        //                 new MaterialPageRoute(
+                        //                     builder: (context) =>
+                        //                         new WalmartItemsListPage(
+                        //                           catId: '0',
+                        //                           catName: value,
+                        //                           uid: uid,
+                        //                         )),
+                        //               );
+                        //             } else {
+                        //               Navigator.push(
+                        //                 context,
+                        //                 new MaterialPageRoute(
+                        //                     builder: (context) =>
+                        //                         new WalmartItemsListPage(
+                        //                           catId: '0',
+                        //                           catName: value,
+                        //                           uid: uid,
+                        //                         )),
+                        //               );
+                        //             }
+                        //           },
+                        //           textInputAction: TextInputAction.search,
+                        //           //focusNode: myFocusNode,
+                        //           decoration: InputDecoration(
+                        //             fillColor: Colors.white,
+                        //             filled: true,
+                        //             suffixIcon: Icon(Icons.search,
+                        //                 color: myFocusNode.hasFocus
+                        //                     ? Color(0xff0665c9)
+                        //                     : Colors.black),
+                        //             hintText: 'Search for Anything...',
+                        //             // focusedBorder: UnderlineInputBorder(
+                        //             //   borderRadius:BorderRadius.circular(20.0),
+                        //             //   borderSide: BorderSide(
+                        //             //       color: Color(0xff0665c9), width: 3.0),
+                        //             // ),
+                        //             enabledBorder: UnderlineInputBorder(
+                        //               //borderRadius:BorderRadius.circular(20.0),
+                        //               borderSide: BorderSide(
+                        //                   color: Colors.white, width: 0),
+                        //             ),
+                        //           ),
+                        //           validator: (value) {
+                        //             if (value.isEmpty) {
+                        //               return 'Please enter some text';
+                        //             }
+                        //             return null;
+                        //           },
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
                         if (showtitle)
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,

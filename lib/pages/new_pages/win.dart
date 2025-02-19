@@ -10,6 +10,7 @@ import 'package:pay_or_save/pages/new_pages/place_order.dart';
 import 'package:pay_or_save/pages/new_pages/reward_points.dart';
 import 'package:provider/provider.dart';
 
+import '../../models/sweepstake_setup.dart';
 import '../../providers/total_provider.dart';
 import 'acquire_reward_points.dart';
 import 'add_to_account.dart';
@@ -30,19 +31,43 @@ class _WinPrizes extends State<WinPrizes> {
   final firestoreInstance = FirebaseFirestore.instance;
   int _rewardPoints;
   String name;
-  // int amount = 100;
-  // var _newAmount = '\$' + amount;
+  SweepstakeSetup _currentSweepstake;
+  bool _isLoading = true;
+  String _error;
 
   @override
   void initState() {
     super.initState();
     _getRewardPointBal();
-    // print(widget.uid);
+    _loadSweepstakeData();
   }
 
-  _getRewardPointBal() async {
-    var prov = Provider.of<TotalValues>(context, listen: false);
-    await prov.getRewardPointBal(widget.uid);
+  Future<void> _loadSweepstakeData() async {
+    try {
+      final sweepstakeDoc = await firestoreInstance
+          .collection('sweepstake_setup').doc('sweepstake_setup')
+          // .orderBy('updated_at', descending: true)
+          // .limit(1)
+          .get();
+
+      if (!sweepstakeDoc.exists) {
+        setState(() {
+          _error = 'No active sweepstakes available';
+          _isLoading = false;
+        });
+        return;
+      }
+
+      setState(() {
+        _currentSweepstake = SweepstakeSetup.fromFirestore(sweepstakeDoc.data());
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _error = 'Failed to load sweepstakes data';
+        _isLoading = false;
+      });
+    }
   }
 
   @override
@@ -55,258 +80,198 @@ class _WinPrizes extends State<WinPrizes> {
         ),
         backgroundColor: Color(0xff0070c0),
         title: Text(
-          'Win Amazing Prices',
-          style: TextStyle(
-            fontSize: 25.h,
-          ),
+          'Win Amazing Prizes',
+          style: TextStyle(fontSize: 25.h),
         ),
         centerTitle: true,
         elevation: 0.0,
       ),
       endDrawer: MainDrawer(uid: widget.uid),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 10.0),
-        child: Consumer<TotalValues>(
-          builder: (context, details, child) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  details.getName +
-                      ", You have " +
-                      NumberFormat.decimalPattern("en-us").format(details.getRewardPoint) +
-                      " points",
-                  style: TextStyle(
-                    color: Colors.black,
-                    height: 1.5,
-                    fontSize: 18.h,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                SizedBox(
-                  height: 20.0.h,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: RichText(
-                        // overflow: TextOverflow.visible,
-                        textAlign: TextAlign.center,
-                        text: TextSpan(
-                          style: TextStyle(
-                            color: Colors.black,
-                            height: 1.5,
-                            fontSize: 18.h,
+      body: _isLoading
+          ? Center(child: CircularProgressIndicator())
+          : _error != null
+              ? Center(child: Text(_error))
+              : SingleChildScrollView(
+                  padding: EdgeInsets.all(20.0),
+                  child: Consumer<TotalValues>(
+                    builder: (context, details, child) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Card(
+                            elevation: 4,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(16.0),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    '${details.getName}, You have',
+                                    style: TextStyle(
+                                      fontSize: 18.h,
+                                      color: Colors.grey[700],
+                                    ),
+                                  ),
+                                  SizedBox(height: 8),
+                                  Text(
+                                    NumberFormat.decimalPattern('en-us')
+                                        .format(details.getRewardPoint),
+                                    style: TextStyle(
+                                      fontSize: 32.h,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xff0070c0),
+                                    ),
+                                  ),
+                                  Text(
+                                    'Reward Points',
+                                    style: TextStyle(
+                                      fontSize: 18.h,
+                                      color: Colors.grey[700],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
-                          children: [
-                            TextSpan(
-                              text: 'Enter Drawing to Win:',
-                              style: TextStyle(
-                                fontSize: 19.0.h,
-                                fontWeight: FontWeight.bold,
+                          SizedBox(height: 24),
+                          if (_currentSweepstake != null) ...[                            
+                            Card(
+                              elevation: 4,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: Column(
+                                children: [
+                                  if (_currentSweepstake.image.isNotEmpty)
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(15),
+                                      ),
+                                      child: Image.network(
+                                        _currentSweepstake.image,
+                                        height: 200,
+                                        width: double.infinity,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  Padding(
+                                    padding: EdgeInsets.all(16.0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          _currentSweepstake.title,
+                                          style: TextStyle(
+                                            fontSize: 24.h,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        SizedBox(height: 8),
+                                        Text(
+                                          _currentSweepstake.description,
+                                          style: TextStyle(fontSize: 16.h),
+                                        ),
+                                        SizedBox(height: 16),
+                                        _buildInfoRow(
+                                          'Entry Deadline',
+                                          DateFormat.yMMMd().format(_currentSweepstake.entryDeadline),
+                                        ),
+                                        _buildInfoRow(
+                                          'Drawing Date',
+                                          DateFormat.yMMMd().format(_currentSweepstake.drawingDate),
+                                        ),
+                                        _buildInfoRow(
+                                          'Required Points',
+                                          '${NumberFormat.decimalPattern().format(_currentSweepstake.requiredRewardsPoints)} points',
+                                        ),
+                                        SizedBox(height: 24),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: ElevatedButton(
+                                                onPressed: details.getRewardPoint >= _currentSweepstake.requiredRewardsPoints
+                                                    ? () => _enterSweepstakes(context, details.getName)
+                                                    : null,
+                                                style: ElevatedButton.styleFrom(
+                                                  primary: Color(0xff0070c0),
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(10),
+                                                  ),
+                                                  minimumSize: Size(0, 50),
+                                                ),
+                                                child: Text(
+                                                  'Enter Drawing',
+                                                  style: TextStyle(fontSize: 18.h),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(width: 12),
+                                            Expanded(
+                                              child: TextButton(
+                                                onPressed: () => Navigator.pushNamedAndRemoveUntil(context, '/starting', (route) => false),
+                                                style: TextButton.styleFrom(
+                                                  backgroundColor: Colors.grey[200],
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(10),
+                                                  ),
+                                                  minimumSize: Size(0, 50),
+                                                ),
+                                                child: Text(
+                                                  'Skip Drawing',
+                                                  style: TextStyle(
+                                                    fontSize: 18.h,
+                                                    color: Colors.grey[800],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 20.0.h,
-                ),
-                Container(
-                  width: 320.0.w,
-                  height: 220.0.h,
-                  decoration: BoxDecoration(
-                    // color: Color(0xff3790ce),
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(9.0),
-                  ),
-                  child: Image.asset('assets/images/amazonnew.jpg'),
-                  // color: Color(0xff3790ce),
-                ),
-                SizedBox(
-                  height: 30.h,
-                ),
-                Container(
-                  child: RichText(
-                    textAlign: TextAlign.center,
-                    // overflow: TextOverflow.visible,
-                    text: TextSpan(
-                      style: TextStyle(
-                        color: Colors.black,
-                        height: 1.5,
-                        fontSize: 18.h,
-                      ),
-                      children: [
-                        TextSpan(
-                          text: 'Entry Deadline: ',
-                          style: TextStyle(
-                            fontSize: 18.0.h,
-                          ),
-                        ),
-                        TextSpan(
-                          text: ' Sept 15, 2021',
-                          style: TextStyle(
-                            fontSize: 18.h,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
+                        ],
+                      );
+                    },
                   ),
                 ),
-                Container(
-                  child: RichText(
-                    textAlign: TextAlign.center,
-                    // overflow: TextOverflow.visible,
-                    text: TextSpan(
-                      style: TextStyle(
-                        color: Colors.black,
-                        height: 1.5,
-                        fontSize: 18.h,
-                      ),
-                      children: [
-                        TextSpan(
-                          text: 'Drawing Date: ',
-                          style: TextStyle(
-                            fontSize: 18.0.h,
-                          ),
-                        ),
-                        TextSpan(
-                          text: ' Sept 16, 2021',
-                          style: TextStyle(
-                            fontSize: 18.h,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 20.0.h,
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
-                  child: Container(
-                    child: Text(
-                      'To enter drawing, you must have at least 1,500 reward points. Drawings are held weekly. Winner(s) will be notified by email.',
-                      textAlign: TextAlign.justify,
-                      style: TextStyle(
-                        fontSize: 15.h,
-                      ),
-                    ),
-                  ),
-                ),
-                Spacer(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(
-                      width: 130.0.w,
-                      child: TextButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.resolveWith(
-                            (states) => Color(0xff0e8646),
-                          ),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                          ),
-                          overlayColor: MaterialStateProperty.resolveWith(
-                            (states) {
-                              return states.contains(MaterialState.pressed)
-                                  ? Colors.green
-                                  : null;
-                            },
-                          ),
-                          // fixedSize: MaterialStateProperty.resolveWith((states)=> Size(width, height))
-                        ),
-                        onPressed: () => Timer(
-                          const Duration(milliseconds: 400),
-                          () async {
-                            print('details.getRewardPoint -> ${details.getRewardPoint}');
-                            if (details.getRewardPoint < 1500) {
-                              _showRewardPointNotice(context, details.getRewardPoint);
-                            } else {
-                              await _enterSweepstakes(context, details.getName);
-                            }
-                          },
-                        ),
-                        child: Text(
-                          'Enter\nDrawing',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 17.0.h,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 10.0.w,
-                    ),
-                    // _validateInputs();
-                    // navigateToSetInvestmentGoals(context);
-                    SizedBox(
-                      width: 130.0.w,
-                      child: TextButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.resolveWith(
-                            (states) => Color(0xff1ba0fb),
-                          ),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                          ),
-                          overlayColor: MaterialStateProperty.resolveWith(
-                            (states) {
-                              return states.contains(MaterialState.pressed)
-                                  ? Colors.blue
-                                  : null;
-                            },
-                          ),
-                        ),
-                        onPressed: () => Timer(
-                          const Duration(milliseconds: 400),
-                          () {
-                            Navigator.pushNamedAndRemoveUntil(context, '/starting', (route) => false);
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => PlaceOrder(
-                            //               uid: widget.uid,
-                            //             )));
-                          },
-                        ),
-                        child: Container(
-                          child: Text(
-                            'Skip\nDrawing',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 17.0.h,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            );
-          },
-        ),
+    );
+  }
+
+  Widget _buildInfoRow(String label, String value) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 16.h,
+              color: Colors.grey[600],
+            ),
+          ),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 16.h,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
       ),
     );
+  }
+
+  _getRewardPointBal() async {
+    var prov = Provider.of<TotalValues>(context, listen: false);
+    await prov.getRewardPointBal(widget.uid);
   }
 
   _showRewardPointNotice(BuildContext context, amount) {
@@ -558,63 +523,60 @@ class _WinPrizes extends State<WinPrizes> {
       throw e;
     }
   }
-
   Future<void> _enterSweepstakes(BuildContext context, String displayName) async {
     try {
       EasyLoading.show(status: 'Entering drawing...');
       
-      // Fetch current user data
-      final userData = await _getCurrentUserData();
-      final String firstName = userData['firstName'] ?? '';
-      final String lastName = userData['lastName'] ?? '';
-      final String email = userData['email'] ?? '';
-      
-      if (email.isEmpty) {
-        EasyLoading.dismiss();
-        EasyLoading.showError('Email address is required for sweepstakes entry');
-        return;
-      }
-
-      // Create sweepstake entry with full name and email
-      final entry = SweepstakeEntry(
-        userId: widget.uid,
-        fullName: '$firstName $lastName'.trim(),
-        userEmail: email,
-        optedInAt: DateTime.now(),
-        hasWon: false,
-        additionalData: {
-          'rewardPoints': Provider.of<TotalValues>(context, listen: false).getRewardPoint,
-        },
-      );
-
-      // Check if user already has an entry
-      final existingEntry = await FirebaseFirestore.instance
-          .collection('sweepstake_entries')
+      // Check if user has already entered any drawing
+      final existingEntry = await firestoreInstance
+          .collection('sweepstakes_entries')
           .where('userId', isEqualTo: widget.uid)
           .get();
 
       if (existingEntry.docs.isNotEmpty) {
-        EasyLoading.dismiss();
-        EasyLoading.showInfo('You are already entered in the drawing');
+        EasyLoading.showError('You have already entered the drawing');
         return;
       }
 
+      // Get user data
+      final userData = await _getCurrentUserData();
+      
+      // Create sweepstakes entry using the model
+      final entry = SweepstakeEntry(
+        userId: widget.uid,
+        fullName: displayName,
+        userEmail: userData['email'] ?? '',
+        optedInAt: DateTime.now(),
+        hasWon: false,
+        additionalData: {
+          'rewardPoints': userData['reward_points'] ?? 0,
+        }
+      );
+
       // Add entry to Firestore
-      await FirebaseFirestore.instance
-          .collection('sweepstake_entries')
+      await firestoreInstance.collection('sweepstakes_entries')
           .add(entry.toJson());
 
-      EasyLoading.dismiss();
-      EasyLoading.showSuccess('Successfully entered in drawing!');
-      
-      // Navigate after short delay
-      await Future.delayed(Duration(seconds: 1));
-      Navigator.pushNamedAndRemoveUntil(context, '/starting', (route) => false);
+      // Deduct points from user's account
+      await firestoreInstance.collection('users').doc(widget.uid).update({
+        'reward_points': FieldValue.increment(-_currentSweepstake.requiredRewardsPoints)
+      });
 
+      EasyLoading.showSuccess('Successfully entered the drawing!');
+      
+      // Refresh reward points
+      await _getRewardPointBal();
+
+      // In _enterSweepstakes method, replace the navigation line with:
+      // After success message
+      await Future.delayed(Duration(milliseconds: 500));
+      Navigator.pop(context);
+      Navigator.pushNamedAndRemoveUntil(context, '/starting', (route) => false);
+      
     } catch (e) {
       print('Error entering sweepstakes: $e');
-      EasyLoading.dismiss();
       EasyLoading.showError('Failed to enter drawing. Please try again.');
     }
   }
 }
+

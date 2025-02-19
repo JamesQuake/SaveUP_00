@@ -155,6 +155,8 @@ class RegistrationPageTabs extends State<RegistrationPage>
       'investment': 2500,
       'ads_status': 0,
       'user_status': 0,
+      'uid': uid,
+      'created_at': DateTime.now(),
     });
   }
 
